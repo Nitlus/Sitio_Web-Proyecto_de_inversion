@@ -1,0 +1,95 @@
+.sitio-footer {
+  background-color: #1a1a1a; /* Mismo fondo de la Navbar */
+  color: #ffffff;
+  padding: 45px 40px 20px 40px;
+  font-family: system-ui, -apple-system, sans-serif;
+  border-top: 1px solid #2d2d2d; /* Línea divisoria superior que espeja el hr de la navbar */
+  margin-top: auto; /* Mantener abajo siempre */
+}
+
+.footer-contenido {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-seccion {
+  flex: 1;
+  min-width: 250px;
+}
+
+.footer-seccion h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+  position: relative;
+  padding-bottom: 8px;
+}
+
+/* Subrayado corto decorativo debajo de los títulos del footer, estilo Venex/CompraGamer */
+.footer-seccion h3::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 35px;
+  height: 2px;
+  background-color: #007bff; /* Detalle azul corporativo */
+}
+
+.footer-seccion p {
+  color: #b3b3b3; /* Mismo gris secundario de la navbar */
+  font-size: 0.92rem;
+  line-height: 1.6;
+  margin: 10px 0;
+}
+
+.redes-enlaces {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.redes-enlaces a {
+  color: #b3b3b3;
+  text-decoration: none;
+  font-size: 0.92rem;
+  font-weight: 500;
+  width: fit-content;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.redes-enlaces a:hover {
+  color: #007bff; /* Match con los hovers del header */
+  transform: translateX(3px); /* Desplazamiento interactivo elegante */
+}
+
+.footer-derechos {
+  max-width: 1200px;
+  margin: 40px auto 0 auto;
+  padding-top: 20px;
+  border-top: 1px solid #2d2d2d;
+  text-align: center;
+}
+
+.footer-derechos p {
+  color: #666666; /* Gris apagado para legales */
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+/* Asegurar adaptabilidad para dispositivos móviles */
+@media (max-width: 768px) {
+  .sitio-footer {
+    padding: 30px 20px 20px 20px;
+  }
+  .footer-contenido {
+    flex-direction: column;
+    gap: 25px;
+  }
+}

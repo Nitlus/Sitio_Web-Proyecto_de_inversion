@@ -1,122 +1,92 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
-import './App.css'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+// Proveedor de Autenticación Global
+import { AuthProvider, useAuth } from './context/AuthContext';
 
-  return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
-        </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
-        </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
-      </section>
+// Estructura Fija de la Layout
+import Navbar from './components/Navbar';
+import Footer from './components/Footer';
 
-      <div className="ticks"></div>
+// Páginas / Vistas Solicitadas
+import Home from './pages/Home';
+import CatalogoProductos from './pages/CatalogoProductos';
+import Producto from './pages/Producto';
+import Login from './pages/Login';
+import Register from './pages/Register';
+import BusquedaPedidos from './pages/BusquedaPedidos';
+import HistorialPedidos from './pages/HistorialPedidos';
+import DetallePedido from './pages/DetallePedido';
+import CarritoCompras from './pages/CarritoCompras';
+import ArmarPC from './pages/ArmarPC'; // <-- NUEVO IMPORT REAL
 
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
-  )
+/**
+ * Componente Inteligente de Manejo de Pedidos (/mis-pedidos)
+ */
+function ControladorRutaPedidos() {
+  const { usuario } = useAuth();
+  return usuario ? <HistorialPedidos /> : <BusquedaPedidos />;
 }
 
-export default App
+/**
+ * Componente Puente para Destacados (/destacados)
+ */
+function RedireccionDestacado() {
+  const [idDestacado, setIdDestacado] = useState(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    fetch('http://localhost:3000/api/productos')
+      .then(res => res.json())
+      .then(productos => {
+        if (productos && productos.length > 0) {
+          setIdDestacado(productos[0].id);
+        } else {
+          setError(true);
+        }
+      })
+      .catch(() => setError(true));
+  }, []);
+
+  if (error) return <Navigate to="/" replace />;
+  if (!idDestacado) return <div style={{ color: 'white', padding: '40px' }}>Cargando producto destacado...</div>;
+
+  return <Navigate to={`/producto/${idDestacado}`} replace />;
+}
+
+function App() {
+  return (
+    <AuthProvider>
+      <BrowserRouter>
+        <div className="app-layout">
+          
+          <Navbar />
+          
+          <main className="contenedor-principal">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/tienda/:categoria?/:subcategoria?" element={<CatalogoProductos />} />
+              <Route path="/producto/:id" element={<Producto />} />
+              <Route path="/destacados" element={<RedireccionDestacado />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/mis-pedidos" element={<ControladorRutaPedidos />} />
+              <Route path="/pedido/:id" element={<DetallePedido />} />
+              <Route path="/carrito" element={<CarritoCompras />} />
+              
+              {/* Ruta real del asistente de armado */}
+              <Route path="/armar-pc" element={<ArmarPC />} />
+
+              <Route path="*" element={<Navigate to="/" replace />} />
+            </Routes>
+          </main>
+
+          <Footer />
+
+        </div>
+      </BrowserRouter>
+    </AuthProvider>
+  );
+}
+
+export default App;

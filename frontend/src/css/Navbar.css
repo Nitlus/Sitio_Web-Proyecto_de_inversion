@@ -1,0 +1,196 @@
+.navbar-container {
+  background-color: #1a1a1a; /* Fondo principal unificado */
+  color: #ffffff;
+  padding: 15px 40px; /* Más aire a los costados */
+  font-family: system-ui, -apple-system, sans-serif;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3); /* Sombra suave para separar del contenido */
+}
+
+/* --- FILA 1 --- */
+.navbar-fila-1 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.navbar-logo {
+  color: #ffffff;
+  font-size: 1.6rem;
+  font-weight: 800;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: color 0.2s ease;
+}
+
+.navbar-logo:hover {
+  color: #007bff; /* Brillo azul corporativo */
+}
+
+.navbar-search {
+  display: flex;
+  flex: 1;
+  max-width: 550px;
+  margin: 0 30px;
+}
+
+.navbar-search input {
+  flex: 1;
+  padding: 10px 16px;
+  border-radius: 6px 0 0 4px;
+  border: 1px solid #333333;
+  background-color: #252525;
+  color: #ffffff;
+  outline: none;
+  font-size: 0.95rem;
+  transition: border-color 0.2s;
+}
+
+.navbar-search input:focus {
+  border-color: #007bff;
+}
+
+.navbar-search button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 0 6px 6px 0;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.navbar-search button:hover {
+  background-color: #0056b3;
+}
+
+.navbar-auth {
+  display: flex;
+  align-items: center;
+}
+
+.navbar-auth a {
+  color: #e0e0e0;
+  text-decoration: none;
+  margin-left: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-auth a:hover {
+  color: #007bff;
+}
+
+/* --- SEPARADOR --- */
+.navbar-divider {
+  border: 0;
+  height: 1px;
+  background-color: #2d2d2d; /* Separador sutil */
+  margin: 4px 0;
+}
+
+/* --- FILA 2 --- */
+.navbar-fila-2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+}
+
+.navbar-links a {
+  color: #b3b3b3;
+  text-decoration: none;
+  margin-right: 25px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.navbar-links a:hover {
+  color: #ffffff;
+}
+
+.navbar-carrito {
+  color: #b3b3b3;
+  display: flex;
+  align-items: center;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.navbar-carrito:hover {
+  color: #28a745; /* El carrito brilla en verde de éxito al pasar el mouse */
+  transform: scale(1.05);
+}
+
+/* --- DROPDOWN INTERACTIVO --- */
+.dropdown-container {
+  position: relative;
+}
+
+.btn-productos {
+  background: none;
+  border: none;
+  color: #ffffff;
+  font-size: 0.95rem;
+  cursor: pointer;
+  font-weight: bold;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.btn-productos:hover {
+  color: #007bff;
+}
+
+.dropdown-menu {
+  position: absolute;
+  top: 130%;
+  left: 0;
+  background-color: #1f1f1f; /* Fondo oscuro que hace match con las cards de productos */
+  border: 1px solid #333333;
+  color: #ffffff;
+  min-width: 240px;
+  border-radius: 8px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  z-index: 1000;
+  padding: 12px 0;
+}
+
+.dropdown-item {
+  padding: 8px 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown-item > a {
+  font-size: 1rem;
+  color: #ffffff;
+  text-decoration: none;
+  margin-bottom: 6px;
+  transition: color 0.2s;
+}
+
+.dropdown-item > a:hover {
+  color: #007bff;
+}
+
+.subcategorias-lista {
+  display: flex;
+  flex-direction: column;
+  padding-left: 12px;
+  border-left: 1px solid #333333; /* Guía visual vertical */
+}
+
+.subcategorias-lista a {
+  font-size: 0.88rem;
+  color: #a0a0a0;
+  text-decoration: none;
+  padding: 4px 0;
+  transition: color 0.2s;
+}
+
+.subcategorias-lista a:hover {
+  color: #007bff;
+}
