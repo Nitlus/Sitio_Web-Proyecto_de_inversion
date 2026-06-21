@@ -1,8 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
-// Proveedor de Autenticación Global
+// Proveedores de Contextos Globales
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { CarritoProvider } from './context/CarritoContext'; // <-- AÑADIDO: Para que la Navbar y el Carrito se comuniquen
 
 // Estructura Fija de la Layout
 import Navbar from './components/Navbar';
@@ -18,7 +19,8 @@ import BusquedaPedidos from './pages/BusquedaPedidos';
 import HistorialPedidos from './pages/HistorialPedidos';
 import DetallePedido from './pages/DetallePedido';
 import CarritoCompras from './pages/CarritoCompras';
-import ArmarPC from './pages/ArmarPC'; // <-- NUEVO IMPORT REAL
+import ResumenCompra from './pages/ResumenCompra'; // <-- AÑADIDO: La página de Checkout
+import ArmarPC from './pages/ArmarPC';
 
 /**
  * Componente Inteligente de Manejo de Pedidos (/mis-pedidos)
@@ -57,34 +59,40 @@ function RedireccionDestacado() {
 function App() {
   return (
     <AuthProvider>
-      <BrowserRouter>
-        <div className="app-layout">
-          
-          <Navbar />
-          
-          <main className="contenedor-principal">
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/tienda/:categoria?/:subcategoria?" element={<CatalogoProductos />} />
-              <Route path="/producto/:id" element={<Producto />} />
-              <Route path="/destacados" element={<RedireccionDestacado />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/mis-pedidos" element={<ControladorRutaPedidos />} />
-              <Route path="/pedido/:id" element={<DetallePedido />} />
-              <Route path="/carrito" element={<CarritoCompras />} />
-              
-              {/* Ruta real del asistente de armado */}
-              <Route path="/armar-pc" element={<ArmarPC />} />
+      {/* 🛒 Envolvemos con CarritoProvider para que toda la app tenga acceso al chango de compras */}
+      <CarritoProvider> 
+        <BrowserRouter>
+          <div className="app-layout">
+            
+            <Navbar />
+            
+            <main className="contenedor-principal">
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/tienda/:categoria?/:subcategoria?" element={<CatalogoProductos />} />
+                <Route path="/producto/:id" element={<Producto />} />
+                <Route path="/destacados" element={<RedireccionDestacado />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="/mis-pedidos" element={<ControladorRutaPedidos />} />
+                <Route path="/pedido/:id" element={<DetallePedido />} />
+                <Route path="/carrito" element={<CarritoCompras />} />
+                
+                {/* Ruta de Facturación y Cierre de compra */}
+                <Route path="/resumen-compra" element={<ResumenCompra />} />
+                
+                {/* Ruta del Asistente Técnico */}
+                <Route path="/armar-pc" element={<ArmarPC />} />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </main>
+                <Route path="*" element={<Navigate to="/" replace />} />
+              </Routes>
+            </main>
 
-          <Footer />
+            <Footer />
 
-        </div>
-      </BrowserRouter>
+          </div>
+        </BrowserRouter>
+      </CarritoProvider>
     </AuthProvider>
   );
 }

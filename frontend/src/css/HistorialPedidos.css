@@ -1,0 +1,194 @@
+.historial-loading {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid #2d2d2d;
+  color: #aaaaaa;
+  margin-top: 20px;
+}
+
+.historial-page-container {
+  padding: 10px 0 60px 0;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.historial-breadcrumb {
+  font-size: 0.88rem;
+  color: #888888;
+  margin-bottom: 25px;
+}
+
+.historial-breadcrumb a {
+  color: #888888;
+  text-decoration: none;
+}
+
+.historial-breadcrumb a:hover {
+  color: #007bff;
+}
+
+.historial-header-bloque {
+  margin-bottom: 35px;
+}
+
+.historial-header-bloque h1 {
+  font-size: 1.8rem;
+  margin: 0 0 8px 0;
+  border-left: 4px solid #007bff;
+  padding-left: 12px;
+}
+
+.historial-header-bloque p {
+  margin: 0;
+  font-size: 0.98rem;
+  color: #aaaaaa;
+}
+
+.historial-error-alerta {
+  background-color: rgba(220, 53, 69, 0.15);
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+/* Estado Vacío */
+.historial-vacio-card {
+  text-align: center;
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  padding: 50px 20px;
+  color: #888888;
+}
+
+.vacio-icono {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.historial-vacio-card h2 {
+  color: white;
+  margin: 0 0 10px 0;
+  font-size: 1.3rem;
+}
+
+.historial-vacio-card p {
+  margin: 0 0 25px 0;
+  font-size: 0.95rem;
+}
+
+.btn-ir-catalogo {
+  display: inline-block;
+  background-color: #007bff;
+  color: white;
+  padding: 12px 24px;
+  text-decoration: none;
+  font-weight: bold;
+  border-radius: 6px;
+  transition: background-color 0.2s;
+}
+
+.btn-ir-catalogo:hover {
+  background-color: #0056b3;
+}
+
+/* --- TABLA DE HARDWARE --- */
+.table-responsive-wrapper {
+  width: 100%;
+  overflow-x: auto; /* Permite scroll horizontal en pantallas muy chicas para que no rompa el diseño */
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 10px;
+}
+
+.historial-tabla {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.92rem;
+}
+
+.historial-tabla th, .historial-tabla td {
+  padding: 15px 20px;
+  border-bottom: 1px solid #2d2d2d;
+}
+
+.historial-tabla th {
+  background-color: #1f1f1f;
+  color: #aaaaaa;
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.78rem;
+  letter-spacing: 0.5px;
+}
+
+.historial-tabla tbody tr:last-child td {
+  border-bottom: none; /* Saca la línea al último elemento */
+}
+
+.historial-tabla tbody tr:hover {
+  background-color: #222222; /* Cambio sutil de color al pasar el mouse por la fila */
+}
+
+.col-id {
+  font-weight: bold;
+  color: #007bff;
+}
+
+.col-total {
+  font-weight: bold;
+  color: #ffffff;
+}
+
+.txt-capitalizar {
+  text-transform: capitalize;
+}
+
+/* Badges cosméticos compactos para las celdas de la tabla */
+.status-badge-tabla {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  letter-spacing: 0.3px;
+}
+
+.status-badge-tabla.pendiente_de_pago, .status-badge-tabla.pendiente {
+  background-color: rgba(234, 142, 0, 0.12);
+  color: #ea8e00;
+}
+
+.status-badge-tabla.reservado {
+  background-color: rgba(0, 123, 255, 0.12);
+  color: #007bff;
+}
+
+.status-badge-tabla.pagado {
+  background-color: rgba(40, 167, 69, 0.12);
+  color: #28a745;
+}
+
+/* Botón de Acción */
+.btn-tabla-ver {
+  display: inline-block;
+  background-color: #252525;
+  border: 1px solid #333333;
+  color: #dddddd;
+  padding: 6px 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.85rem;
+  transition: all 0.2s;
+}
+
+.btn-tabla-ver:hover {
+  background-color: #007bff;
+  border-color: #007bff;
+  color: white;
+}

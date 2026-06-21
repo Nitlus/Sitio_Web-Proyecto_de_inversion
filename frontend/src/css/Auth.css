@@ -1,0 +1,141 @@
+.auth-page-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 0;
+  min-height: 70vh;
+}
+
+.auth-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  padding: 35px;
+  width: 100%;
+  max-width: 420px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  box-sizing: border-box;
+}
+
+/* Modificador para que el registro de dos columnas sea un poco más ancho */
+.auth-card.register-wide {
+  max-width: 650px;
+}
+
+.auth-titulo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  color: #ffffff;
+  text-align: center;
+}
+
+.auth-subtitulo {
+  font-size: 0.9rem;
+  color: #888888;
+  margin: 0 0 25px 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.auth-error-alerta {
+  background-color: rgba(220, 53, 69, 0.15);
+  border: 1px solid #dc3545;
+  color: #dc3545;
+  padding: 12px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+.auth-formulario {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* Estructura en grilla de 2 columnas para pantallas grandes en el Registro */
+.auth-grid-inputs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 18px;
+}
+
+.auth-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.auth-input-group label {
+  font-size: 0.85rem;
+  color: #cccccc;
+  font-weight: 500;
+}
+
+.auth-input-group input {
+  padding: 11px 14px;
+  background-color: #252525;
+  border: 1px solid #333333;
+  color: #ffffff;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.auth-input-group input:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+}
+
+.btn-auth-enviar {
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  padding: 13px;
+  font-size: 1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.btn-auth-enviar:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-auth-enviar:disabled {
+  background-color: #333333;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.auth-footer-link {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #888888;
+  margin: 25px 0 0 0;
+}
+
+.auth-footer-link a {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-footer-link a:hover {
+  text-decoration: underline;
+}
+
+/* Adaptabilidad para móviles (colapsa el registro a 1 sola columna) */
+@media (max-width: 600px) {
+  .auth-grid-inputs {
+    grid-template-columns: 1fr;
+  }
+  .auth-card {
+    padding: 25px 20px;
+  }
+}

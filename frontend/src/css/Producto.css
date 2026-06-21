@@ -1,0 +1,286 @@
+.producto-loading, .producto-error-caja {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  color: #aaa;
+  margin-top: 20px;
+}
+
+.btn-volver-tienda {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.ficha-producto-container {
+  padding: 10px 0 60px 0;
+  color: #ffffff;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.producto-breadcrumb {
+  font-size: 0.88rem;
+  color: #888888;
+  margin-bottom: 25px;
+}
+
+.producto-breadcrumb a {
+  color: #888888;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.producto-breadcrumb a:hover {
+  color: #007bff;
+}
+
+/* --- LAYOUT DE DOBLE COLUMNA --- */
+.producto-layout-principal {
+  display: flex;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.producto-visual-bloque {
+  flex: 1.2;
+}
+
+.producto-imagen-marco {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  background-color: #ffffff; /* Fondo blanco que resalta las siluetas de hardware */
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 30px;
+  box-sizing: border-box;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+}
+
+.producto-imagen-principal {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* --- BLOQUE DE DATOS Y TRANSACCIONES --- */
+.producto-datos-bloque {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.producto-condicion-tag {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 4px;
+  width: fit-content;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.producto-condicion-tag.nuevo {
+  background-color: rgba(0, 123, 255, 0.15);
+  color: #007bff;
+}
+
+.producto-condicion-tag.usado {
+  background-color: rgba(234, 142, 0, 0.15);
+  color: #ea8e00;
+}
+
+.producto-nombre-completo {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 0 0 12px 0;
+  color: #ffffff;
+}
+
+.stock-disponible-txt {
+  color: #28a745;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.stock-agotado-txt {
+  color: #dc3545;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.producto-seccion-divider {
+  border: 0;
+  height: 1px;
+  background-color: #2d2d2d;
+  margin: 20px 0;
+}
+
+/* --- PANEL DE TARIFAS --- */
+.producto-precios-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.precio-caja-efectivo {
+  background: linear-gradient(135deg, #1e291b 0%, #151f13 100%);
+  border: 1px solid #244018;
+  padding: 16px 20px;
+  border-radius: 8px;
+}
+
+.efectivo-monto {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #28a745;
+  display: block;
+  line-height: 1;
+  margin-bottom: 6px;
+}
+
+.efectivo-leyenda, .lista-leyenda {
+  margin: 0;
+  font-size: 0.88rem;
+  color: #cccccc;
+}
+
+.efectivo-leyenda honor, .efectivo-leyenda strong {
+  color: #28a745;
+}
+
+.precio-caja-lista {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  padding: 14px 20px;
+  border-radius: 8px;
+}
+
+.lista-monto {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #ffffff;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.lista-leyenda strong {
+  color: #007bff;
+}
+
+/* --- PANEL DE ACCIONES --- */
+.producto-acciones-panel {
+  display: flex;
+  gap: 15px;
+  margin-top: auto; /* Empuja los botones al pie del panel si hay espacio */
+}
+
+.contador-cantidad-caja {
+  display: flex;
+  align-items: center;
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.btn-contador {
+  background: none;
+  border: none;
+  color: white;
+  width: 45px;
+  height: 45px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-contador:hover:not(:disabled) {
+  background-color: #2a2a2a;
+}
+
+.btn-contador:disabled {
+  color: #444;
+  cursor: not-allowed;
+}
+
+.cantidad-numero-txt {
+  width: 35px;
+  text-align: center;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.btn-principal-carrito {
+  flex: 1;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-principal-carrito:hover:not(:disabled) {
+  background-color: #0056b3;
+}
+
+.btn-principal-carrito:disabled {
+  background-color: #2d2d2d;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* --- DESCRIPCIÓN TÉCNICA EXTENDIDA --- */
+.producto-descripcion-seccion {
+  margin-top: 20px;
+  background-color: #1a1a1a;
+  padding: 30px;
+  border-radius: 12px;
+  border: 1px solid #2d2d2d;
+}
+
+.producto-descripcion-seccion h2 {
+  font-size: 1.3rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.descripcion-texto-cuerpo p {
+  color: #b3b3b3;
+  line-height: 1.6;
+  font-size: 0.98rem;
+  margin: 0;
+  white-space: pre-line; /* Mantiene saltos de línea que vengan del backend */
+}
+
+.sin-especificaciones {
+  font-style: italic;
+  color: #666666 !important;
+}
+
+/* Responsividad para pantallas medianas o celulares */
+@media (max-width: 900px) {
+  .producto-layout-principal {
+    flex-direction: column;
+    gap: 30px;
+  }
+  .producto-imagen-marco {
+    aspect-ratio: 16 / 9;
+  }
+  .producto-acciones-panel {
+    margin-top: 25px;
+  }
+}

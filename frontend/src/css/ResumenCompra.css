@@ -1,0 +1,280 @@
+.resumen-vacio {
+  text-align: center;
+  padding: 60px;
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  color: #888;
+}
+
+.checkout-wrapper {
+  padding: 10px 0 60px 0;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+.checkout-main-titulo {
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  border-left: 4px solid #007bff;
+  padding-left: 12px;
+}
+
+.checkout-layout {
+  display: flex;
+  gap: 30px;
+  align-items: flex-start;
+}
+
+/* --- COLUMNA IZQUIERDA FORMULARIOS --- */
+.checkout-form-columna {
+  flex: 2;
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+}
+
+.checkout-seccion-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.checkout-seccion-card h2 {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #ffffff;
+}
+
+.form-inputs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+  margin-bottom: 15px;
+}
+
+.form-inputs-grid .flex-2 {
+  grid-column: span 2;
+}
+
+.input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-group label {
+  font-size: 0.88rem;
+  color: #aaaaaa;
+  font-weight: 500;
+}
+
+.input-group input, .input-group textarea {
+  padding: 10px 14px;
+  background-color: #252525;
+  border: 1px solid #333333;
+  color: white;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+.input-group input:focus, .input-group textarea:focus {
+  border-color: #007bff;
+}
+
+.input-group input:disabled {
+  background-color: #1a1a1a;
+  color: #777777;
+  border-color: #222222;
+  cursor: not-allowed;
+}
+
+/* --- SELECTORES MODERNOS (RADIO BUTTONS) --- */
+.radio-selector-caja {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  background-color: #222222;
+  border: 1px solid #333333;
+  padding: 15px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  gap: 15px;
+  transition: all 0.2s;
+}
+
+.radio-option:hover {
+  border-color: #444444;
+}
+
+.radio-option.selected {
+  border-color: #007bff;
+  background-color: rgba(0, 123, 255, 0.05);
+}
+
+.radio-option input[type="radio"] {
+  accent-color: #007bff; /* Color azul para el circulito nativo */
+  transform: scale(1.2);
+}
+
+.radio-txt {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.radio-txt strong {
+  font-size: 0.98rem;
+}
+
+.radio-txt span {
+  font-size: 0.85rem;
+  color: #888888;
+}
+
+.descuento-alert {
+  color: #28a745 !important;
+  font-weight: 600;
+}
+
+/* Sub-bloque animado de envío */
+.form-envio-subbloque {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #2d2d2d;
+}
+
+.form-envio-subbloque h3 {
+  font-size: 1.05rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #ccc;
+}
+
+/* --- COLUMNA DERECHA FACTURACIÓN --- */
+.checkout-resumen-columna {
+  flex: 1;
+  position: sticky;
+  top: 25px;
+}
+
+.orden-totales-fija {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.orden-totales-fija h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.items-previsualizacion-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-height: 180px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+.item-mini-linea {
+  display: flex;
+  font-size: 0.88rem;
+  gap: 8px;
+}
+
+.item-mini-cant {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.item-mini-nom {
+  flex: 1;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #ccc;
+}
+
+.item-mini-prc {
+  font-weight: 500;
+}
+
+.resumen-valores-caja {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 25px;
+}
+
+.valor-fila {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.92rem;
+  color: #aaaaaa;
+}
+
+.descuento-verde {
+  color: #28a745;
+}
+
+.total-grande {
+  border-top: 1px solid #2d2d2d;
+  padding-top: 15px;
+  margin-top: 5px;
+  font-size: 1.4rem;
+  font-weight: 800;
+  color: white;
+}
+
+.btn-confirmar-compra {
+  width: 100%;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  padding: 15px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.btn-confirmar-compra:hover:not(:disabled) {
+  background-color: #218838;
+}
+
+.btn-confirmar-compra:disabled {
+  background-color: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+/* Animación de entrada suave */
+.animate-fade {
+  animation: fadeIn 0.3s ease-in-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(5px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 900px) {
+  .checkout-layout {
+    flex-direction: column;
+  }
+  .checkout-resumen-columna {
+    width: 100%;
+  }
+}

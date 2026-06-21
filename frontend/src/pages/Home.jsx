@@ -1,7 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import heroImg from '../assets/hero.png'; // Aprovechamos la imagen que ya tenés en tu repo
 import '../css/Home.css';
+
+// ✨ LA MAGIA DE VITE: Cargamos el índice dinámico de hardware para ubicar las fotos en subcarpetas
+const todasLasImagenes = import.meta.glob('../assets/productos/**/*.{jpg,png,webp,avif}', { 
+  eager: true, 
+  import: 'default' 
+});
 
 function Home() {
   const [productos, setProductos] = useState([]);
@@ -9,51 +14,79 @@ function Home() {
   const [cargando, setCargando] = useState(true);
 
   useEffect(() => {
-    // Traemos los productos del backend. 
-    // Usamos el mismo criterio que en App.jsx: ordenamos por precio descendente (o el filtro que prefieras)
+    let estaMontado = true;
+
+    // Traemos los productos del backend.
     fetch('http://localhost:3000/api/productos?orden=precio_desc')
       .then(res => res.json())
       .then(data => {
-        if (data.length > 0) {
-          setDestacado(data[0]); // El producto N°1 es el destacado
-          setProductos(data.slice(1, 9)); // Tomamos los siguientes 8 para la vitrina mezclada
+        if (estaMontado && data.length > 0) {
+          setDestacado(data[0]); // El producto N°1 de la lista es el estrella
+          setProductos(data.slice(1, 9)); // Tomamos los siguientes 8 para la cuadrícula inferior
         }
-        setCargando(false);
+        if (estaMontado) setCargando(false);
       })
       .catch(err => {
         console.error("Error cargando el inicio:", err);
-        setCargando(false);
+        if (estaMontado) setCargando(false);
       });
+
+    return () => {
+      estaMontado = false;
+    };
   }, []);
+
+  // Buscador inteligente de imágenes idéntico al del Catálogo, Ficha técnica y Carrito
+  const obtenerRutaImagen = (nombreProducto) => {
+    try {
+      const nombreFormateado = nombreProducto
+        .replace(/ /g, '_')
+        .replace(/%/g, '') // ✨ FIX: Elimina los porcentajes para evitar errores "Malformed URI"
+        .toLowerCase();
+        
+      const rutaEncontrada = Object.keys(todasLasImagenes).find(rutaRelativa => {
+        return rutaRelativa.toLowerCase().includes(`/${nombreFormateado}.`);
+      });
+      return rutaEncontrada ? todasLasImagenes[rutaEncontrada] : 'https://via.placeholder.com/250?text=Hardware';
+    } catch {
+      return 'https://via.placeholder.com/250?text=Hardware';
+    }
+  };
 
   return (
     <div className="home-container">
       
-      {/* --- SECCIÓN HERO (Carrusel / Banners) --- */}
+      {/* --- SECCIÓN HERO (Banner Principal + Producto Estrella Flotante) --- */}
       <section className="hero-section">
         {/* Banner Principal de Bienvenida */}
         <div className="hero-banner">
-          <img src={heroImg} alt="Bienvenidos a Tu Empresa Computación" className="hero-imagen" />
           <div className="hero-texto-overlay">
             <h2>Llevá tu setup al siguiente nivel</h2>
-            <p>Componentes, PCs armadas y el mejor servicio técnico.</p>
-            <Link to="/tienda" className="btn-hero">Ver Catálogo</Link>
+            <p>Componentes, PCs armadas y el mejor servicio técnico especializado.</p>
+            <Link to="/tienda" className="btn-hero">Ver Catálogo General</Link>
           </div>
         </div>
 
-        {/* Tarjeta lateral del Producto Destacado */}
+        {/* Tarjeta lateral fija del Producto Destacado */}
         <div className="hero-destacado">
           <div className="destacado-etiqueta">🔥 PRODUCTO ESTRELLA</div>
           {cargando ? (
-            <div className="loader-caja">Cargando destacado...</div>
-          ) : destacado ? (
+            <div className="loader-caja">Buscando componente estrella...</div>
+          ) : [{ destacadaFoto: destacado }].length > 0 && destacado ? (
             <div className="destacado-card">
-              <h3 className="destacado-titulo">{destacado.nombre}</h3>
-              <p className="destacado-desc">{destacado.descripcion}</p>
+              {/* Caja de Imagen para el destacado */}
+              <div className="destacado-img-contenedor">
+                <img 
+                  src={obtenerRutaImagen(destacado.nombre)} 
+                  alt={destacado.nombre} 
+                  onError={(e) => { e.target.src = 'https://via.placeholder.com/250?text=Hardware' }}
+                />
+              </div>
+              <h3 className="destacado-titulo" title={destacado.nombre}>{destacado.nombre}</h3>
               
               <div className="destacado-precios">
-                <span className="precio-lista">${Number(destacado.precio).toLocaleString('es-AR')}</span>
-                <span className="precio-final">${(destacado.precio * 0.85).toLocaleString('es-AR')} <small>Efectivo</small></span>
+                <span className="precio-lista">Lista: ${Number(destacado.precio).toLocaleString('es-AR')}</span>
+                <span className="precio-final">${(destacado.precio * 0.85).toLocaleString('es-AR')} <small>15% OFF</small></span>
               </div>
               
               <Link to={`/producto/${destacado.id}`} className="btn-ver-destacado">
@@ -66,38 +99,46 @@ function Home() {
         </div>
       </section>
 
-      {/* --- SECCIÓN VITRINA MIXTA --- */}
+      {/* --- SECCIÓN VITRINA DE PRODUCTOS DESTACADOS (Grilla Espejada del Catálogo) --- */}
       <section className="vitrina-section">
-        <h2 className="vitrina-titulo">Descubrí nuestros productos</h2>
+        <h2 className="vitrina-titulo">Componentes y Hardware Destacados</h2>
         
         {cargando ? (
-          <p className="cargando-texto">Cargando el catálogo...</p>
+          <div className="catalogo-loader">Cargando la vitrina principal...</div>
         ) : (
-          <div className="productos-grid">
+          <div className="grilla-productos">
             {productos.map(producto => (
-              <div key={producto.id} className="producto-card">
+              <div key={producto.id} className="tarjeta-producto">
                 
-                {/* Etiqueta de Stock Dinámica */}
-                {producto.stock > 0 ? (
-                   <span className="badge-stock">En Stock</span>
-                ) : (
-                   <span className="badge-sin-stock">Agotado</span>
-                )}
-
-                {/* Info del Producto */}
-                <div className="producto-info">
-                  <h4 title={producto.nombre}>{producto.nombre}</h4>
-                  
-                  <div className="precios-caja">
-                    <p className="p-lista">${Number(producto.precio).toLocaleString('es-AR')}</p>
-                    <p className="p-final">${(producto.precio * 0.85).toLocaleString('es-AR')}</p>
-                  </div>
+                {/* Contenedor de la Imagen (Marco Blanco Premium para Hardware) */}
+                <div className="tarjeta-imagen-caja">
+                  <img 
+                    src={obtenerRutaImagen(producto.nombre)} 
+                    alt={producto.nombre} 
+                    className="tarjeta-imagen"
+                    onError={(e) => { e.target.src = 'https://via.placeholder.com/250?text=Sin+Imagen' }}
+                  />
                 </div>
 
-                {/* Botón de Acción */}
-                <Link to={`/producto/${producto.id}`} className="btn-ver-producto">
-                  Ver Detalles
-                </Link>
+                {/* Contenedor de la Información */}
+                <div className="tarjeta-info">
+                  <h3 className="tarjeta-nombre" title={producto.nombre}>
+                    {producto.nombre}
+                  </h3>
+                  
+                  <div className="tarjeta-precios">
+                    {/* Precio calculado dinámicamente con 15% de descuento por transferencia */}
+                    <span className="precio-transferencia">
+                      ${(producto.precio * 0.85).toLocaleString('es-AR')}
+                    </span>
+                    <span className="etiqueta-pago">Efectivo / Transferencia</span>
+                  </div>
+
+                  <Link to={`/producto/${producto.id}`} className="btn-ver-detalle">
+                    Ver Producto
+                  </Link>
+                </div>
+
               </div>
             ))}
           </div>

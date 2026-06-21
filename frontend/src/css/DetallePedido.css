@@ -1,0 +1,288 @@
+.tracking-loading {
+  text-align: center;
+  padding: 80px 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid #2d2d2d;
+  color: #aaaaaa;
+  margin-top: 20px;
+}
+
+.tracking-error-caja {
+  text-align: center;
+  padding: 60px 20px;
+  background-color: #1a1a1a;
+  border-radius: 12px;
+  border: 1px solid #2d2d2d;
+  color: #888;
+}
+
+.btn-volver-home {
+  display: inline-block;
+  margin-top: 20px;
+  background-color: #007bff;
+  color: white;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+
+.tracking-page-container {
+  padding: 10px 0 60px 0;
+  color: white;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+/* --- ENCABEZADO DE SEGUIMIENTO --- */
+.tracking-header-card {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  padding: 25px 30px;
+  border-radius: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.header-id-caja h1 {
+  margin: 0 0 6px 0;
+  font-size: 1.8rem;
+}
+
+.codigo-temporal-tag {
+  font-size: 0.85rem;
+  color: #888888;
+}
+
+.codigo-temporal-tag strong {
+  color: #007bff;
+}
+
+/* Badges de Estados */
+.status-badge-grande {
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-weight: bold;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+}
+
+.status-badge-grande.pendiente_de_pago, .status-badge-grande.pendiente {
+  background-color: rgba(234, 142, 0, 0.15);
+  color: #ea8e00;
+  border: 1px solid #ea8e00;
+}
+
+.status-badge-grande.reservado {
+  background-color: rgba(0, 123, 255, 0.15);
+  color: #007bff;
+  border: 1px solid #007bff;
+}
+
+.status-badge-grande.pagado {
+  background-color: rgba(40, 167, 69, 0.15);
+  color: #28a745;
+  border: 1px solid #28a745;
+}
+
+/* --- CUERPO --- */
+.tracking-layout-cuerpo {
+  display: flex;
+  gap: 30px;
+}
+
+.tracking-detalles-col {
+  flex: 1.4;
+}
+
+.tracking-acciones-col {
+  flex: 1;
+}
+
+.tracking-subcard {
+  background-color: #1a1a1a;
+  border: 1px solid #2d2d2d;
+  border-radius: 12px;
+  padding: 25px;
+}
+
+.tracking-subcard h2 {
+  font-size: 1.2rem;
+  margin-top: 0;
+  margin-bottom: 20px;
+  color: #fff;
+}
+
+.pedido-productos-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.producto-pedido-fila {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.95rem;
+}
+
+.prod-ped-info {
+  display: flex;
+  gap: 12px;
+  max-width: 80%;
+}
+
+.prod-ped-cant {
+  color: #007bff;
+  font-weight: bold;
+}
+
+.prod-ped-nombre {
+  margin: 0;
+  color: #dddddd;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.prod-ped-subtotal {
+  font-weight: 500;
+}
+
+.tracking-divider {
+  border: 0;
+  height: 1px;
+  background-color: #2d2d2d;
+  margin: 20px 0;
+}
+
+.tracking-totales-caja {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.total-fila-tracking {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.9rem;
+  color: #aaaaaa;
+}
+
+.entrega-metodo-val {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.direccion-desglose {
+  font-size: 0.85rem;
+  margin-top: -4px;
+}
+
+.total-destacado-linea {
+  border-top: 1px solid #2d2d2d;
+  padding-top: 15px;
+  margin-top: 5px;
+  font-size: 1.3rem;
+  color: white;
+}
+
+.total-destacado-linea strong {
+  color: #28a745;
+}
+
+/* --- CUADROS DE ALERTA ACCIONES --- */
+.instrucciones-caja {
+  border-radius: 12px;
+  padding: 25px;
+  height: fit-content;
+}
+
+.instrucciones-caja h3 {
+  margin-top: 0;
+  font-size: 1.15rem;
+  margin-bottom: 15px;
+}
+
+.instrucciones-caja p {
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: #eeeeee;
+}
+
+/* Alerta Transferencia */
+.transferencia-alerta {
+  background: linear-gradient(135deg, #241c0e 0%, #151109 100%);
+  border: 1px solid #4a3411;
+}
+
+.transferencia-alerta h3 {
+  color: #ea8e00;
+}
+
+.datos-cBU-bloque, .datos-cbu-bloque {
+  background-color: #110e08;
+  border: 1px solid #33240d;
+  padding: 15px;
+  border-radius: 6px;
+  margin: 15px 0;
+}
+
+.datos-cbu-bloque p {
+  margin: 6px 0;
+  font-size: 0.88rem;
+  color: #ccc;
+}
+
+.btn-whatsapp-comprobante {
+  display: block;
+  width: 100%;
+  background-color: #25d366; /* Verde oficial WhatsApp */
+  color: white;
+  text-align: center;
+  padding: 12px;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 0.95rem;
+  box-sizing: border-box;
+  transition: background-color 0.2s;
+}
+
+.btn-whatsapp-comprobante:hover {
+  background-color: #1ebd56;
+}
+
+/* Alerta Efectivo */
+.efectivo-alerta {
+  background: linear-gradient(135deg, #1e252b 0%, #10151a 100%);
+  border: 1px solid #203a43;
+}
+
+.efectivo-alerta h3 {
+  color: #007bff;
+}
+
+/* Alerta Exito */
+.exito-alerta {
+  background: linear-gradient(135deg, #152417 0%, #0d1a0e 100%);
+  border: 1px solid #1a3a20;
+}
+
+.exito-alerta h3 {
+  color: #28a745;
+}
+
+/* Responsivo */
+@media (max-width: 900px) {
+  .tracking-header-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  .tracking-layout-cuerpo {
+    flex-direction: column;
+  }
+}
