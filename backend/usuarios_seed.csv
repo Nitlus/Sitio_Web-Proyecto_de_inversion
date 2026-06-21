@@ -1,0 +1,11 @@
+nombre,email,contraseña_hash,rol,es_invitado
+Admin Principal,admin@tu-tienda.com.ar,admin,admin,0
+Trinidad Borla,trinidad@gmail.com,hash_simulado_2,cliente,0
+Rodrigo Carranza,rodrigo@gmail.com,hash_simulado_3,cliente,0
+Valentin Crisman,valentin@gmail.com,hash_simulado_4,cliente,0
+Tiziano Motta,tiziano@gmail.com,hash_simulado_5,cliente,0
+Luis Robledo,luis@gmail.com,hash_simulado_6,cliente,0
+Melina Sifón,melina@gmail.com,hash_simulado_7,cliente,0
+Lucas Sifón,lucas@gmail.com,hash_simulado_8,cliente,0
+Lisandro Vargas,lisandro@gmail.com,hash_simulado_9,cliente,0
+Patricia Rodríguez,patricia.profesora@utn.edu.ar,hash_simulado_10,cliente,0

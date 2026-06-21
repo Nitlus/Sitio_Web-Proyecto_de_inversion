@@ -1,0 +1,31 @@
+id,nombre,parent_id
+1,PC Armada,
+2,Componentes de PC,
+3,Motherboards,2
+4,Procesadores,2
+5,Placas de Video,2
+6,Memorias RAM,2
+7,Almacenamiento,2
+8,HDD,7
+9,SSD,7
+10,Fuentes,2
+11,Gabinetes,2
+12,Refrigeracion,2
+13,Perifericos,
+14,Teclados,13
+15,Mouse,13
+16,Auriculares,13
+17,Webcams,13
+18,Mousepads,13
+19,Parlantes,13
+20,Microfonos,13
+21,Joysticks,13
+22,Monitores,
+23,Almacenamiento Portatil,
+24,Reacondicionados,
+25,Placas de Video (Reacondicionadas),24
+26,Procesadores (Reacondicionados),24
+27,Motherboards (Reacondicionadas),24
+28,Usados,
+29,Placas de Video (Usadas),28
+30,Procesadores (Usados),28
