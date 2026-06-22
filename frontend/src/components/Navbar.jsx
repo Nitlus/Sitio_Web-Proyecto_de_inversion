@@ -10,7 +10,11 @@ import { useAuth } from '../context/AuthContext';
 function Navbar() {
   const [categorias, setCategorias] = useState([]);
   const [busqueda, setBusqueda] = useState('');
+  
+  // Estados para controlar los menús desplegables
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
+  const [categoriaHover, setCategoriaHover] = useState(null); // Sabe qué categoría tiene el mouse encima
+  
   const navigate = useNavigate();
 
   // Extraemos datos globales
@@ -91,38 +95,52 @@ function Navbar() {
       {/* --- 2DA FILA --- */}
       <nav className="navbar-fila-2">
         
-        {/* Botón Productos (Menú Desplegable hacia el Catálogo) */}
+        {/* Botón Productos (Menú Desplegable en Cascada) */}
         <div 
           className="dropdown-container"
           onMouseEnter={() => setMostrarDropdown(true)}
-          onMouseLeave={() => setMostrarDropdown(false)}
+          onMouseLeave={() => {
+            setMostrarDropdown(false);
+            setCategoriaHover(null); // Resetea el panel lateral al sacar el mouse
+          }}
         >
-          {/* El botón principal de productos también puede llevar al catálogo general si se desea */}
+          {/* Botón principal de productos */}
           <Link to="/tienda" className="btn-productos" style={{textDecoration: 'none'}}>Productos ▾</Link>
           
           {mostrarDropdown && (
             <div className="dropdown-menu">
-              {categorias.map(categoria => (
-                <div key={categoria.id} className="dropdown-item">
-                  <Link to={`/tienda/${formatearURL(categoria.nombre)}`}>
-                    <strong>{categoria.nombre}</strong>
-                  </Link>
-                  
-                  {/* Subcategorías de este padre */}
-                  {categoria.subcategorias && categoria.subcategorias.length > 0 && (
-                    <div className="subcategorias-lista">
-                      {categoria.subcategorias.map(sub => (
-                        <Link 
-                          key={sub.id} 
-                          to={`/tienda/${formatearURL(categoria.nombre)}/${formatearURL(sub.nombre)}`}
-                        >
-                          {sub.nombre}
-                        </Link>
-                      ))}
-                    </div>
-                  )}
-                </div>
-              ))}
+              {categorias.map(categoria => {
+                const tieneSub = categoria.subcategorias && categoria.subcategorias.length > 0;
+                
+                return (
+                  <div 
+                    key={categoria.id} 
+                    className="dropdown-item-wrapper"
+                    onMouseEnter={() => setCategoriaHover(categoria.id)}
+                  >
+                    <Link to={`/tienda/${formatearURL(categoria.nombre)}`} className="dropdown-item-link">
+                      <span>{categoria.nombre}</span>
+                      {/* Flecha condicional si tiene subcategorías */}
+                      {tieneSub && <span className="dropdown-arrow">▸</span>}
+                    </Link>
+                    
+                    {/* PANEL LATERAL DE SUBCATEGORÍAS (Aparece a la derecha) */}
+                    {tieneSub && categoriaHover === categoria.id && (
+                      <div className="subcategorias-panel-lateral">
+                        {categoria.subcategorias.map(sub => (
+                          <Link 
+                            key={sub.id} 
+                            to={`/tienda/${formatearURL(categoria.nombre)}/${formatearURL(sub.nombre)}`}
+                            className="subcategoria-link"
+                          >
+                            {sub.nombre}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           )}
         </div>

@@ -163,7 +163,24 @@
   transform: scale(1.05);
 }
 
-/* --- DROPDOWN INTERACTIVO --- */
+.carrito-badge-count {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  background-color: var(--tf-danger);
+  color: var(--tf-text);
+  font-size: 0.75rem;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* --- DROPDOWN INTERACTIVO (CASCADA LATERAL) --- */
+
 .dropdown-container {
   position: relative;
 }
@@ -183,69 +200,95 @@
   color: var(--tf-cyan);
 }
 
+/* El menú principal que cae hacia abajo */
 .dropdown-menu {
   position: absolute;
   top: 130%;
   left: 0;
-  background-color: var(--tf-surface); /* Fondo oscuro que hace match con las cards de productos */
+  background-color: var(--tf-surface); 
   border: 1px solid var(--tf-border);
-  color: var(--tf-text);
-  min-width: 240px;
   border-radius: 8px;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+  min-width: 260px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
   z-index: 1000;
-  padding: 12px 0;
-}
-
-.dropdown-item {
-  padding: 8px 20px;
+  padding: 8px 0;
   display: flex;
   flex-direction: column;
 }
 
-.dropdown-item > a {
-  font-size: 1rem;
-  color: var(--tf-text);
-  text-decoration: none;
-  margin-bottom: 6px;
-  transition: color 0.2s;
+/* El envoltorio de cada categoría (importante para que el panel lateral tome esto como eje) */
+.dropdown-item-wrapper {
+  position: relative; /* Clave para el submenú lateral */
 }
 
-.dropdown-item > a:hover {
+/* Link de la categoría principal */
+.dropdown-item-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  color: var(--tf-text);
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.dropdown-item-link:hover {
+  background-color: var(--tf-surface-hover);
   color: var(--tf-cyan);
 }
 
-.subcategorias-lista {
-  display: flex;
-  flex-direction: column;
-  padding-left: 12px;
-  border-left: 1px solid var(--tf-border); /* Guía visual vertical */
+/* La flechita indicadora lateral */
+.dropdown-arrow {
+  color: var(--tf-text-muted);
+  font-size: 1.2rem;
+  margin-left: 10px;
 }
 
-.subcategorias-lista a {
-  font-size: 0.88rem;
+.dropdown-item-link:hover .dropdown-arrow {
+  color: var(--tf-cyan);
+}
+
+/* --- PANEL LATERAL DE SUBCATEGORÍAS --- */
+.subcategorias-panel-lateral {
+  position: absolute;
+  top: -8px; /* Se alinea perfecto con el borde superior de la categoría */
+  left: 100%; /* ¡La magia! Lo empuja exactamente a la derecha de la caja negra */
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 8px;
+  min-width: 240px;
+  box-shadow: 4px 8px 30px rgba(0, 0, 0, 0.7);
+  padding: 8px 0;
+  display: flex;
+  flex-direction: column;
+  z-index: 1001;
+}
+
+/* Links individuales de subcategoría */
+.subcategoria-link {
+  padding: 10px 20px;
   color: var(--tf-text-muted);
   text-decoration: none;
-  padding: 4px 0;
-  transition: color 0.2s;
+  font-size: 0.9rem;
+  transition: background-color 0.2s, color 0.2s;
 }
 
-.subcategorias-lista a:hover {
-  color: var(--tf-cyan);
-}
-
-.carrito-badge-count {
-  position: absolute;
-  top: -8px;
-  right: -8px;
-  background-color: var(--tf-danger);
+.subcategoria-link:hover {
+  background-color: var(--tf-surface-hover);
   color: var(--tf-text);
-  font-size: 0.75rem;
-  font-weight: bold;
-  border-radius: 50%;
-  width: 18px;
-  height: 18px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  border-left: 3px solid var(--tf-cyan); /* Pequeño acento estético Titan Forge */
+  padding-left: 17px;
+}
+
+/* Pequeño espacio para separar el panel derecho del menú principal y que el mouse no "se caiga" */
+.subcategorias-panel-lateral::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 0;
+  height: 100%;
+  width: 5px;
+  background: transparent;
 }
