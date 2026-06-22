@@ -1,17 +1,17 @@
 .producto-loading, .producto-error-caja {
   text-align: center;
   padding: 80px 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 8px;
-  color: #aaa;
+  color: var(--tf-text-muted);
   margin-top: 20px;
 }
 
 .btn-volver-tienda {
   display: inline-block;
   margin-top: 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 6px;
@@ -20,24 +20,24 @@
 
 .ficha-producto-container {
   padding: 10px 0 60px 0;
-  color: #ffffff;
+  color: var(--tf-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .producto-breadcrumb {
   font-size: 0.88rem;
-  color: #888888;
+  color: var(--tf-text-dim);
   margin-bottom: 25px;
 }
 
 .producto-breadcrumb a {
-  color: #888888;
+  color: var(--tf-text-dim);
   text-decoration: none;
   transition: color 0.2s;
 }
 
 .producto-breadcrumb a:hover {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 /* --- LAYOUT DE DOBLE COLUMNA --- */
@@ -54,7 +54,7 @@
 .producto-imagen-marco {
   width: 100%;
   aspect-ratio: 4 / 3;
-  background-color: #ffffff; /* Fondo blanco que resalta las siluetas de hardware */
+  background-color: var(--tf-text); /* Fondo blanco que resalta las siluetas de hardware */
   border-radius: 12px;
   display: flex;
   align-items: center;
@@ -89,13 +89,13 @@
 }
 
 .producto-condicion-tag.nuevo {
-  background-color: rgba(0, 123, 255, 0.15);
-  color: #007bff;
+  background-color: var(--tf-cyan-soft);
+  color: var(--tf-cyan);
 }
 
 .producto-condicion-tag.usado {
-  background-color: rgba(234, 142, 0, 0.15);
-  color: #ea8e00;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
 }
 
 .producto-nombre-completo {
@@ -103,17 +103,17 @@
   font-weight: 700;
   line-height: 1.3;
   margin: 0 0 12px 0;
-  color: #ffffff;
+  color: var(--tf-text);
 }
 
 .stock-disponible-txt {
-  color: #28a745;
+  color: var(--tf-orange);
   font-weight: 600;
   font-size: 0.95rem;
 }
 
 .stock-agotado-txt {
-  color: #dc3545;
+  color: var(--tf-danger);
   font-weight: 600;
   font-size: 0.95rem;
 }
@@ -121,7 +121,7 @@
 .producto-seccion-divider {
   border: 0;
   height: 1px;
-  background-color: #2d2d2d;
+  background-color: var(--tf-border);
   margin: 20px 0;
 }
 
@@ -133,8 +133,8 @@
 }
 
 .precio-caja-efectivo {
-  background: linear-gradient(135deg, #1e291b 0%, #151f13 100%);
-  border: 1px solid #244018;
+  background: linear-gradient(135deg, var(--tf-surface-2) 0%, var(--tf-bg-deep) 100%);
+  border: 1px solid var(--tf-border-strong);
   padding: 16px 20px;
   border-radius: 8px;
 }
@@ -142,7 +142,7 @@
 .efectivo-monto {
   font-size: 2.2rem;
   font-weight: 800;
-  color: #28a745;
+  color: var(--tf-orange);
   display: block;
   line-height: 1;
   margin-bottom: 6px;
@@ -151,16 +151,16 @@
 .efectivo-leyenda, .lista-leyenda {
   margin: 0;
   font-size: 0.88rem;
-  color: #cccccc;
+  color: var(--tf-text-muted);
 }
 
 .efectivo-leyenda honor, .efectivo-leyenda strong {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 .precio-caja-lista {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   padding: 14px 20px;
   border-radius: 8px;
 }
@@ -168,13 +168,13 @@
 .lista-monto {
   font-size: 1.4rem;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--tf-text);
   display: block;
   margin-bottom: 4px;
 }
 
 .lista-leyenda strong {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 /* --- PANEL DE ACCIONES --- */
@@ -187,8 +187,8 @@
 .contador-cantidad-caja {
   display: flex;
   align-items: center;
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 6px;
   overflow: hidden;
 }
@@ -196,7 +196,7 @@
 .btn-contador {
   background: none;
   border: none;
-  color: white;
+  color: var(--tf-text);
   width: 45px;
   height: 45px;
   font-size: 1.2rem;
@@ -205,11 +205,11 @@
 }
 
 .btn-contador:hover:not(:disabled) {
-  background-color: #2a2a2a;
+  background-color: var(--tf-surface-2);
 }
 
 .btn-contador:disabled {
-  color: #444;
+  color: var(--tf-text-dim);
   cursor: not-allowed;
 }
 
@@ -222,8 +222,8 @@
 
 .btn-principal-carrito {
   flex: 1;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   border: none;
   border-radius: 6px;
   font-size: 1.05rem;
@@ -233,33 +233,33 @@
 }
 
 .btn-principal-carrito:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--tf-cyan-strong);
 }
 
 .btn-principal-carrito:disabled {
-  background-color: #2d2d2d;
-  color: #666;
+  background-color: var(--tf-border);
+  color: var(--tf-text-dim);
   cursor: not-allowed;
 }
 
 /* --- DESCRIPCIÓN TÉCNICA EXTENDIDA --- */
 .producto-descripcion-seccion {
   margin-top: 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   padding: 30px;
   border-radius: 12px;
-  border: 1px solid #2d2d2d;
+  border: 1px solid var(--tf-border);
 }
 
 .producto-descripcion-seccion h2 {
   font-size: 1.3rem;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: var(--tf-text);
 }
 
 .descripcion-texto-cuerpo p {
-  color: #b3b3b3;
+  color: var(--tf-text-muted);
   line-height: 1.6;
   font-size: 0.98rem;
   margin: 0;
@@ -268,7 +268,7 @@
 
 .sin-especificaciones {
   font-style: italic;
-  color: #666666 !important;
+  color: var(--tf-text-dim) !important;
 }
 
 /* Responsividad para pantallas medianas o celulares */

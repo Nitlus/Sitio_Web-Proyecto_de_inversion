@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#15151E"/>
+      <stop offset="100%" stop-color="#08080C"/>
+    </linearGradient>
+    <linearGradient id="shieldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1A2035"/>
+      <stop offset="100%" stop-color="#0D111C"/>
+    </linearGradient>
+    <linearGradient id="cyanNeon" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00FFFF"/>
+      <stop offset="100%" stop-color="#0088FF"/>
+    </linearGradient>
+    <linearGradient id="orangeFire" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#FFCC00"/>
+      <stop offset="50%" stop-color="#FF6600"/>
+      <stop offset="100%" stop-color="#CC1100"/>
+    </linearGradient>
+    <linearGradient id="metalArmour" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#556075"/>
+      <stop offset="100%" stop-color="#2B3245"/>
+    </linearGradient>
+
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="800" height="800" fill="url(#bg)"/>
+
+  <path d="M 400 50 L 650 150 L 650 450 C 650 600 400 680 400 680 C 400 680 150 600 150 450 L 150 150 Z" fill="url(#shieldGrad)" stroke="url(#cyanNeon)" stroke-width="8" filter="url(#glow)"/>
+  
+  <path d="M 400 80 L 620 170 L 620 440 C 620 570 400 640 400 640 C 400 640 180 570 180 440 L 180 170 Z" fill="#111424" stroke="#232A42" stroke-width="4"/>
+
+  <path d="M 250 500 Q 300 350 400 450 Q 500 350 550 500 Z" fill="url(#orangeFire)" filter="url(#glow)" opacity="0.6"/>
+
+  <path d="M 220 380 C 220 280, 300 250, 400 250 C 500 250, 580 280, 580 380 L 520 480 L 280 480 Z" fill="url(#metalArmour)" stroke="#111424" stroke-width="6"/>
+  
+  <path d="M 300 320 L 500 320 L 450 400 L 350 400 Z" fill="#3A435E" stroke="#111424" stroke-width="4"/>
+
+  <rect x="350" y="380" width="100" height="100" rx="10" fill="#1A2035" stroke="url(#cyanNeon)" stroke-width="6" filter="url(#glow)"/>
+  <rect x="365" y="395" width="70" height="70" rx="5" fill="#0D111C"/>
+  <text x="400" y="440" font-family="Arial, sans-serif" font-weight="900" font-size="28" fill="#00FFFF" text-anchor="middle" letter-spacing="2">CPU</text>
+
+  <path d="M 400 130 L 460 180 L 450 280 L 400 310 L 350 280 L 340 180 Z" fill="url(#metalArmour)" stroke="#111424" stroke-width="5"/>
+  <path d="M 400 130 L 460 180 L 400 220 Z" fill="#6A758F"/> <path d="M 360 210 L 400 260 L 440 210 L 420 200 L 400 230 L 380 200 Z" fill="url(#orangeFire)" filter="url(#glow)"/>
+
+  <path d="M 520 280 L 620 220 L 640 260 L 560 330 Z" fill="url(#metalArmour)" stroke="#111424" stroke-width="4"/>
+  <line x1="580" y1="280" x2="680" y2="100" stroke="#8B5A2B" stroke-width="16" stroke-linecap="round"/>
+  <path d="M 600 60 L 720 120 L 690 180 L 570 120 Z" fill="#2B3245" stroke="url(#cyanNeon)" stroke-width="4" filter="url(#glow)"/>
+  <rect x="610" y="80" width="80" height="60" fill="#3A435E" transform="rotate(26, 610, 80)"/>
+  <circle cx="650" cy="115" r="15" fill="url(#cyanNeon)"/>
+
+  <path d="M 280 600 L 520 600 L 480 520 L 320 520 Z" fill="#1A2035" stroke="#00FFFF" stroke-width="2"/>
+  <path d="M 350 520 L 450 520 L 430 460 L 370 460 Z" fill="#2B3245"/>
+  <path d="M 250 460 L 550 460 L 550 490 L 250 490 Z" fill="#3A435E" stroke="url(#cyanNeon)" stroke-width="3"/>
+
+  <path d="M 640 180 L 550 300 L 580 320 L 480 420 L 500 440 L 400 460" fill="none" stroke="url(#orangeFire)" stroke-width="10" stroke-linejoin="round" filter="url(#glow)"/>
+
+  <circle cx="380" cy="450" r="5" fill="#FFCC00" filter="url(#glow)"/>
+  <circle cx="450" cy="430" r="4" fill="#FFCC00" filter="url(#glow)"/>
+  <circle cx="300" cy="420" r="6" fill="#00FFFF" filter="url(#glow)"/>
+  <circle cx="480" cy="480" r="7" fill="#FF6600" filter="url(#glow)"/>
+
+</svg>

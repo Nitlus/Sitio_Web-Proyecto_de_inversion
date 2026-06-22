@@ -1,8 +1,117 @@
 html, body, #root {
   height: 100%;
   margin: 0;
-  background-color: #121212; /* Color oscuro gamer de fondo */
-  color: #ffffff;
+  background-color: var(--tf-bg);
+  color: var(--tf-text);
+}
+
+:root {
+  --tf-bg: #07111f;
+  --tf-bg-deep: #030914;
+  --tf-surface: #0d1b2d;
+  --tf-surface-2: #12263a;
+  --tf-surface-3: #16324a;
+  --tf-input: #0a1727;
+  --tf-border: rgba(79, 211, 255, 0.24);
+  --tf-border-strong: rgba(79, 211, 255, 0.46);
+  --tf-cyan: #4fd3ff;
+  --tf-cyan-strong: #00b7ff;
+  --tf-cyan-soft: rgba(79, 211, 255, 0.12);
+  --tf-orange: #ff6b35;
+  --tf-orange-strong: #ff8f1f;
+  --tf-orange-soft: rgba(255, 107, 53, 0.14);
+  --tf-danger: #ff4f5e;
+  --tf-success: #35f0a1;
+  --tf-text: #f4f8ff;
+  --tf-text-muted: #9fb2c7;
+  --tf-text-dim: #6f849b;
+  --tf-shadow: 0 18px 50px rgba(0, 183, 255, 0.12);
+  --tf-shadow-hot: 0 0 24px rgba(255, 107, 53, 0.18);
+  --tf-radius: 8px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Rajdhani", "Orbitron", "Eurostile", "Segoe UI", system-ui, sans-serif;
+  background:
+    radial-gradient(circle at 18% 0%, rgba(79, 211, 255, 0.12), transparent 28%),
+    radial-gradient(circle at 88% 18%, rgba(255, 107, 53, 0.1), transparent 26%),
+    linear-gradient(135deg, var(--tf-bg-deep), var(--tf-bg) 48%, var(--tf-surface-2));
+  background-attachment: fixed;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+::selection {
+  background: var(--tf-orange);
+  color: var(--tf-bg-deep);
+}
+
+a {
+  color: inherit;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 800;
+}
+
+input,
+select,
+textarea {
+  caret-color: var(--tf-cyan);
+}
+
+input:focus,
+select:focus,
+textarea:focus,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--tf-cyan);
+  outline-offset: 2px;
+}
+
+button,
+.btn-hero,
+.btn-ver-detalle,
+.btn-ver-destacado,
+.btn-ver-producto,
+.btn-ir-tienda,
+.btn-ir-catalogo,
+.btn-comercial-checkout,
+.btn-confirmar-compra,
+.btn-principal-carrito,
+.btn-contratar-servicio,
+.btn-buscar-pedido,
+.btn-auth {
+  box-shadow: 0 0 0 1px rgba(79, 211, 255, 0.18), 0 0 18px rgba(79, 211, 255, 0.12);
+}
+
+.tarjeta-producto,
+.producto-card,
+.carrito-item-card,
+.resumen-totales-tarjeta,
+.checkout-seccion-card,
+.orden-totales-fija,
+.auth-card,
+.busqueda-card,
+.tarjeta-servicio,
+.tracking-header-card,
+.tracking-subcard,
+.historial-vacio-card,
+.historial-tabla-wrapper,
+.table-responsive-wrapper {
+  box-shadow: var(--tf-shadow);
 }
 
 .app-layout {

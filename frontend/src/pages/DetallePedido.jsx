@@ -46,11 +46,14 @@ function DetallePedido() {
     return (
       <div className="tracking-error-caja">
         <h2>⚠️ Código de orden inválido o vencido</h2>
-        <p>Si compraste como invitado, revisá el mail que te enviamos con el token temporal de seguimiento.</p>
+        <p>Revisá el código de pedido que te enviamos por correo o consultá tu historial si estás logueado.</p>
         <Link to="/" className="btn-volver-home">Ir al Inicio</Link>
       </div>
     );
   }
+
+  const codigoPedido = pedido.codigo || pedido.codigo_temporal || pedido.codigoTemporal || `#${pedido.id}`;
+  const itemsPedido = pedido.detalles || pedido.items || [];
 
   // Lógica comercial de renderizado de instrucciones según el estado
   const obtenerInstruccionesEstado = () => {
@@ -67,7 +70,7 @@ function DetallePedido() {
             <p><strong>Alias:</strong> tuempresa.hardware.gamer</p>
             <p><strong>Total Neto:</strong> ${Number(pedido.total).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</p>
           </div>
-          <a href={`https://wa.me/5493512345678?text=Hola!%20Adjunto%20comprobante%20del%20pedido%20N%20${pedido.id}`} target="_blank" rel="noreferrer" className="btn-whatsapp-comprobante">
+          <a href={`https://wa.me/5493512345678?text=Hola!%20Adjunto%20comprobante%20del%20pedido%20${codigoPedido}`} target="_blank" rel="noreferrer" className="btn-whatsapp-comprobante">
             💬 Enviar Comprobante por WhatsApp
           </a>
         </div>
@@ -109,8 +112,8 @@ function DetallePedido() {
       {/* Encabezado Principal del Pedido */}
       <div className="tracking-header-card">
         <div className="header-id-caja">
-          <h1>Orden N° #{pedido.id}</h1>
-          <span className="codigo-temporal-tag">Código de Seguimiento Temporal: <strong>{pedido.codigo_temporal || pedido.codigoTemporal || 'INV-' + pedido.id}</strong></span>
+          <h1>Pedido {codigoPedido}</h1>
+          <span className="codigo-temporal-tag">Código de pedido: <strong>{codigoPedido}</strong></span>
         </div>
         <div className={`status-badge-grande ${pedido.estado}`}>
           {pedido.estado ? pedido.estado.replace(/_/g, ' ').toUpperCase() : 'PENDIENTE'}
@@ -125,7 +128,7 @@ function DetallePedido() {
           <div className="tracking-subcard">
             <h2>Componentes Pedidos</h2>
             <div className="pedido-productos-lista">
-              {pedido.items && pedido.items.map((item, index) => (
+              {itemsPedido.map((item, index) => (
                 <div key={index} className="producto-pedido-fila">
                   <div className="prod-ped-info">
                     <span className="prod-ped-cant">{item.cantidad}x</span>
@@ -145,10 +148,14 @@ function DetallePedido() {
                 <span>Método de Entrega:</span>
                 <span className="entrega-metodo-val">{pedido.metodo_envio === 'domicilio' ? '🚚 Envío a Domicilio' : '📍 Retiro en Sucursal Centro'}</span>
               </div>
-              {pedido.direccion && (
+              {(pedido.direccion || pedido.direccion_envio) && (
                 <div className="total-fila-tracking direccion-desglose">
                   <span>Dirección:</span>
-                  <span>{`${pedido.direccion.calle} ${pedido.direccion.numero} (${pedido.direccion.ciudad}, ${pedido.direccion.provincia})`}</span>
+                  <span>
+                    {pedido.direccion
+                      ? `${pedido.direccion.calle} ${pedido.direccion.numero} (${pedido.direccion.ciudad}, ${pedido.direccion.provincia})`
+                      : pedido.direccion_envio}
+                  </span>
                 </div>
               )}
               <div className="total-fila-tracking total-destacado-linea">

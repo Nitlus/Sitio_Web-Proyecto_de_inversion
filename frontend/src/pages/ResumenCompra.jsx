@@ -18,6 +18,7 @@ function ResumenCompra() {
     nombre: usuario?.nombre || '',
     apellido: usuario?.apellido || '',
     dni: usuario?.dni || usuario?.documento || '',
+    telefono: usuario?.telefono || '',
     aclaracion: '',
     metodoPago: 'transferencia', // transferencia (15% OFF), efectivo, tarjeta
     metodoEnvio: 'retiro',       // retiro, domicilio
@@ -41,11 +42,27 @@ function ResumenCompra() {
 
   const calcularTotalFinal = () => {
     const subtotal = calcularSubtotal();
-    // Si es transferencia o efectivo en local se aplica el 15% de descuento del negocio
-    if (formData.metodoPago === 'transferencia' || formData.metodoPago === 'efectivo') {
+    // El backend aplica el descuento al recalcular el pedido cuando el método es transferencia
+    if (formData.metodoPago === 'transferencia') {
       return subtotal * 0.85;
     }
     return subtotal; // Tarjeta de crédito paga precio de lista
+  };
+
+  const obtenerFechaHoraActual = () => {
+    const ahora = new Date();
+    return {
+      fecha: ahora.toISOString().slice(0, 10),
+      hora: ahora.toTimeString().slice(0, 8)
+    };
+  };
+
+  const obtenerDireccionEnvio = () => {
+    if (formData.metodoEnvio === 'retiro') {
+      return 'Retiro en sucursal - Av. Colon 450, Cordoba';
+    }
+
+    return `${formData.calle} ${formData.numero}${formData.pisoDepto ? ` ${formData.pisoDepto}` : ''}, ${formData.ciudad}, ${formData.provincia}`;
   };
 
   // Envío del pedido al Backend
@@ -53,34 +70,26 @@ function ResumenCompra() {
     e.preventDefault();
     setProcesando(true);
 
-    // Estructuramos el payload exacto que espera tu Sequelize en Node.js
+    const { fecha, hora } = obtenerFechaHoraActual();
+
+    // Estructuramos el payload plano que espera pedidos_service.js en Node.js
     const pedidoPayload = {
-      cliente_datos: {
-        email: formData.email,
-        nombre: formData.nombre,
-        apellido: formData.apellido,
-        dni: formData.dni,
-        aclaracion: formData.aclaracion
-      },
-      logistica: {
-        metodoEnvio: formData.metodoEnvio,
-        direccion: formData.metodoEnvio === 'domicilio' ? {
-          calle: formData.calle,
-          numero: formData.numero,
-          pisoDepto: formData.pisoDepto,
-          ciudad: formData.ciudad,
-          provincia: formData.provincia
-        } : null
-      },
-      financiero: {
-        metodoPago: formData.metodoPago,
-        total: calcularTotalFinal()
-      },
-      // Mapeamos los ítems del carrito
-      items: carrito.map(item => ({
+      nombre: `${formData.nombre} ${formData.apellido}`.trim(),
+      email: formData.email,
+      fecha,
+      hora,
+      total: calcularTotalFinal(),
+      estado: 'pendiente',
+      metodo_pago: formData.metodoPago,
+      metodo_envio: formData.metodoEnvio,
+      costo_envio: 0,
+      direccion_envio: obtenerDireccionEnvio(),
+      telefono_contacto: formData.telefono || 'No informado',
+      aclaracion: formData.aclaracion,
+      detalles: carrito.map(item => ({
         producto_id: item.id,
         cantidad: item.cantidad,
-        precio_unitario: formData.metodoPago === 'tarjeta' ? item.precio : item.precio * 0.85
+        precio_unitario: item.precio
       }))
     };
 
@@ -98,11 +107,19 @@ function ResumenCompra() {
       if (!respuesta.ok) throw new Error("Error al procesar la orden en el servidor");
 
       const resultado = await respuesta.json();
+      const pedidoCreado = resultado.pedido || resultado;
+      const codigoPedido = resultado.codigo || pedidoCreado.codigo || resultado.codigo_temporal;
+      const idPedido = pedidoCreado.id || resultado.id;
       
       // Limpiamos el carrito global y redirigimos a la vista individual del pedido generado
       limpiarCarrito();
-      alert(`¡Pedido N° ${resultado.id || 'Generado'} creado con éxito!`);
-      navigate(`/pedido/${resultado.id || ''}`);
+      alert(`¡Pedido ${codigoPedido || 'generado'} creado con éxito!`);
+
+      if (idPedido) {
+        navigate(`/pedido/${idPedido}`);
+      } else {
+        navigate('/mis-pedidos');
+      }
 
     } catch (err) {
       console.error(err);
@@ -149,6 +166,10 @@ function ResumenCompra() {
               <div className="input-group">
                 <label>DNI / CUIT *</label>
                 <input type="text" name="dni" value={formData.dni} onChange={handleChange} required disabled={!!usuario} />
+              </div>
+              <div className="input-group">
+                <label>Teléfono *</label>
+                <input type="tel" name="telefono" value={formData.telefono} onChange={handleChange} required />
               </div>
             </div>
             <div className="input-group full-width">
@@ -222,7 +243,7 @@ function ResumenCompra() {
                 <input type="radio" name="metodoPago" value="efectivo" checked={formData.metodoPago === 'efectivo'} onChange={handleChange} />
                 <div className="radio-txt">
                   <strong>Efectivo (Retiro en local)</strong>
-                  <span className="descuento-alert">💵 ¡15% de Descuento Especial!</span>
+                  <span>Pago al retirar en sucursal</span>
                 </div>
               </label>
               <label className={`radio-option ${formData.metodoPago === 'tarjeta' ? 'selected' : ''}`}>
@@ -248,7 +269,7 @@ function ResumenCompra() {
                   <span className="item-mini-cant">{item.cantidad}x</span>
                   <span className="item-mini-nom" title={item.nombre}>{item.nombre}</span>
                   <span className="item-mini-prc">
-                    ${((formData.metodoPago === 'tarjeta' ? item.precio : item.precio * 0.85) * item.cantidad).toLocaleString('es-AR')}
+                    ${((formData.metodoPago === 'transferencia' ? item.precio * 0.85 : item.precio) * item.cantidad).toLocaleString('es-AR')}
                   </span>
                 </div>
               ))}
@@ -262,7 +283,7 @@ function ResumenCompra() {
                 <span>${calcularSubtotal().toLocaleString('es-AR', { minimumFractionDigits: 2 })}</span>
               </div>
               
-              {(formData.metodoPago === 'transferencia' || formData.metodoPago === 'efectivo') && (
+              {formData.metodoPago === 'transferencia' && (
                 <div className="valor-fila descuento-verde">
                   <span>Descuento aplicado (15%):</span>
                   <span>-${(calcularSubtotal() * 0.15).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</span>

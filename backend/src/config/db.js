@@ -120,6 +120,15 @@ const Pedido = sequelize.define(
 			primaryKey: true,
 			autoIncrement: true,
 		},
+		codigo: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+			unique: true,
+			validate: {
+				len: [5, 5],
+				is: /^[A-Z0-9]{5}$/,
+			},
+		},
 		usuario_id: {
 			type: DataTypes.INTEGER,
 			allowNull: false,

@@ -38,15 +38,15 @@ function crearTransportador() {
 	});
 }
 
-async function enviarCorreoPedido({ destinatario, nombre, codigoTemporal, pedido, esInvitado }) {
+async function enviarCorreoPedido({ destinatario, nombre, codigoPedido, pedido, esInvitado }) {
 	const transportador = crearTransportador();
-	const subject = `Confirmación de pedido ${codigoTemporal}`;
+	const subject = `Confirmación de pedido ${codigoPedido}`;
 	const lineaPedido = `${pedido.estado || 'pendiente'} - ${pedido.metodo_pago || 'sin método de pago'} - Total: ${pedido.total}`;
 	const texto = [
 		`Hola ${nombre || 'cliente'},`,
 		'',
 		`Tu pedido fue recibido correctamente.`,
-		`Código temporal: ${codigoTemporal}`,
+		`Código de pedido: ${codigoPedido}`,
 		`Estado: ${pedido.estado || 'pendiente'}`,
 		`Total: ${pedido.total}`,
 		esInvitado ? 'Este pedido es temporal y no fue guardado en la base de datos.' : 'Este pedido quedó registrado en tu historial.',
@@ -58,7 +58,7 @@ async function enviarCorreoPedido({ destinatario, nombre, codigoTemporal, pedido
 		<p>Hola <strong>${nombre || 'cliente'}</strong>,</p>
 		<p>Tu pedido fue recibido correctamente.</p>
 		<ul>
-			<li><strong>Código temporal:</strong> ${codigoTemporal}</li>
+			<li><strong>Código de pedido:</strong> ${codigoPedido}</li>
 			<li><strong>Estado:</strong> ${pedido.estado || 'pendiente'}</li>
 			<li><strong>Total:</strong> ${pedido.total}</li>
 			<li><strong>Detalle:</strong> ${lineaPedido}</li>

@@ -1,39 +1,70 @@
-import { useNavigate } from 'react-router-dom';
-import { useCarrito } from '../context/CarritoContext';
 import '../css/ArmarPC.css';
 
 function ArmarPC() {
-  const { agregarAlCarrito } = useCarrito();
-  const navigate = useNavigate();
+  const whatsappServicios = '5493517568602';
 
-  // Definimos los servicios como "productos virtuales"
   const servicios = [
     {
-      id: 'srv-mantenimiento',
-      nombre: 'Servicio de Mantenimiento Preventivo y Limpieza',
-      descripcion: 'Desarme completo, limpieza profunda con alcohol isopropílico, cambio de pasta térmica (Arctic MX-4), testeo de temperaturas y optimización de software.',
-      precio: 80000,
-      stock: 999, // Stock infinito
-      condicion: 'servicio',
+      id: 'srv-limpieza-profunda',
+      nombre: 'Limpieza profunda + pasta térmica',
+      descripcion: 'Limpieza interna completa del equipo, remoción de polvo, revisión de temperaturas y cambio de pasta térmica.',
+      precio: 55000,
+      detalleTurno: 'Quiero sacar un turno para limpieza profunda con cambio de pasta térmica.',
       icono: '🧹'
     },
     {
-      id: 'srv-armado',
-      nombre: 'Servicio de Armado de PC Custom',
-      descripcion: 'Ensamblaje profesional de componentes, gestión de cables (cable management) premium, instalación de Windows, actualización de BIOS y estrés de componentes.',
+      id: 'srv-reinstalacion-windows',
+      nombre: 'Reinstalación de Windows',
+      descripcion: 'Reinstalación del sistema operativo, configuración inicial y puesta a punto básica para dejar el equipo listo para usar.',
+      precio: 75000,
+      detalleTurno: 'Quiero sacar un turno para reinstalación de Windows.',
+      icono: '💿'
+    },
+    {
+      id: 'srv-ssd-ram',
+      nombre: 'Instalación SSD / Upgrade RAM',
+      descripcion: 'Instalación de unidad SSD, ampliación de memoria RAM y verificación de reconocimiento correcto del hardware.',
       precio: 50000,
-      stock: 999, // Stock infinito
-      condicion: 'servicio',
+      detalleTurno: 'Quiero sacar un turno para instalación de SSD o upgrade de RAM.',
+      icono: '🧩'
+    },
+    {
+      id: 'srv-diagnostico-reparacion',
+      nombre: 'Diagnóstico + reparación hardware',
+      descripcion: 'Diagnóstico técnico de fallas, revisión de componentes y coordinación de reparación según disponibilidad de repuestos.',
+      precio: 90000,
+      detalleTurno: 'Quiero sacar un turno para diagnóstico y reparación de hardware.',
+      icono: '🔧'
+    },
+    {
+      id: 'srv-armado-medida',
+      nombre: 'Armado de PC a medida',
+      descripcion: 'Ensamblaje profesional de PC, organización de cables, instalación inicial y revisión de funcionamiento general.',
+      precio: 65000,
+      detalleTurno: 'Quiero sacar un turno para armado de PC a medida.',
       icono: '⚙️'
+    },
+    {
+      id: 'srv-mantenimiento-empresa',
+      nombre: 'Mantenimiento preventivo empresa',
+      descripcion: 'Servicio mensual para empresas: revisión preventiva, limpieza, control de estado y soporte técnico programado.',
+      precio: 120000,
+      periodo: '/mes',
+      detalleTurno: 'Quiero consultar por mantenimiento preventivo mensual para empresa.',
+      icono: '🏢'
     }
   ];
 
-  const contratarServicio = (servicio) => {
-    // Lo agregamos al carrito (cantidad 1)
-    agregarAlCarrito(servicio, 1);
-    alert(`¡${servicio.nombre} añadido al carrito!`);
-    // Opcional: Redirigir al carrito automáticamente para que paguen
-    navigate('/carrito');
+  const obtenerLinkWhatsapp = (servicio) => {
+    const mensaje = [
+      'Hola Titan Forge, quiero consultar por servicios técnicos.',
+      servicio.detalleTurno,
+      'Mi nombre es:',
+      'Mi equipo/modelo es:',
+      'Disponibilidad para turno:'
+    ].join('\n');
+
+    return `https://wa.me/${whatsappServicios}?text=${encodeURIComponent(mensaje)}`;
   };
 
   return (
@@ -53,17 +84,22 @@ function ArmarPC() {
             <p className="servicio-descripcion">{servicio.descripcion}</p>
             
             <div className="servicio-precio-caja">
-              <span className="precio-etiqueta">Precio del Servicio:</span>
-              <span className="precio-valor">${servicio.precio.toLocaleString('es-AR')}</span>
-              <span className="precio-descuento">¡Aplica 15% OFF abonando en Transferencia!</span>
+              <span className="precio-etiqueta">Precio orientativo</span>
+              <span className="precio-valor">
+                ${servicio.precio.toLocaleString('es-AR')}
+                {servicio.periodo && <small>{servicio.periodo}</small>}
+              </span>
+              <span className="precio-descuento">Turnos y detalles finales se coordinan por WhatsApp.</span>
             </div>
 
-            <button 
+            <a 
               className="btn-contratar-servicio"
-              onClick={() => contratarServicio(servicio)}
+              href={obtenerLinkWhatsapp(servicio)}
+              target="_blank"
+              rel="noreferrer"
             >
-              Añadir servicio al carrito
-            </button>
+              Solicitar turno por WhatsApp
+            </a>
           </div>
         ))}
       </div>
@@ -71,9 +107,9 @@ function ArmarPC() {
       <div className="servicios-info-adicional">
         <h3>📌 Información Importante</h3>
         <ul>
-          <li>Los equipos para mantenimiento deben ser entregados en nuestra sucursal (Av. Colón 450).</li>
+          <li>Los equipos para mantenimiento deben ser entregados en nuestra sucursal.</li>
           <li>El armado de PC incluye garantía de 6 meses sobre el ensamblaje.</li>
-          <li>Si compraste los componentes en nuestra tienda, el costo de armado tiene prioridad en la fila de trabajo.</li>
+          <li>Los turnos y presupuestos se coordinan por WhatsApp con el área de ventas y servicios.</li>
         </ul>
       </div>
     </div>

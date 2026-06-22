@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../css/Navbar.css';
+import titanForgeLogo from '../assets/Titan_Forge_logo.svg';
 
 // Importamos los contextos globales (Carrito y Usuarios)
 import { useCarrito } from '../context/CarritoContext';
@@ -47,7 +48,8 @@ function Navbar() {
       <div className="navbar-fila-1">
         {/* Logo / Nombre - Redirige al Home (/) */}
         <Link to="/" className="navbar-logo">
-          TU EMPRESA
+          <img src={titanForgeLogo} alt="Titan Forge" className="navbar-logo-img" />
+          <span>Titan Forge</span>
         </Link>
 
         {/* Barra de Búsqueda */}
@@ -65,11 +67,11 @@ function Navbar() {
         <div className="navbar-auth">
           {usuario ? (
             // Si está logueado, saludamos y mostramos botón de salir
-            <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
-              <span style={{ color: '#28a745', fontWeight: '600' }}>👤 ¡Hola, {usuario.nombre}!</span>
+            <div className="navbar-user-box">
+              <span className="navbar-user-greeting">¡Hola, {usuario.nombre}!</span>
               <button 
                 onClick={logout} 
-                style={{ background: 'none', border: 'none', color: '#dc3545', cursor: 'pointer', fontSize: '0.95rem', fontWeight: '500' }}
+                className="navbar-logout-btn"
               >
                 Salir
               </button>
@@ -129,7 +131,7 @@ function Navbar() {
         <div className="navbar-links">
           <Link to="/destacados">Destacado</Link>
           <Link to="/mis-pedidos">Mis Pedidos</Link>
-          <Link to="/armar-pc">Armar mi PC</Link>
+          <Link to="/armar-pc">Servicios</Link>
         </div>
 
         {/* Ícono de Carrito y Globito de Contador */}

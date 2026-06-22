@@ -1,27 +1,27 @@
 .tracking-loading {
   text-align: center;
   padding: 80px 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 12px;
-  border: 1px solid #2d2d2d;
-  color: #aaaaaa;
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text-muted);
   margin-top: 20px;
 }
 
 .tracking-error-caja {
   text-align: center;
   padding: 60px 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 12px;
-  border: 1px solid #2d2d2d;
-  color: #888;
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text-dim);
 }
 
 .btn-volver-home {
   display: inline-block;
   margin-top: 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   padding: 10px 20px;
   text-decoration: none;
   border-radius: 6px;
@@ -30,14 +30,14 @@
 
 .tracking-page-container {
   padding: 10px 0 60px 0;
-  color: white;
+  color: var(--tf-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 /* --- ENCABEZADO DE SEGUIMIENTO --- */
 .tracking-header-card {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   padding: 25px 30px;
   border-radius: 12px;
   display: flex;
@@ -53,11 +53,11 @@
 
 .codigo-temporal-tag {
   font-size: 0.85rem;
-  color: #888888;
+  color: var(--tf-text-dim);
 }
 
 .codigo-temporal-tag strong {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 /* Badges de Estados */
@@ -70,21 +70,21 @@
 }
 
 .status-badge-grande.pendiente_de_pago, .status-badge-grande.pendiente {
-  background-color: rgba(234, 142, 0, 0.15);
-  color: #ea8e00;
-  border: 1px solid #ea8e00;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
+  border: 1px solid var(--tf-orange);
 }
 
 .status-badge-grande.reservado {
-  background-color: rgba(0, 123, 255, 0.15);
-  color: #007bff;
-  border: 1px solid #007bff;
+  background-color: var(--tf-cyan-soft);
+  color: var(--tf-cyan);
+  border: 1px solid var(--tf-cyan);
 }
 
 .status-badge-grande.pagado {
-  background-color: rgba(40, 167, 69, 0.15);
-  color: #28a745;
-  border: 1px solid #28a745;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
+  border: 1px solid var(--tf-orange);
 }
 
 /* --- CUERPO --- */
@@ -102,8 +102,8 @@
 }
 
 .tracking-subcard {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 25px;
 }
@@ -112,7 +112,7 @@
   font-size: 1.2rem;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #fff;
+  color: var(--tf-text);
 }
 
 .pedido-productos-lista {
@@ -135,13 +135,13 @@
 }
 
 .prod-ped-cant {
-  color: #007bff;
+  color: var(--tf-cyan);
   font-weight: bold;
 }
 
 .prod-ped-nombre {
   margin: 0;
-  color: #dddddd;
+  color: var(--tf-text);
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -154,7 +154,7 @@
 .tracking-divider {
   border: 0;
   height: 1px;
-  background-color: #2d2d2d;
+  background-color: var(--tf-border);
   margin: 20px 0;
 }
 
@@ -168,11 +168,11 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.9rem;
-  color: #aaaaaa;
+  color: var(--tf-text-muted);
 }
 
 .entrega-metodo-val {
-  color: #ffffff;
+  color: var(--tf-text);
   font-weight: 500;
 }
 
@@ -182,15 +182,15 @@
 }
 
 .total-destacado-linea {
-  border-top: 1px solid #2d2d2d;
+  border-top: 1px solid var(--tf-border);
   padding-top: 15px;
   margin-top: 5px;
   font-size: 1.3rem;
-  color: white;
+  color: var(--tf-text);
 }
 
 .total-destacado-linea strong {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 /* --- CUADROS DE ALERTA ACCIONES --- */
@@ -209,22 +209,22 @@
 .instrucciones-caja p {
   font-size: 0.92rem;
   line-height: 1.5;
-  color: #eeeeee;
+  color: var(--tf-text);
 }
 
 /* Alerta Transferencia */
 .transferencia-alerta {
-  background: linear-gradient(135deg, #241c0e 0%, #151109 100%);
-  border: 1px solid #4a3411;
+  background: linear-gradient(135deg, var(--tf-surface-2) 0%, var(--tf-bg-deep) 100%);
+  border: 1px solid var(--tf-orange);
 }
 
 .transferencia-alerta h3 {
-  color: #ea8e00;
+  color: var(--tf-orange);
 }
 
 .datos-cBU-bloque, .datos-cbu-bloque {
-  background-color: #110e08;
-  border: 1px solid #33240d;
+  background-color: var(--tf-bg-deep);
+  border: 1px solid var(--tf-border-strong);
   padding: 15px;
   border-radius: 6px;
   margin: 15px 0;
@@ -233,14 +233,14 @@
 .datos-cbu-bloque p {
   margin: 6px 0;
   font-size: 0.88rem;
-  color: #ccc;
+  color: var(--tf-text-muted);
 }
 
 .btn-whatsapp-comprobante {
   display: block;
   width: 100%;
-  background-color: #25d366; /* Verde oficial WhatsApp */
-  color: white;
+  background-color: var(--tf-cyan); /* Verde oficial WhatsApp */
+  color: var(--tf-text);
   text-align: center;
   padding: 12px;
   border-radius: 6px;
@@ -252,27 +252,27 @@
 }
 
 .btn-whatsapp-comprobante:hover {
-  background-color: #1ebd56;
+  background-color: var(--tf-cyan-strong);
 }
 
 /* Alerta Efectivo */
 .efectivo-alerta {
-  background: linear-gradient(135deg, #1e252b 0%, #10151a 100%);
-  border: 1px solid #203a43;
+  background: linear-gradient(135deg, var(--tf-surface-2) 0%, var(--tf-bg-deep) 100%);
+  border: 1px solid var(--tf-border-strong);
 }
 
 .efectivo-alerta h3 {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 /* Alerta Exito */
 .exito-alerta {
-  background: linear-gradient(135deg, #152417 0%, #0d1a0e 100%);
-  border: 1px solid #1a3a20;
+  background: linear-gradient(135deg, var(--tf-surface-2) 0%, var(--tf-bg-deep) 100%);
+  border: 1px solid var(--tf-border-strong);
 }
 
 .exito-alerta h3 {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 /* Responsivo */

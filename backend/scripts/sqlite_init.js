@@ -59,6 +59,7 @@ async function CrearBaseDeDatos() {
 
             CREATE TABLE IF NOT EXISTS pedidos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
+                codigo TEXT NOT NULL UNIQUE CHECK(codigo GLOB '[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]'),
                 usuario_id INTEGER NOT NULL,
                 fecha TEXT NOT NULL,
                 hora TEXT NOT NULL,

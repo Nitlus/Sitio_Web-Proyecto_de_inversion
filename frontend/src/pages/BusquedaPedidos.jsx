@@ -20,16 +20,14 @@ function BusquedaPedidos() {
       return;
     }
 
-    // MAGIA FRONTEND: Extraemos solo los números del texto ingresado.
-    // Así, si escriben "INV-45", "orden 45" o "45", siempre obtenemos el ID real (45)
-    // para pasárselo a nuestra vista de DetallePedido.
-    const matchNumerico = codigoLimpio.match(/\d+/);
+    const codigoPedido = codigoLimpio.toUpperCase();
+    const tieneFormatoCodigoPedido = /^[A-Z0-9]{5}$/.test(codigoPedido);
+    const matchNumerico = codigoPedido.match(/^\d+$/);
 
-    if (matchNumerico) {
-      const idPedido = matchNumerico[0];
-      navigate(`/pedido/${idPedido}`);
+    if (tieneFormatoCodigoPedido || matchNumerico) {
+      navigate(`/pedido/${codigoPedido}`);
     } else {
-      setError('El código ingresado no es válido. Debe contener el número de la orden.');
+      setError('El código ingresado no es válido. Debe tener 5 caracteres con letras mayúsculas y números.');
     }
   };
 
@@ -46,7 +44,7 @@ function BusquedaPedidos() {
           </p>
         ) : (
           <p className="busqueda-subtitulo">
-            ¿Compraste como invitado? Ingresá el ID de tu orden o el código temporal que te enviamos al correo para conocer el estado de tu hardware.
+            ¿Compraste como invitado? Ingresá el código de pedido que te enviamos al correo para conocer el estado de tu hardware.
           </p>
         )}
 
@@ -55,9 +53,10 @@ function BusquedaPedidos() {
         <form onSubmit={manejarBusqueda} className="busqueda-formulario">
           <input 
             type="text" 
-            placeholder="Ej: 1254 o INV-1254" 
+            placeholder="Ej: A7K2P" 
             value={codigo}
             onChange={(e) => setCodigo(e.target.value)}
+            maxLength={5}
             className="input-codigo"
             autoComplete="off"
           />

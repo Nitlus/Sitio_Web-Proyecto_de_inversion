@@ -1,32 +1,32 @@
 .historial-loading {
   text-align: center;
   padding: 80px 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 12px;
-  border: 1px solid #2d2d2d;
-  color: #aaaaaa;
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text-muted);
   margin-top: 20px;
 }
 
 .historial-page-container {
   padding: 10px 0 60px 0;
-  color: white;
+  color: var(--tf-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .historial-breadcrumb {
   font-size: 0.88rem;
-  color: #888888;
+  color: var(--tf-text-dim);
   margin-bottom: 25px;
 }
 
 .historial-breadcrumb a {
-  color: #888888;
+  color: var(--tf-text-dim);
   text-decoration: none;
 }
 
 .historial-breadcrumb a:hover {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 .historial-header-bloque {
@@ -36,20 +36,20 @@
 .historial-header-bloque h1 {
   font-size: 1.8rem;
   margin: 0 0 8px 0;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid var(--tf-cyan);
   padding-left: 12px;
 }
 
 .historial-header-bloque p {
   margin: 0;
   font-size: 0.98rem;
-  color: #aaaaaa;
+  color: var(--tf-text-muted);
 }
 
 .historial-error-alerta {
-  background-color: rgba(220, 53, 69, 0.15);
-  border: 1px solid #dc3545;
-  color: #dc3545;
+  background-color: rgba(255, 79, 94, 0.14);
+  border: 1px solid var(--tf-danger);
+  color: var(--tf-danger);
   padding: 15px;
   border-radius: 8px;
 }
@@ -57,11 +57,11 @@
 /* Estado Vacío */
 .historial-vacio-card {
   text-align: center;
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 50px 20px;
-  color: #888888;
+  color: var(--tf-text-dim);
 }
 
 .vacio-icono {
@@ -70,7 +70,7 @@
 }
 
 .historial-vacio-card h2 {
-  color: white;
+  color: var(--tf-text);
   margin: 0 0 10px 0;
   font-size: 1.3rem;
 }
@@ -82,8 +82,8 @@
 
 .btn-ir-catalogo {
   display: inline-block;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   padding: 12px 24px;
   text-decoration: none;
   font-weight: bold;
@@ -92,15 +92,15 @@
 }
 
 .btn-ir-catalogo:hover {
-  background-color: #0056b3;
+  background-color: var(--tf-cyan-strong);
 }
 
 /* --- TABLA DE HARDWARE --- */
 .table-responsive-wrapper {
   width: 100%;
   overflow-x: auto; /* Permite scroll horizontal en pantallas muy chicas para que no rompa el diseño */
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 10px;
 }
 
@@ -113,12 +113,12 @@
 
 .historial-tabla th, .historial-tabla td {
   padding: 15px 20px;
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom: 1px solid var(--tf-border);
 }
 
 .historial-tabla th {
-  background-color: #1f1f1f;
-  color: #aaaaaa;
+  background-color: var(--tf-surface);
+  color: var(--tf-text-muted);
   font-weight: 600;
   text-transform: uppercase;
   font-size: 0.78rem;
@@ -130,17 +130,17 @@
 }
 
 .historial-tabla tbody tr:hover {
-  background-color: #222222; /* Cambio sutil de color al pasar el mouse por la fila */
+  background-color: var(--tf-surface-2); /* Cambio sutil de color al pasar el mouse por la fila */
 }
 
 .col-id {
   font-weight: bold;
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 .col-total {
   font-weight: bold;
-  color: #ffffff;
+  color: var(--tf-text);
 }
 
 .txt-capitalizar {
@@ -159,26 +159,26 @@
 }
 
 .status-badge-tabla.pendiente_de_pago, .status-badge-tabla.pendiente {
-  background-color: rgba(234, 142, 0, 0.12);
-  color: #ea8e00;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
 }
 
 .status-badge-tabla.reservado {
-  background-color: rgba(0, 123, 255, 0.12);
-  color: #007bff;
+  background-color: var(--tf-cyan-soft);
+  color: var(--tf-cyan);
 }
 
 .status-badge-tabla.pagado {
-  background-color: rgba(40, 167, 69, 0.12);
-  color: #28a745;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
 }
 
 /* Botón de Acción */
 .btn-tabla-ver {
   display: inline-block;
-  background-color: #252525;
-  border: 1px solid #333333;
-  color: #dddddd;
+  background-color: var(--tf-input);
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text);
   padding: 6px 14px;
   border-radius: 4px;
   text-decoration: none;
@@ -188,7 +188,7 @@
 }
 
 .btn-tabla-ver:hover {
-  background-color: #007bff;
-  border-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  border-color: var(--tf-cyan);
+  color: var(--tf-text);
 }

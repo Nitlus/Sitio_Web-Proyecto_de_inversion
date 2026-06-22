@@ -15,7 +15,7 @@ function HistorialPedidos() {
     const obtenerHistorial = async () => {
       try {
         // Hacemos la petición al endpoint protegido de pedidos
-        const respuesta = await fetch('http://localhost:3000/api/pedidos', {
+        const respuesta = await fetch('http://localhost:3000/api/pedidos/mis-pedidos', {
           headers: {
             // Enviamos el token JWT para que el backend reconozca al usuario de forma segura
             'Authorization': `Bearer ${localStorage.getItem('token')}`
@@ -77,7 +77,7 @@ function HistorialPedidos() {
           <table className="historial-tabla">
             <thead>
               <tr>
-                <th>N° Orden</th>
+                <th>Código</th>
                 <th>Fecha</th>
                 <th>Método de Pago</th>
                 <th>Entrega</th>
@@ -97,8 +97,8 @@ function HistorialPedidos() {
 
                 return (
                   <tr key={pedido.id}>
-                    {/* Número de Pedido */}
-                    <td className="col-id">#{pedido.id}</td>
+                    {/* Código de Pedido */}
+                    <td className="col-id">{pedido.codigo || `#${pedido.id}`}</td>
                     
                     {/* Fecha */}
                     <td>{fechaFormateada}</td>

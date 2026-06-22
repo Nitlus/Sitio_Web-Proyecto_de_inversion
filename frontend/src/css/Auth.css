@@ -7,8 +7,8 @@
 }
 
 .auth-card {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 35px;
   width: 100%;
@@ -26,22 +26,22 @@
   font-size: 1.8rem;
   font-weight: 700;
   margin: 0 0 8px 0;
-  color: #ffffff;
+  color: var(--tf-text);
   text-align: center;
 }
 
 .auth-subtitulo {
   font-size: 0.9rem;
-  color: #888888;
+  color: var(--tf-text-dim);
   margin: 0 0 25px 0;
   text-align: center;
   line-height: 1.4;
 }
 
 .auth-error-alerta {
-  background-color: rgba(220, 53, 69, 0.15);
-  border: 1px solid #dc3545;
-  color: #dc3545;
+  background-color: rgba(255, 79, 94, 0.14);
+  border: 1px solid var(--tf-danger);
+  color: var(--tf-danger);
   padding: 12px;
   border-radius: 6px;
   font-size: 0.9rem;
@@ -70,15 +70,15 @@
 
 .auth-input-group label {
   font-size: 0.85rem;
-  color: #cccccc;
+  color: var(--tf-text-muted);
   font-weight: 500;
 }
 
 .auth-input-group input {
   padding: 11px 14px;
-  background-color: #252525;
-  border: 1px solid #333333;
-  color: #ffffff;
+  background-color: var(--tf-input);
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text);
   border-radius: 6px;
   font-size: 0.95rem;
   outline: none;
@@ -86,13 +86,13 @@
 }
 
 .auth-input-group input:focus {
-  border-color: #007bff;
-  box-shadow: 0 0 8px rgba(0, 123, 255, 0.2);
+  border-color: var(--tf-cyan);
+  box-shadow: 0 0 8px rgba(79, 211, 255, 0.24);
 }
 
 .btn-auth-enviar {
-  background-color: #007bff;
-  color: #ffffff;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   border: none;
   padding: 13px;
   font-size: 1rem;
@@ -104,24 +104,24 @@
 }
 
 .btn-auth-enviar:hover:not(:disabled) {
-  background-color: #0056b3;
+  background-color: var(--tf-cyan-strong);
 }
 
 .btn-auth-enviar:disabled {
-  background-color: #333333;
-  color: #666666;
+  background-color: var(--tf-border);
+  color: var(--tf-text-dim);
   cursor: not-allowed;
 }
 
 .auth-footer-link {
   text-align: center;
   font-size: 0.9rem;
-  color: #888888;
+  color: var(--tf-text-dim);
   margin: 25px 0 0 0;
 }
 
 .auth-footer-link a {
-  color: #007bff;
+  color: var(--tf-cyan);
   text-decoration: none;
   font-weight: 500;
 }

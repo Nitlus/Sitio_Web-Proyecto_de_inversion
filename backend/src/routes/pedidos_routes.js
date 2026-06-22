@@ -6,7 +6,7 @@ const router = express.Router();
 
 router.get('/', requiereRol('admin'), pedidosController.listarPedidos);
 router.get('/mis-pedidos', requiereAutenticacion, requerirRolCliente, pedidosController.listarMisPedidos);
-router.get('/:id', requiereRol('admin'), pedidosController.obtenerPedido);
+router.get('/:id', pedidosController.obtenerPedido);
 router.post('/', pedidosController.crearPedido);
 router.put('/:id', requiereRol('admin'), pedidosController.actualizarPedido);
 router.delete('/:id', requiereRol('admin'), pedidosController.eliminarPedido);

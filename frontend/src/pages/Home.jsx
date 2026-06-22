@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../css/Home.css';
+import titanForgeLogo from '../assets/Titan_Forge_logo.svg';
+import titanForgeBg from '../assets/backgrounds/Titan_Forge_bg.png';
 
 // ✨ LA MAGIA DE VITE: Cargamos el índice dinámico de hardware para ubicar las fotos en subcarpetas
 const todasLasImagenes = import.meta.glob('../assets/productos/**/*.{jpg,png,webp,avif}', { 
@@ -59,10 +61,12 @@ function Home() {
       {/* --- SECCIÓN HERO (Banner Principal + Producto Estrella Flotante) --- */}
       <section className="hero-section">
         {/* Banner Principal de Bienvenida */}
-        <div className="hero-banner">
+        <div className="hero-banner" style={{ backgroundImage: `url(${titanForgeBg})` }}>
           <div className="hero-texto-overlay">
-            <h2>Llevá tu setup al siguiente nivel</h2>
-            <p>Componentes, PCs armadas y el mejor servicio técnico especializado.</p>
+            <img src={titanForgeLogo} alt="Titan Forge" className="hero-logo" />
+            <span className="hero-marca">Titan Forge</span>
+            <h2>Forjá tu próxima máquina</h2>
+            <p>Componentes, PCs armadas y servicio técnico especializado para llevar tu setup al siguiente nivel.</p>
             <Link to="/tienda" className="btn-hero">Ver Catálogo General</Link>
           </div>
         </div>
@@ -101,7 +105,7 @@ function Home() {
 
       {/* --- SECCIÓN VITRINA DE PRODUCTOS DESTACADOS (Grilla Espejada del Catálogo) --- */}
       <section className="vitrina-section">
-        <h2 className="vitrina-titulo">Componentes y Hardware Destacados</h2>
+        <h2 className="vitrina-titulo">Hardware destacado de Titan Forge</h2>
         
         {cargando ? (
           <div className="catalogo-loader">Cargando la vitrina principal...</div>

@@ -13,8 +13,9 @@ function CatalogoProductos() {
   const { categoria, subcategoria } = useParams();
   
   // Capturamos si viene de la barra de búsqueda (Ej: /tienda?nombre=ryzen)
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const busqueda = searchParams.get('nombre');
+  const orden = searchParams.get('orden') || '';
 
   const [productos, setProductos] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -33,6 +34,7 @@ function CatalogoProductos() {
         if (categoria) urlParams.append('categoria', categoria);
         if (subcategoria) urlParams.append('subcategoria', subcategoria);
         if (busqueda) urlParams.append('nombre', busqueda);
+        if (orden) urlParams.append('orden', orden);
 
         const respuesta = await fetch(`http://localhost:3000/api/productos?${urlParams.toString()}`);
         const datos = await respuesta.json();
@@ -57,7 +59,20 @@ function CatalogoProductos() {
     return () => {
       estaMontado = false;
     };
-  }, [categoria, subcategoria, busqueda]);
+  }, [categoria, subcategoria, busqueda, orden]);
+
+  const cambiarOrden = (e) => {
+    const nuevoOrden = e.target.value;
+    const nuevosParametros = new URLSearchParams(searchParams);
+
+    if (nuevoOrden) {
+      nuevosParametros.set('orden', nuevoOrden);
+    } else {
+      nuevosParametros.delete('orden');
+    }
+
+    setSearchParams(nuevosParametros);
+  };
 
   // Función inteligente usando import.meta.glob para buscar la imagen por nombre
   const obtenerRutaImagen = (producto) => {
@@ -90,7 +105,19 @@ function CatalogoProductos() {
 
   return (
     <div className="catalogo-container">
-      <h1 className="catalogo-titulo">{generarTitulo()}</h1>
+      <div className="catalogo-header">
+        <h1 className="catalogo-titulo">{generarTitulo()}</h1>
+
+        <label className="catalogo-orden-control">
+          <span>Ordenar por</span>
+          <select value={orden} onChange={cambiarOrden}>
+            <option value="">Predeterminado</option>
+            <option value="alfabetico_az">Nombre (A-Z)</option>
+            <option value="precio_asc">Precio: menor a mayor</option>
+            <option value="precio_desc">Precio: mayor a menor</option>
+          </select>
+        </label>
+      </div>
 
       {cargando ? (
         <div className="catalogo-loader">Cargando productos...</div>

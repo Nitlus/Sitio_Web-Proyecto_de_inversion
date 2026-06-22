@@ -1,9 +1,9 @@
 .sitio-footer {
-  background-color: #1a1a1a; /* Mismo fondo de la Navbar */
-  color: #ffffff;
+  background-color: var(--tf-surface); /* Mismo fondo de la Navbar */
+  color: var(--tf-text);
   padding: 45px 40px 20px 40px;
   font-family: system-ui, -apple-system, sans-serif;
-  border-top: 1px solid #2d2d2d; /* Línea divisoria superior que espeja el hr de la navbar */
+  border-top: 1px solid var(--tf-border); /* Línea divisoria superior que espeja el hr de la navbar */
   margin-top: auto; /* Mantener abajo siempre */
 }
 
@@ -26,7 +26,7 @@
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: var(--tf-text);
   position: relative;
   padding-bottom: 8px;
 }
@@ -39,11 +39,11 @@
   left: 0;
   width: 35px;
   height: 2px;
-  background-color: #007bff; /* Detalle azul corporativo */
+  background-color: var(--tf-cyan); /* Detalle azul corporativo */
 }
 
 .footer-seccion p {
-  color: #b3b3b3; /* Mismo gris secundario de la navbar */
+  color: var(--tf-text-muted); /* Mismo gris secundario de la navbar */
   font-size: 0.92rem;
   line-height: 1.6;
   margin: 10px 0;
@@ -56,29 +56,37 @@
 }
 
 .redes-enlaces a {
-  color: #b3b3b3;
+  color: var(--tf-text-muted);
   text-decoration: none;
   font-size: 0.92rem;
   font-weight: 500;
   width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   transition: color 0.2s ease, transform 0.2s ease;
 }
 
 .redes-enlaces a:hover {
-  color: #007bff; /* Match con los hovers del header */
+  color: var(--tf-cyan); /* Match con los hovers del header */
   transform: translateX(3px); /* Desplazamiento interactivo elegante */
+}
+
+.red-social-icono {
+  color: var(--tf-orange);
+  filter: drop-shadow(0 0 8px rgba(255, 107, 53, 0.28));
 }
 
 .footer-derechos {
   max-width: 1200px;
   margin: 40px auto 0 auto;
   padding-top: 20px;
-  border-top: 1px solid #2d2d2d;
+  border-top: 1px solid var(--tf-border);
   text-align: center;
 }
 
 .footer-derechos p {
-  color: #666666; /* Gris apagado para legales */
+  color: var(--tf-text-dim); /* Gris apagado para legales */
   font-size: 0.85rem;
   margin: 0;
 }

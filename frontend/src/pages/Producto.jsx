@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
+import { useCarrito } from '../context/CarritoContext';
 import '../css/Producto.css';
 
 // 🔮 Cargamos el mismo índice dinámico de hardware para ubicar las imágenes en las subcarpetas
@@ -10,6 +11,7 @@ const todasLasImagenes = import.meta.glob('../assets/productos/**/*.{jpg,png,web
 
 function Producto() {
   const { id } = useParams(); // Atrapamos el ID desde la URL
+  const { agregarAlCarrito } = useCarrito();
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [cargando, setCargando] = useState(true);
@@ -71,8 +73,8 @@ function Producto() {
     }
   };
 
-  const agregarAlCarrito = () => {
-    // Esto se conectará con el estado global de CarritoCompras.jsx en fases posteriores
+  const manejarAgregarAlCarrito = () => {
+    agregarAlCarrito(producto, cantidad);
     alert(`¡Añadido al carrito: ${cantidad} unidad(es) de "${producto.nombre}"!`);
   };
 
@@ -171,7 +173,7 @@ function Producto() {
             <button 
               className="btn-principal-carrito"
               disabled={!tieneStock}
-              onClick={agregarAlCarrito}
+              onClick={manejarAgregarAlCarrito}
             >
               {tieneStock ? 'Añadir al Carrito' : 'Agotado'}
             </button>

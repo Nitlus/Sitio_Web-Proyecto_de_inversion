@@ -4,6 +4,8 @@ const { enviarCorreoPedido } = require('./mail_service');
 
 const ESTADO_POR_DEFECTO = 'pendiente';
 const ROL_CLIENTE = 'cliente';
+const CARACTERES_CODIGO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+const LONGITUD_CODIGO_PEDIDO = 5;
 
 function esTransferencia(metodoPago) {
 	return String(metodoPago || '').trim().toLowerCase() === 'transferencia';
@@ -26,8 +28,33 @@ function normalizarDetalle(detalle) {
 	};
 }
 
-function generarCodigoTemporal() {
-	return `PED-${Date.now().toString(36).toUpperCase()}-${crypto.randomBytes(3).toString('hex').toUpperCase()}`;
+function generarCodigoAleatorio() {
+	const bytes = crypto.randomBytes(LONGITUD_CODIGO_PEDIDO);
+	let codigo = '';
+
+	for (const byte of bytes) {
+		codigo += CARACTERES_CODIGO[byte % CARACTERES_CODIGO.length];
+	}
+
+	return codigo;
+}
+
+async function generarCodigoPedido(transaction = null) {
+	for (let intento = 0; intento < 10; intento += 1) {
+		const codigo = generarCodigoAleatorio();
+		const existente = await Pedido.findOne({
+			where: { codigo },
+			...(transaction ? { transaction } : {}),
+		});
+
+		if (!existente) {
+			return codigo;
+		}
+	}
+
+	const error = new Error('No se pudo generar un código único para el pedido');
+	error.status = 500;
+	throw error;
 }
 
 function obtenerDatosContactoPedido(data, usuarioContexto) {
@@ -86,11 +113,12 @@ function calcularTotalPedido({ detalles, costo_envio, total, metodo_pago }) {
 	return Number(costo_envio ?? 0);
 }
 
-function prepararPedidoTemporal(data, contacto, detalles, codigoTemporal) {
+function prepararPedidoTemporal(data, contacto, detalles, codigo) {
 	return {
 		id: null,
+		codigo,
 		usuario_id: null,
-		codigo_temporal: codigoTemporal,
+		codigo_temporal: codigo,
 		nombre_contacto: contacto.nombre,
 		email_contacto: contacto.email,
 		fecha: data.fecha,
@@ -116,7 +144,7 @@ function prepararPedidoTemporal(data, contacto, detalles, codigoTemporal) {
 	};
 }
 
-async function notificarPedido({ destinatario, nombre, codigoTemporal, pedido, esInvitado }) {
+async function notificarPedido({ destinatario, nombre, codigoPedido, pedido, esInvitado }) {
 	if (!destinatario) {
 		return { enviado: false, configurado: false };
 	}
@@ -125,12 +153,12 @@ async function notificarPedido({ destinatario, nombre, codigoTemporal, pedido, e
 		return await enviarCorreoPedido({
 			destinatario,
 			nombre,
-			codigoTemporal,
+			codigoPedido,
 			pedido,
 			esInvitado,
 		});
 	} catch (error) {
-		console.warn(`No se pudo enviar el correo del pedido ${codigoTemporal}:`, error.message);
+		console.warn(`No se pudo enviar el correo del pedido ${codigoPedido}:`, error.message);
 		return { enviado: false, configurado: true, error: error.message };
 	}
 }
@@ -157,7 +185,10 @@ async function listarPedidosPorUsuario(usuarioId) {
 }
 
 async function obtenerPedidoPorId(id) {
-	return Pedido.findByPk(id, {
+	const where = /^\d+$/.test(String(id)) ? { id } : { codigo: String(id).trim().toUpperCase() };
+
+	return Pedido.findOne({
+		where,
 		include: [
 			{ model: Usuario, as: 'usuario' },
 			{ model: DetallePedido, as: 'detalles', include: [{ model: Producto, as: 'producto' }] },
@@ -166,12 +197,12 @@ async function obtenerPedidoPorId(id) {
 }
 
 async function crearPedido(data, usuarioContexto = null) {
-	const codigoTemporal = generarCodigoTemporal();
 	const contacto = obtenerDatosContactoPedido(data, usuarioContexto);
 	const detallesValidados = await validarDetallesPedido(Array.isArray(data.detalles) ? data.detalles : []);
 
 	if (usuarioContexto?.autenticado) {
 		return sequelize.transaction(async (transaction) => {
+			const codigo = await generarCodigoPedido(transaction);
 			const usuario = await Usuario.findByPk(usuarioContexto.id, { transaction });
 			if (!usuario) {
 				const error = new Error('El usuario del pedido no existe');
@@ -181,6 +212,7 @@ async function crearPedido(data, usuarioContexto = null) {
 
 			const pedido = await Pedido.create(
 				{
+					codigo,
 					usuario_id: usuario.id,
 					fecha: data.fecha,
 					hora: data.hora,
@@ -214,31 +246,34 @@ async function crearPedido(data, usuarioContexto = null) {
 			const notificacion = await notificarPedido({
 				destinatario: contacto.email,
 				nombre: contacto.nombre,
-				codigoTemporal,
+				codigoPedido: codigo,
 				pedido: pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto,
 				esInvitado: false,
 			});
 
 			const respuesta = pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto;
 			return {
-				codigo_temporal: codigoTemporal,
+				codigo,
+				codigo_temporal: codigo,
 				pedido: respuesta,
 				email: notificacion,
 			};
 		});
 	}
 
-	const pedidoTemporal = prepararPedidoTemporal(data, contacto, detallesValidados, codigoTemporal);
+	const codigo = generarCodigoAleatorio();
+	const pedidoTemporal = prepararPedidoTemporal(data, contacto, detallesValidados, codigo);
 	const notificacion = await notificarPedido({
 		destinatario: contacto.email,
 		nombre: contacto.nombre,
-		codigoTemporal,
+		codigoPedido: codigo,
 		pedido: pedidoTemporal,
 		esInvitado: true,
 	});
 
 	return {
-		codigo_temporal: codigoTemporal,
+		codigo,
+		codigo_temporal: codigo,
 		pedido: pedidoTemporal,
 		email: notificacion,
 	};
@@ -251,13 +286,15 @@ async function actualizarPedido(id, data) {
 	}
 
 	await pedido.update({
+		codigo: data.codigo ?? pedido.codigo,
 		usuario_id: data.usuario_id ?? pedido.usuario_id,
 		fecha: data.fecha ?? pedido.fecha,
 		hora: data.hora ?? pedido.hora,
-		total: calcularTotal({
+		total: calcularTotalPedido({
 			detalles: data.detalles,
 			costo_envio: data.costo_envio ?? pedido.costo_envio,
 			total: data.total ?? pedido.total,
+			metodo_pago: data.metodo_pago ?? pedido.metodo_pago,
 		}),
 		estado: data.estado ?? pedido.estado,
 		metodo_pago: data.metodo_pago ?? pedido.metodo_pago,

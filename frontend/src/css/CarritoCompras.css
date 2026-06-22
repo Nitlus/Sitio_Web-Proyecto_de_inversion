@@ -1,10 +1,10 @@
 .carrito-vacio-seccion {
   text-align: center;
   padding: 60px 20px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 12px;
-  border: 1px solid #2d2d2d;
-  color: #aaaaaa;
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text-muted);
   margin-top: 30px;
 }
 
@@ -16,8 +16,8 @@
 .btn-ir-tienda {
   display: inline-block;
   margin-top: 20px;
-  background-color: #007bff;
-  color: white;
+  background-color: var(--tf-cyan);
+  color: var(--tf-text);
   padding: 12px 24px;
   text-decoration: none;
   font-weight: bold;
@@ -26,19 +26,19 @@
 }
 
 .btn-ir-tienda:hover {
-  background-color: #0056b3;
+  background-color: var(--tf-cyan-strong);
 }
 
 .carrito-page-wrapper {
   padding: 10px 0 60px 0;
-  color: white;
+  color: var(--tf-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .carrito-page-titulo {
   font-size: 1.8rem;
   margin-bottom: 30px;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid var(--tf-cyan);
   padding-left: 12px;
 }
 
@@ -58,8 +58,8 @@
 .carrito-item-card {
   display: flex;
   align-items: center;
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 10px;
   padding: 15px 20px;
   gap: 20px;
@@ -67,13 +67,13 @@
 }
 
 .carrito-item-card:hover {
-  border-color: #333333;
+  border-color: var(--tf-border);
 }
 
 .item-imagen-contenedor {
   width: 75px;
   height: 75px;
-  background-color: white;
+  background-color: var(--tf-text);
   border-radius: 6px;
   display: flex;
   align-items: center;
@@ -96,7 +96,7 @@
 }
 
 .item-nombre-link {
-  color: #ffffff;
+  color: var(--tf-text);
   text-decoration: none;
   font-weight: 600;
   font-size: 0.95rem;
@@ -108,7 +108,7 @@
 }
 
 .item-nombre-link:hover {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 .item-condicion {
@@ -121,28 +121,28 @@
 }
 
 .item-condicion.nuevo {
-  background-color: rgba(0, 123, 255, 0.12);
-  color: #007bff;
+  background-color: var(--tf-cyan-soft);
+  color: var(--tf-cyan);
 }
 
 .item-condicion.usado {
-  background-color: rgba(234, 142, 0, 0.12);
-  color: #ea8e00;
+  background-color: var(--tf-orange-soft);
+  color: var(--tf-orange);
 }
 
 /* Contador */
 .item-cantidad-control {
   display: flex;
   align-items: center;
-  background-color: #252525;
-  border: 1px solid #333;
+  background-color: var(--tf-input);
+  border: 1px solid var(--tf-border);
   border-radius: 6px;
 }
 
 .btn-cant-mod {
   background: none;
   border: none;
-  color: white;
+  color: var(--tf-text);
   width: 32px;
   height: 32px;
   cursor: pointer;
@@ -150,11 +150,11 @@
 }
 
 .btn-cant-mod:hover:not(:disabled) {
-  background-color: #333;
+  background-color: var(--tf-border);
 }
 
 .btn-cant-mod:disabled {
-  color: #555;
+  color: var(--tf-text-dim);
   cursor: not-allowed;
 }
 
@@ -177,26 +177,26 @@
 .total-item-efectivo {
   font-size: 1.25rem;
   font-weight: 700;
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 .total-item-lista {
   font-size: 0.8rem;
-  color: #777777;
+  color: var(--tf-text-dim);
   text-decoration: line-through;
 }
 
 .btn-remover-producto {
   background: none;
   border: none;
-  color: #555555;
+  color: var(--tf-text-dim);
   cursor: pointer;
   padding: 5px;
   transition: color 0.2s;
 }
 
 .btn-remover-producto:hover {
-  color: #dc3545;
+  color: var(--tf-danger);
 }
 
 /* --- COLUMNA RESUMEN SIDEBAR --- */
@@ -205,8 +205,8 @@
 }
 
 .resumen-totales-tarjeta {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 24px;
   position: sticky;
@@ -218,7 +218,7 @@
 .resumen-totales-tarjeta h3 {
   margin-top: 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom: 1px solid var(--tf-border);
   padding-bottom: 10px;
 }
 
@@ -226,19 +226,19 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.92rem;
-  color: #cccccc;
+  color: var(--tf-text-muted);
   margin-bottom: 12px;
 }
 
 .envio-gratis-txt {
-  color: #28a745;
+  color: var(--tf-orange);
   font-weight: bold;
 }
 
 .resumen-divider {
   border: 0;
   height: 1px;
-  background-color: #2d2d2d;
+  background-color: var(--tf-border);
   margin: 10px 0 15px 0;
 }
 
@@ -258,18 +258,18 @@
 }
 
 .total-pago-linea.efectivo {
-  background: linear-gradient(135deg, #192617 0%, #111b10 100%);
-  border: 1px solid #203d15;
+  background: linear-gradient(135deg, var(--tf-surface-2) 0%, var(--tf-bg-deep) 100%);
+  border: 1px solid var(--tf-border-strong);
 }
 
 .total-pago-linea.lista {
-  background-color: #222222;
-  border: 1px solid #333333;
+  background-color: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
 }
 
 .total-monto-label {
   font-size: 0.8rem;
-  color: #aaaaaa;
+  color: var(--tf-text-muted);
   margin-bottom: 2px;
 }
 
@@ -279,7 +279,7 @@
 }
 
 .total-pago-linea.efectivo .total-monto-valor {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 .ahorro-tag, .cuotas-tag {
@@ -290,17 +290,17 @@
 }
 
 .ahorro-tag {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 .cuotas-tag {
-  color: #007bff;
+  color: var(--tf-cyan);
 }
 
 /* Botones finales */
 .btn-comercial-checkout {
-  background-color: #28a745;
-  color: white;
+  background-color: var(--tf-orange);
+  color: var(--tf-text);
   border: none;
   padding: 14px;
   font-size: 1.05rem;
@@ -312,12 +312,12 @@
 }
 
 .btn-comercial-checkout:hover {
-  background-color: #218838;
+  background-color: var(--tf-orange-strong);
 }
 
 .link-seguir-comprando {
   text-align: center;
-  color: #888888;
+  color: var(--tf-text-dim);
   font-size: 0.85rem;
   text-decoration: none;
   margin-top: 15px;
@@ -325,7 +325,7 @@
 }
 
 .link-seguir-comprando:hover {
-  color: #ffffff;
+  color: var(--tf-text);
 }
 
 /* Responsivo */

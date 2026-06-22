@@ -1,21 +1,21 @@
 .resumen-vacio {
   text-align: center;
   padding: 60px;
-  background-color: #1a1a1a;
+  background-color: var(--tf-surface);
   border-radius: 10px;
-  color: #888;
+  color: var(--tf-text-dim);
 }
 
 .checkout-wrapper {
   padding: 10px 0 60px 0;
-  color: white;
+  color: var(--tf-text);
   font-family: system-ui, -apple-system, sans-serif;
 }
 
 .checkout-main-titulo {
   font-size: 1.8rem;
   margin-bottom: 30px;
-  border-left: 4px solid #007bff;
+  border-left: 4px solid var(--tf-cyan);
   padding-left: 12px;
 }
 
@@ -34,8 +34,8 @@
 }
 
 .checkout-seccion-card {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 25px;
 }
@@ -44,7 +44,7 @@
   font-size: 1.25rem;
   margin-top: 0;
   margin-bottom: 20px;
-  color: #ffffff;
+  color: var(--tf-text);
 }
 
 .form-inputs-grid {
@@ -66,15 +66,15 @@
 
 .input-group label {
   font-size: 0.88rem;
-  color: #aaaaaa;
+  color: var(--tf-text-muted);
   font-weight: 500;
 }
 
 .input-group input, .input-group textarea {
   padding: 10px 14px;
-  background-color: #252525;
-  border: 1px solid #333333;
-  color: white;
+  background-color: var(--tf-input);
+  border: 1px solid var(--tf-border);
+  color: var(--tf-text);
   border-radius: 6px;
   font-size: 0.95rem;
   outline: none;
@@ -82,13 +82,13 @@
 }
 
 .input-group input:focus, .input-group textarea:focus {
-  border-color: #007bff;
+  border-color: var(--tf-cyan);
 }
 
 .input-group input:disabled {
-  background-color: #1a1a1a;
-  color: #777777;
-  border-color: #222222;
+  background-color: var(--tf-surface);
+  color: var(--tf-text-dim);
+  border-color: var(--tf-surface-2);
   cursor: not-allowed;
 }
 
@@ -102,8 +102,8 @@
 .radio-option {
   display: flex;
   align-items: center;
-  background-color: #222222;
-  border: 1px solid #333333;
+  background-color: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
   padding: 15px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -112,16 +112,16 @@
 }
 
 .radio-option:hover {
-  border-color: #444444;
+  border-color: var(--tf-border-strong);
 }
 
 .radio-option.selected {
-  border-color: #007bff;
-  background-color: rgba(0, 123, 255, 0.05);
+  border-color: var(--tf-cyan);
+  background-color: var(--tf-cyan-soft);
 }
 
 .radio-option input[type="radio"] {
-  accent-color: #007bff; /* Color azul para el circulito nativo */
+  accent-color: var(--tf-cyan); /* Color azul para el circulito nativo */
   transform: scale(1.2);
 }
 
@@ -137,11 +137,11 @@
 
 .radio-txt span {
   font-size: 0.85rem;
-  color: #888888;
+  color: var(--tf-text-dim);
 }
 
 .descuento-alert {
-  color: #28a745 !important;
+  color: var(--tf-orange) !important;
   font-weight: 600;
 }
 
@@ -149,14 +149,14 @@
 .form-envio-subbloque {
   margin-top: 25px;
   padding-top: 20px;
-  border-top: 1px solid #2d2d2d;
+  border-top: 1px solid var(--tf-border);
 }
 
 .form-envio-subbloque h3 {
   font-size: 1.05rem;
   margin-top: 0;
   margin-bottom: 15px;
-  color: #ccc;
+  color: var(--tf-text-muted);
 }
 
 /* --- COLUMNA DERECHA FACTURACIÓN --- */
@@ -167,8 +167,8 @@
 }
 
 .orden-totales-fija {
-  background-color: #1a1a1a;
-  border: 1px solid #2d2d2d;
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 24px;
 }
@@ -194,7 +194,7 @@
 }
 
 .item-mini-cant {
-  color: #007bff;
+  color: var(--tf-cyan);
   font-weight: bold;
 }
 
@@ -203,7 +203,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  color: #ccc;
+  color: var(--tf-text-muted);
 }
 
 .item-mini-prc {
@@ -221,26 +221,26 @@
   display: flex;
   justify-content: space-between;
   font-size: 0.92rem;
-  color: #aaaaaa;
+  color: var(--tf-text-muted);
 }
 
 .descuento-verde {
-  color: #28a745;
+  color: var(--tf-orange);
 }
 
 .total-grande {
-  border-top: 1px solid #2d2d2d;
+  border-top: 1px solid var(--tf-border);
   padding-top: 15px;
   margin-top: 5px;
   font-size: 1.4rem;
   font-weight: 800;
-  color: white;
+  color: var(--tf-text);
 }
 
 .btn-confirmar-compra {
   width: 100%;
-  background-color: #28a745;
-  color: white;
+  background-color: var(--tf-orange);
+  color: var(--tf-text);
   border: none;
   padding: 15px;
   font-size: 1.1rem;
@@ -251,12 +251,12 @@
 }
 
 .btn-confirmar-compra:hover:not(:disabled) {
-  background-color: #218838;
+  background-color: var(--tf-orange-strong);
 }
 
 .btn-confirmar-compra:disabled {
-  background-color: #333;
-  color: #666;
+  background-color: var(--tf-border);
+  color: var(--tf-text-dim);
   cursor: not-allowed;
 }
 

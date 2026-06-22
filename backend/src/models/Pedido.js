@@ -1,8 +1,9 @@
 import crypto from 'crypto';
 
 export class Pedido {
-    constructor(id, id_usuario, fecha, hora, total, estado, metodo_pago, metodo_envio, costo_envio, direccion_envio, telefono_contacto) {
+    constructor(id, codigo, id_usuario, fecha, hora, total, estado, metodo_pago, metodo_envio, costo_envio, direccion_envio, telefono_contacto) {
         this.id = id;
+        this.codigo = codigo;
         this.usuario_id = id_usuario;
         this.fecha = fecha;
         this.hora = hora;
@@ -18,6 +19,10 @@ export class Pedido {
     // Getters
     getId() {
         return this.id;
+    }
+
+    getCodigo() {
+        return this.codigo;
     }
 
     getUsuarioId() {
@@ -69,6 +74,10 @@ export class Pedido {
         this.id = id;
     }
 
+    setCodigo(codigo) {
+        this.codigo = codigo;
+    }
+
     setUsuarioId(id_usuario) {
         this.usuario_id = id_usuario;
     }
@@ -115,7 +124,7 @@ export class Pedido {
 
     // Hash
     getHash() {
-        const data = `${this.usuario_id}-${this.fecha}-${this.hora}`;
+        const data = `${this.codigo}-${this.usuario_id}-${this.fecha}-${this.hora}`;
         return crypto.createHash('sha256').update(data).digest('hex');
     }
 }
