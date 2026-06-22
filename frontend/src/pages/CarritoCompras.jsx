@@ -1,5 +1,7 @@
+import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useCarrito } from '../context/CarritoContext';
+import Modal from '../components/Modal';
 import '../css/CarritoCompras.css';
 
 // Índice automático de hardware de Vite para enlazar las imágenes en subcarpetas
@@ -11,6 +13,7 @@ const todasLasImagenes = import.meta.glob('../assets/productos/**/*.{jpg,png,web
 function CarritoCompras() {
   const { carrito, actualizarCantidad, removerDelCarrito } = useCarrito();
   const navigate = useNavigate();
+  const [productoAEliminar, setProductoAEliminar] = useState(null);
 
   // Buscador de imágenes idéntico al del catálogo y ficha técnica
   const obtenerRutaImagen = (nombreProducto) => {
@@ -41,6 +44,12 @@ function CarritoCompras() {
   const procederAlPago = () => {
     // Redirecciona al checkout (Resumen de Compra)
     navigate('/resumen-compra');
+  };
+
+  const confirmarEliminacion = () => {
+    if (!productoAEliminar) return;
+    removerDelCarrito(productoAEliminar.id);
+    setProductoAEliminar(null);
   };
 
   if (carrito.length === 0) {
@@ -117,7 +126,7 @@ function CarritoCompras() {
                 </div>
 
                 {/* Botón de eliminación directa */}
-                <button className="btn-remover-producto" onClick={() => removerDelCarrito(item.id)} title="Eliminar del carrito">
+                <button className="btn-remover-producto" onClick={() => setProductoAEliminar(item)} title="Eliminar del carrito">
                   <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <polyline points="3 6 5 6 21 6"></polyline>
                     <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
@@ -173,6 +182,17 @@ function CarritoCompras() {
         </div>
 
       </div>
+
+      <Modal
+        abierto={!!productoAEliminar}
+        tipo="warning"
+        titulo="Quitar del carrito"
+        mensaje={productoAEliminar ? `¿Querés quitar "${productoAEliminar.nombre}" del carrito?` : ''}
+        textoCancelar="Cancelar"
+        textoConfirmar="Quitar"
+        onCerrar={() => setProductoAEliminar(null)}
+        onConfirmar={confirmarEliminacion}
+      />
     </div>
   );
 }

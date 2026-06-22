@@ -129,7 +129,7 @@ function CatalogoProductos() {
       ) : (
         <div className="grilla-productos">
           {productos.map(producto => (
-            <div key={producto.id} className="tarjeta-producto">
+            <Link key={producto.id} to={`/producto/${producto.id}`} className="tarjeta-producto">
               
               {/* Contenedor de la Imagen */}
               <div className="tarjeta-imagen-caja">
@@ -154,12 +154,8 @@ function CatalogoProductos() {
                   </span>
                   <span className="etiqueta-pago">Precio Especial Efectivo / Transferencia</span>
                 </div>
-
-                <Link to={`/producto/${producto.id}`} className="btn-ver-detalle">
-                  Ver Producto
-                </Link>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}

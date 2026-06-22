@@ -69,13 +69,44 @@
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  color: inherit;
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
 .tarjeta-producto:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  transform: translateY(-7px);
+  background-color: var(--tf-surface-2);
+  box-shadow: 0 0 0 1px rgba(79, 211, 255, 0.22), 0 18px 36px rgba(0, 183, 255, 0.18), 0 0 28px rgba(255, 107, 53, 0.08);
   border-color: var(--tf-cyan); /* Borde azul al pasar el mouse */
+}
+
+.tarjeta-producto::after {
+  content: "Ver detalle";
+  position: absolute;
+  right: 14px;
+  bottom: 14px;
+  color: var(--tf-cyan);
+  font-size: 0.78rem;
+  font-weight: 800;
+  opacity: 0;
+  text-transform: uppercase;
+  transform: translateY(6px);
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.tarjeta-producto:hover::after,
+.tarjeta-producto:focus-visible::after {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.tarjeta-producto:focus-visible {
+  border-color: var(--tf-cyan);
+  outline: 2px solid var(--tf-cyan);
+  outline-offset: 3px;
 }
 
 /* --- CAJA DE LA IMAGEN --- */
@@ -103,7 +134,7 @@
 
 /* --- INFORMACIÓN DEL PRODUCTO --- */
 .tarjeta-info {
-  padding: 20px;
+  padding: 20px 20px 42px;
   display: flex;
   flex-direction: column;
   flex-grow: 1; /* Empuja el botón siempre al fondo */

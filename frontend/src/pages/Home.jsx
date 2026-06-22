@@ -14,6 +14,7 @@ function Home() {
   const [productos, setProductos] = useState([]);
   const [destacado, setDestacado] = useState(null);
   const [cargando, setCargando] = useState(true);
+  const [slideActual, setSlideActual] = useState(0);
 
   useEffect(() => {
     let estaMontado = true;
@@ -38,6 +39,31 @@ function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const totalSlides = destacado ? 2 : 1;
+    const intervalo = setInterval(() => {
+      setSlideActual((actual) => (actual + 1) % totalSlides);
+    }, 5500);
+
+    return () => clearInterval(intervalo);
+  }, [destacado]);
+
+  const cambiarSlide = (indice) => {
+    setSlideActual(indice);
+  };
+
+  const obtenerTotalSlides = () => (destacado ? 2 : 1);
+
+  const irAlSlideAnterior = () => {
+    const totalSlides = obtenerTotalSlides();
+    setSlideActual((actual) => (actual - 1 + totalSlides) % totalSlides);
+  };
+
+  const irAlSlideSiguiente = () => {
+    const totalSlides = obtenerTotalSlides();
+    setSlideActual((actual) => (actual + 1) % totalSlides);
+  };
+
   // Buscador inteligente de imágenes idéntico al del Catálogo, Ficha técnica y Carrito
   const obtenerRutaImagen = (nombreProducto) => {
     try {
@@ -58,48 +84,88 @@ function Home() {
   return (
     <div className="home-container">
       
-      {/* --- SECCIÓN HERO (Banner Principal + Producto Estrella Flotante) --- */}
+      {/* --- CARRUSEL PRINCIPAL --- */}
       <section className="hero-section">
-        {/* Banner Principal de Bienvenida */}
-        <div className="hero-banner" style={{ backgroundImage: `url(${titanForgeBg})` }}>
-          <div className="hero-texto-overlay">
-            <img src={titanForgeLogo} alt="Titan Forge" className="hero-logo" />
-            <span className="hero-marca">Titan Forge</span>
-            <h2>Forjá tu próxima máquina</h2>
-            <p>Componentes, PCs armadas y servicio técnico especializado para llevar tu setup al siguiente nivel.</p>
-            <Link to="/tienda" className="btn-hero">Ver Catálogo General</Link>
-          </div>
-        </div>
+        <div className="hero-carousel">
+          <div className="hero-track" style={{ transform: `translateX(-${slideActual * 100}%)` }}>
+            <article className="hero-slide hero-banner" style={{ backgroundImage: `url(${titanForgeBg})` }}>
+              <div className="hero-texto-overlay">
+                <img src={titanForgeLogo} alt="Titan Forge" className="hero-logo" />
+                <span className="hero-marca">Titan Forge</span>
+                <h2>Forjá tu próxima máquina</h2>
+                <p>Componentes, PCs armadas y servicio técnico especializado para llevar tu setup al siguiente nivel.</p>
+                <Link to="/tienda" className="btn-hero">Ver Catálogo General</Link>
+              </div>
+            </article>
 
-        {/* Tarjeta lateral fija del Producto Destacado */}
-        <div className="hero-destacado">
-          <div className="destacado-etiqueta">🔥 PRODUCTO ESTRELLA</div>
-          {cargando ? (
-            <div className="loader-caja">Buscando componente estrella...</div>
-          ) : [{ destacadaFoto: destacado }].length > 0 && destacado ? (
-            <div className="destacado-card">
-              {/* Caja de Imagen para el destacado */}
-              <div className="destacado-img-contenedor">
-                <img 
-                  src={obtenerRutaImagen(destacado.nombre)} 
-                  alt={destacado.nombre} 
-                  onError={(e) => { e.target.src = 'https://via.placeholder.com/250?text=Hardware' }}
-                />
+            <article className="hero-slide hero-destacado-slide">
+              <div className="hero-destacado-copy">
+                <span className="destacado-etiqueta">Producto estrella</span>
+                <h2>{destacado ? destacado.nombre : 'Buscando componente estrella...'}</h2>
+                <p>Una pieza destacada de Titan Forge para quienes quieren rendimiento, estética y potencia en serio.</p>
+                {destacado && (
+                  <div className="destacado-precios hero-precios">
+                    <span className="precio-lista">Lista: ${Number(destacado.precio).toLocaleString('es-AR')}</span>
+                    <span className="precio-final">${(destacado.precio * 0.85).toLocaleString('es-AR')} <small>15% OFF</small></span>
+                  </div>
+                )}
+                {destacado ? (
+                  <Link to={`/producto/${destacado.id}`} className="btn-ver-destacado">
+                    Comprar Ahora
+                  </Link>
+                ) : (
+                  <Link to="/tienda" className="btn-ver-destacado">
+                    Explorar Productos
+                  </Link>
+                )}
               </div>
-              <h3 className="destacado-titulo" title={destacado.nombre}>{destacado.nombre}</h3>
-              
-              <div className="destacado-precios">
-                <span className="precio-lista">Lista: ${Number(destacado.precio).toLocaleString('es-AR')}</span>
-                <span className="precio-final">${(destacado.precio * 0.85).toLocaleString('es-AR')} <small>15% OFF</small></span>
+
+              <div className="hero-destacado-visual">
+                {cargando ? (
+                  <div className="loader-caja">Buscando componente estrella...</div>
+                ) : destacado ? (
+                  <img 
+                    src={obtenerRutaImagen(destacado.nombre)} 
+                    alt={destacado.nombre} 
+                    onError={(e) => { e.target.src = 'https://via.placeholder.com/420?text=Hardware' }}
+                  />
+                ) : (
+                  <div className="loader-caja">Sin stock destacado</div>
+                )}
               </div>
-              
-              <Link to={`/producto/${destacado.id}`} className="btn-ver-destacado">
-                Comprar Ahora
-              </Link>
-            </div>
-          ) : (
-            <div className="loader-caja">Sin stock destacado</div>
-          )}
+            </article>
+          </div>
+
+          <button
+            type="button"
+            className="hero-flecha hero-flecha-izquierda"
+            onClick={irAlSlideAnterior}
+            aria-label="Slide anterior"
+          >
+            ‹
+          </button>
+
+          <button
+            type="button"
+            className="hero-flecha hero-flecha-derecha"
+            onClick={irAlSlideSiguiente}
+            aria-label="Slide siguiente"
+          >
+            ›
+          </button>
+
+          <div className="hero-controles" aria-label="Controles del carrusel">
+            {[0, 1].map((indice) => (
+              <button
+                key={indice}
+                type="button"
+                className={`hero-control ${slideActual === indice ? 'activo' : ''}`}
+                onClick={() => cambiarSlide(indice)}
+                aria-label={indice === 0 ? 'Ver bienvenida' : 'Ver producto estrella'}
+                disabled={indice === 1 && !destacado}
+              />
+            ))}
+          </div>
         </div>
       </section>
 
@@ -112,7 +178,7 @@ function Home() {
         ) : (
           <div className="grilla-productos">
             {productos.map(producto => (
-              <div key={producto.id} className="tarjeta-producto">
+              <Link key={producto.id} to={`/producto/${producto.id}`} className="tarjeta-producto">
                 
                 {/* Contenedor de la Imagen (Marco Blanco Premium para Hardware) */}
                 <div className="tarjeta-imagen-caja">
@@ -137,13 +203,9 @@ function Home() {
                     </span>
                     <span className="etiqueta-pago">Efectivo / Transferencia</span>
                   </div>
-
-                  <Link to={`/producto/${producto.id}`} className="btn-ver-detalle">
-                    Ver Producto
-                  </Link>
                 </div>
 
-              </div>
+              </Link>
             ))}
           </div>
         )}

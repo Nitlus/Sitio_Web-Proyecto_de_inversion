@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useCarrito } from '../context/CarritoContext';
+import Modal from '../components/Modal';
 import '../css/Producto.css';
 
 // 🔮 Cargamos el mismo índice dinámico de hardware para ubicar las imágenes en las subcarpetas
@@ -15,6 +16,10 @@ function Producto() {
   const [producto, setProducto] = useState(null);
   const [cantidad, setCantidad] = useState(1);
   const [cargando, setCargando] = useState(true);
+  const [modalCarrito, setModalCarrito] = useState({
+    abierto: false,
+    mensaje: '',
+  });
 
   useEffect(() => {
     let estaMontado = true;
@@ -75,7 +80,10 @@ function Producto() {
 
   const manejarAgregarAlCarrito = () => {
     agregarAlCarrito(producto, cantidad);
-    alert(`¡Añadido al carrito: ${cantidad} unidad(es) de "${producto.nombre}"!`);
+    setModalCarrito({
+      abierto: true,
+      mensaje: `${cantidad} unidad(es) de "${producto.nombre}" se añadieron al carrito.`,
+    });
   };
 
   if (cargando) {
@@ -193,6 +201,15 @@ function Producto() {
           )}
         </div>
       </div>
+
+      <Modal
+        abierto={modalCarrito.abierto}
+        tipo="success"
+        titulo="Producto añadido"
+        mensaje={modalCarrito.mensaje}
+        textoConfirmar="Seguir comprando"
+        onCerrar={() => setModalCarrito({ abierto: false, mensaje: '' })}
+      />
 
     </div>
   );
