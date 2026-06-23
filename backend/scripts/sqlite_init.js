@@ -60,7 +60,7 @@ async function CrearBaseDeDatos() {
             CREATE TABLE IF NOT EXISTS pedidos (
                 id INTEGER PRIMARY KEY AUTOINCREMENT,
                 codigo TEXT NOT NULL UNIQUE CHECK(codigo GLOB '[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]'),
-                usuario_id INTEGER NOT NULL,
+                usuario_id INTEGER,
                 fecha TEXT NOT NULL,
                 hora TEXT NOT NULL,
                 total REAL NOT NULL,
@@ -70,9 +70,10 @@ async function CrearBaseDeDatos() {
                 costo_envio REAL NOT NULL DEFAULT 0,
                 direccion_envio TEXT NOT NULL,
                 telefono_contacto TEXT NOT NULL,
+                email_contacto TEXT NOT NULL,
                 FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
                     ON UPDATE CASCADE
-                    ON DELETE RESTRICT
+                    ON DELETE SET NULL
             );
 
             CREATE TABLE IF NOT EXISTS detalle_pedido (

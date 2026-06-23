@@ -80,7 +80,7 @@ function CatalogoProductos() {
       // 1. Tomamos el nombre y reemplazamos espacios y %
       const nombreFormateado = producto.nombre
         .replace(/ /g, '_')
-        .replace(/%/g, '') // ✨ FIX: Elimina los porcentajes
+        .replace(/%/g, '') // FIX: Elimina los porcentajes
         .toLowerCase();
       
       // 2. Buscamos en el índice de Vite el archivo que coincida con ese nombre
@@ -148,9 +148,9 @@ function CatalogoProductos() {
                 </h3>
                 
                 <div className="tarjeta-precios">
-                  {/* Precio calculado dinámicamente con 15% OFF */}
+                  {/* ✨ CAMBIO AQUÍ: Usamos producto.precio_lista (que ya viene pesificado del backend) */}
                   <span className="precio-transferencia">
-                    ${(producto.precio * 0.85).toLocaleString('es-AR')}
+                    ${(producto.precio_lista * 0.85).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                   </span>
                   <span className="etiqueta-pago">Precio Especial Efectivo / Transferencia</span>
                 </div>

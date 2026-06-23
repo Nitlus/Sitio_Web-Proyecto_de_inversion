@@ -34,7 +34,8 @@ function CarritoCompras() {
 
   // Cálculos económicos síncronos
   const calcularTotalLista = () => {
-    return carrito.reduce((acc, item) => acc + Number(item.precio || 0) * item.cantidad, 0);
+    // ✨ CAMBIO AQUÍ: Usamos item.precio_lista en lugar de item.precio
+    return carrito.reduce((acc, item) => acc + Number(item.precio_lista || 0) * item.cantidad, 0);
   };
 
   const calcularTotalTransferencia = () => {
@@ -72,7 +73,8 @@ function CarritoCompras() {
         {/* GRILLA IZQUIERDA: Listado de ítems seleccionados */}
         <div className="carrito-items-columna">
           {carrito.map((item) => {
-            const precioItemLista = Number(item.precio || 0);
+            // ✨ CAMBIO AQUÍ: Usamos item.precio_lista
+            const precioItemLista = Number(item.precio_lista || 0);
             const precioItemTransferencia = precioItemLista * 0.85;
 
             return (

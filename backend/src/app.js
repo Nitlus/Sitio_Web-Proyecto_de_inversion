@@ -2,7 +2,7 @@ const express = require('express');
 const cors = require('cors');
 
 const { seedDatabase } = require('../scripts/seed');
-const { sequelize, Usuario, Categoria, Producto, Pedido, DetallePedido } = require('./config/db');
+const { sequelize, Usuario, Categoria, Producto, Pedido, DetallePedido, asegurarEsquemaPedidos } = require('./config/db');
 const { cargarUsuarioOpcional } = require('./middlewares/auth');
 const usuariosRoutes = require('./routes/usuarios_routes');
 const categoriasRoutes = require('./routes/categorias_routes');
@@ -30,6 +30,7 @@ async function prepararBaseYSeedearSiHaceFalta() {
 	try {
 		await sequelize.authenticate();
 		await sequelize.sync();
+		await asegurarEsquemaPedidos();
 		const estado = await leerEstadoTablas();
 		const tablasConDatos = Object.values(estado).filter((total) => total > 0).length;
 		const tablasVacias = Object.values(estado).filter((total) => total === 0).length;

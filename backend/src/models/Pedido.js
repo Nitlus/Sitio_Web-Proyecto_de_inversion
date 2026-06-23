@@ -1,7 +1,7 @@
 import crypto from 'crypto';
 
 export class Pedido {
-    constructor(id, codigo, id_usuario, fecha, hora, total, estado, metodo_pago, metodo_envio, costo_envio, direccion_envio, telefono_contacto) {
+    constructor(id, codigo, id_usuario, fecha, hora, total, estado, metodo_pago, metodo_envio, costo_envio, direccion_envio, telefono_contacto, email_contacto) {
         this.id = id;
         this.codigo = codigo;
         this.usuario_id = id_usuario;
@@ -14,6 +14,7 @@ export class Pedido {
         this.costo_envio = costo_envio;
         this.direccion_envio = direccion_envio;
         this.telefono_contacto = telefono_contacto;
+        this.email_contacto = email_contacto;
     }
 
     // Getters
@@ -69,6 +70,10 @@ export class Pedido {
         return this.telefono_contacto;
     }
 
+    getEmailContacto() {
+        return this.email_contacto;
+    }
+
     // Setters
     setId(id) {
         this.id = id;
@@ -120,6 +125,10 @@ export class Pedido {
 
     setTelefonoContacto(telefono_contacto) {
         this.telefono_contacto = telefono_contacto;
+    }
+
+    setEmailContacto(email_contacto) {
+        this.email_contacto = email_contacto;
     }
 
     // Hash

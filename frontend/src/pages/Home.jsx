@@ -105,8 +105,9 @@ function Home() {
                 <p>Una pieza destacada de Titan Forge para quienes quieren rendimiento, estética y potencia en serio.</p>
                 {destacado && (
                   <div className="destacado-precios hero-precios">
-                    <span className="precio-lista">Lista: ${Number(destacado.precio).toLocaleString('es-AR')}</span>
-                    <span className="precio-final">${(destacado.precio * 0.85).toLocaleString('es-AR')} <small>15% OFF</small></span>
+                    {/* ✨ CAMBIO AQUÍ: Cambiados a destacado.precio_lista */}
+                    <span className="precio-lista">Lista: ${Number(destacado.precio_lista).toLocaleString('es-AR')}</span>
+                    <span className="precio-final">${(destacado.precio_lista * 0.85).toLocaleString('es-AR')} <small>15% OFF</small></span>
                   </div>
                 )}
                 {destacado ? (
@@ -197,9 +198,9 @@ function Home() {
                   </h3>
                   
                   <div className="tarjeta-precios">
-                    {/* Precio calculado dinámicamente con 15% de descuento por transferencia */}
+                    {/* ✨ CAMBIO AQUÍ: Cambiado a producto.precio_lista */}
                     <span className="precio-transferencia">
-                      ${(producto.precio * 0.85).toLocaleString('es-AR')}
+                      ${(producto.precio_lista * 0.85).toLocaleString('es-AR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </span>
                     <span className="etiqueta-pago">Efectivo / Transferencia</span>
                   </div>

@@ -70,7 +70,7 @@ function DetallePedido() {
             <p><strong>Alias:</strong> tuempresa.hardware.gamer</p>
             <p><strong>Total Neto:</strong> ${Number(pedido.total).toLocaleString('es-AR', { minimumFractionDigits: 2 })}</p>
           </div>
-          <a href={`https://wa.me/5493512345678?text=Hola!%20Adjunto%20comprobante%20del%20pedido%20${codigoPedido}`} target="_blank" rel="noreferrer" className="btn-whatsapp-comprobante">
+          <a href={`https://wa.me/5493517568602?text=Hola!%20Adjunto%20comprobante%20del%20pedido%20${codigoPedido}`} target="_blank" rel="noreferrer" className="btn-whatsapp-comprobante">
             💬 Enviar Comprobante por WhatsApp
           </a>
         </div>

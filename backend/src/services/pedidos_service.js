@@ -7,25 +7,26 @@ const ROL_CLIENTE = 'cliente';
 const CARACTERES_CODIGO = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 const LONGITUD_CODIGO_PEDIDO = 5;
 
-function esTransferencia(metodoPago) {
-	return String(metodoPago || '').trim().toLowerCase() === 'transferencia';
+function aplicaDescuentoPago(metodoPago) {
+    const metodoNormalizado = String(metodoPago || '').trim().toLowerCase();
+    return metodoNormalizado === 'transferencia' || metodoNormalizado === 'efectivo';
 }
 
 function calcularPrecioAplicado(precio, metodoPago) {
-	const precioBase = Number(precio ?? 0);
-	if (esTransferencia(metodoPago)) {
-		return Number((precioBase * 0.85).toFixed(2));
-	}
+    const precioBase = Number(precio ?? 0);
+    if (aplicaDescuentoPago(metodoPago)) {
+        return Number((precioBase * 0.85).toFixed(2));
+    }
 
-	return precioBase;
+    return precioBase;
 }
 
 function normalizarDetalle(detalle) {
-	return {
-		producto_id: Number(detalle.producto_id),
-		cantidad: Number(detalle.cantidad),
-		precio_unitario: Number(detalle.precio_unitario),
-	};
+    return {
+        producto_id: Number(detalle.producto_id),
+        cantidad: Number(detalle.cantidad),
+        precio_unitario: Number(detalle.precio_unitario),
+    };
 }
 
 function generarCodigoAleatorio() {
@@ -58,23 +59,30 @@ async function generarCodigoPedido(transaction = null) {
 }
 
 function obtenerDatosContactoPedido(data, usuarioContexto) {
+	const emailContacto = String(data.email_contacto || data.email || usuarioContexto?.email || '').trim().toLowerCase();
+
 	if (usuarioContexto?.autenticado) {
+		if (!emailContacto) {
+			const error = new Error('Para crear un pedido debés enviar email_contacto');
+			error.status = 400;
+			throw error;
+		}
+
 		return {
 			nombre: usuarioContexto.nombre,
-			email: usuarioContexto.email,
+			email: emailContacto,
 		};
 	}
 
 	const nombre = String(data.nombre || '').trim();
-	const email = String(data.email || '').trim().toLowerCase();
 
-	if (!nombre || !email) {
-		const error = new Error('Para crear un pedido como invitado debés enviar nombre y email');
+	if (!nombre || !emailContacto) {
+		const error = new Error('Para crear un pedido como invitado debés enviar nombre y email_contacto');
 		error.status = 400;
 		throw error;
 	}
 
-	return { nombre, email };
+	return { nombre, email: emailContacto };
 }
 
 async function validarDetallesPedido(detalles, transaction = null) {
@@ -111,37 +119,6 @@ function calcularTotalPedido({ detalles, costo_envio, total, metodo_pago }) {
 	}
 
 	return Number(costo_envio ?? 0);
-}
-
-function prepararPedidoTemporal(data, contacto, detalles, codigo) {
-	return {
-		id: null,
-		codigo,
-		usuario_id: null,
-		codigo_temporal: codigo,
-		nombre_contacto: contacto.nombre,
-		email_contacto: contacto.email,
-		fecha: data.fecha,
-		hora: data.hora,
-		total: calcularTotalPedido({
-			detalles,
-			costo_envio: data.costo_envio ?? 0,
-			total: data.total,
-			metodo_pago: data.metodo_pago,
-		}),
-		estado: data.estado ?? ESTADO_POR_DEFECTO,
-		metodo_pago: data.metodo_pago,
-		metodo_envio: data.metodo_envio,
-		costo_envio: data.costo_envio ?? 0,
-		direccion_envio: data.direccion_envio,
-		telefono_contacto: data.telefono_contacto,
-		detalles: detalles.map((detalle) => ({
-			producto_id: detalle.producto_id,
-			cantidad: detalle.cantidad,
-			precio_unitario: detalle.precio_unitario,
-			producto: detalle.producto,
-		})),
-	};
 }
 
 async function notificarPedido({ destinatario, nombre, codigoPedido, pedido, esInvitado }) {
@@ -184,7 +161,7 @@ async function listarPedidosPorUsuario(usuarioId) {
 	});
 }
 
-async function obtenerPedidoPorId(id) {
+async function obtenerPedidoPorId(id, options = {}) {
 	const where = /^\d+$/.test(String(id)) ? { id } : { codigo: String(id).trim().toUpperCase() };
 
 	return Pedido.findOne({
@@ -193,90 +170,87 @@ async function obtenerPedidoPorId(id) {
 			{ model: Usuario, as: 'usuario' },
 			{ model: DetallePedido, as: 'detalles', include: [{ model: Producto, as: 'producto' }] },
 		],
+		...(options.transaction ? { transaction: options.transaction } : {}),
 	});
 }
 
+// ✨ UNIFICADO: crearPedido ahora siempre persiste en la Base de Datos SQLite
 async function crearPedido(data, usuarioContexto = null) {
 	const contacto = obtenerDatosContactoPedido(data, usuarioContexto);
 	const detallesValidados = await validarDetallesPedido(Array.isArray(data.detalles) ? data.detalles : []);
 
-	if (usuarioContexto?.autenticado) {
-		return sequelize.transaction(async (transaction) => {
-			const codigo = await generarCodigoPedido(transaction);
+	return sequelize.transaction(async (transaction) => {
+		const codigo = await generarCodigoPedido(transaction);
+		
+		let usuarioId = null;
+		// Si es usuario registrado, validamos y asignamos su clave foránea
+		if (usuarioContexto?.autenticado) {
 			const usuario = await Usuario.findByPk(usuarioContexto.id, { transaction });
 			if (!usuario) {
 				const error = new Error('El usuario del pedido no existe');
 				error.status = 400;
 				throw error;
 			}
+			usuarioId = usuario.id;
+		}
 
-			const pedido = await Pedido.create(
-				{
-					codigo,
-					usuario_id: usuario.id,
-					fecha: data.fecha,
-					hora: data.hora,
-					total: calcularTotalPedido({
-						detalles: detallesValidados,
-						costo_envio: data.costo_envio ?? 0,
-						total: data.total,
-						metodo_pago: data.metodo_pago,
-					}),
-					estado: data.estado ?? ESTADO_POR_DEFECTO,
-					metodo_pago: data.metodo_pago,
-					metodo_envio: data.metodo_envio,
+		// Se inserta en la tabla de Pedidos (usuario_id quedará null si es invitado)
+		const pedido = await Pedido.create(
+			{
+				codigo,
+				usuario_id: usuarioId,
+				fecha: data.fecha,
+				hora: data.hora,
+				total: calcularTotalPedido({
+					detalles: detallesValidados,
 					costo_envio: data.costo_envio ?? 0,
-					direccion_envio: data.direccion_envio,
-					telefono_contacto: data.telefono_contacto,
-				},
+					total: data.total,
+					metodo_pago: data.metodo_pago,
+				}),
+				estado: data.estado ?? ESTADO_POR_DEFECTO,
+				metodo_pago: data.metodo_pago,
+				metodo_envio: data.metodo_envio,
+				costo_envio: data.costo_envio ?? 0,
+				direccion_envio: data.direccion_envio,
+				telefono_contacto: data.telefono_contacto,
+				email_contacto: contacto.email,
+			},
+			{ transaction }
+		);
+
+		// Guardamos la lista de hardware comprado vinculada al ID real generado
+		if (detallesValidados.length > 0) {
+			await DetallePedido.bulkCreate(
+				detallesValidados.map((detalle) => ({
+					pedido_id: pedido.id,
+					...normalizarDetalle(detalle),
+				})),
 				{ transaction }
 			);
+		}
 
-			if (detallesValidados.length > 0) {
-				await DetallePedido.bulkCreate(
-					detallesValidados.map((detalle) => ({
-						pedido_id: pedido.id,
-						...normalizarDetalle(detalle),
-					})),
-					{ transaction }
-				);
-			}
-
-			const pedidoCompleto = await obtenerPedidoPorId(pedido.id);
-			const notificacion = await notificarPedido({
-				destinatario: contacto.email,
-				nombre: contacto.nombre,
-				codigoPedido: codigo,
-				pedido: pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto,
-				esInvitado: false,
-			});
-
-			const respuesta = pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto;
-			return {
-				codigo,
-				codigo_temporal: codigo,
-				pedido: respuesta,
-				email: notificacion,
-			};
+		const pedidoCompleto = await obtenerPedidoPorId(pedido.id, { transaction });
+		
+		// Despachamos la notificación automatizada de Nodemailer
+		const notificacion = await notificarPedido({
+			destinatario: contacto.email,
+			nombre: contacto.nombre,
+			codigoPedido: codigo,
+			pedido: pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto,
+			esInvitado: !usuarioContexto?.autenticado,
 		});
-	}
 
-	const codigo = generarCodigoAleatorio();
-	const pedidoTemporal = prepararPedidoTemporal(data, contacto, detallesValidados, codigo);
-	const notificacion = await notificarPedido({
-		destinatario: contacto.email,
-		nombre: contacto.nombre,
-		codigoPedido: codigo,
-		pedido: pedidoTemporal,
-		esInvitado: true,
+		const respuesta = pedidoCompleto.toJSON ? pedidoCompleto.toJSON() : pedidoCompleto;
+		
+		// Retornamos de forma consistente el ID e información de persistencia
+		return {
+			id: pedido.id,
+			codigo,
+			codigo_temporal: codigo,
+			pedido: respuesta,
+			email: notificacion,
+		};
 	});
-
-	return {
-		codigo,
-		codigo_temporal: codigo,
-		pedido: pedidoTemporal,
-		email: notificacion,
-	};
 }
 
 async function actualizarPedido(id, data) {
@@ -287,7 +261,7 @@ async function actualizarPedido(id, data) {
 
 	await pedido.update({
 		codigo: data.codigo ?? pedido.codigo,
-		usuario_id: data.usuario_id ?? pedido.usuario_id,
+		usuario_id: Object.prototype.hasOwnProperty.call(data, 'usuario_id') ? data.usuario_id : pedido.usuario_id,
 		fecha: data.fecha ?? pedido.fecha,
 		hora: data.hora ?? pedido.hora,
 		total: calcularTotalPedido({
@@ -302,6 +276,7 @@ async function actualizarPedido(id, data) {
 		costo_envio: data.costo_envio ?? pedido.costo_envio,
 		direccion_envio: data.direccion_envio ?? pedido.direccion_envio,
 		telefono_contacto: data.telefono_contacto ?? pedido.telefono_contacto,
+		email_contacto: data.email_contacto ?? data.email ?? pedido.email_contacto,
 	});
 
 	return obtenerPedidoPorId(id);

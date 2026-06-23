@@ -121,7 +121,7 @@
 }
 
 .radio-option input[type="radio"] {
-  accent-color: var(--tf-cyan); /* Color azul para el circulito nativo */
+  accent-color: var(--tf-cyan); 
   transform: scale(1.2);
 }
 
@@ -164,6 +164,9 @@
   flex: 1;
   position: sticky;
   top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px; /* Separación vertical entre el resumen de totales y la pestaña de envíos */
 }
 
 .orden-totales-fija {
@@ -258,6 +261,66 @@
   background-color: var(--tf-border);
   color: var(--tf-text-dim);
   cursor: not-allowed;
+}
+
+/* --- ✨ ESTILOS NUEVOS: PESTAÑA LATERAL DE ENVÍOS --- */
+.checkout-shipping-info-card {
+  background-color: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkout-shipping-info-card h4 {
+  font-size: 1.05rem;
+  margin: 0;
+  color: var(--tf-cyan);
+  font-weight: 700;
+}
+
+.checkout-shipping-info-card p {
+  font-size: 0.85rem;
+  color: var(--tf-text-muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.shipping-rate-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.88rem;
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--tf-border);
+}
+
+.shipping-rate-row:last-of-type {
+  border-bottom: none;
+}
+
+.shipping-rate-row span {
+  color: var(--tf-text-muted);
+}
+
+.shipping-rate-row strong {
+  color: var(--tf-text);
+  font-weight: 600;
+}
+
+.shipping-rate-tip {
+  background-color: var(--tf-surface-2);
+  border-radius: 6px;
+  padding: 10px;
+  margin-top: 4px;
+}
+
+.shipping-rate-tip span {
+  font-size: 0.8rem;
+  color: var(--tf-text-muted);
+  line-height: 1.4;
 }
 
 /* Animación de entrada suave */

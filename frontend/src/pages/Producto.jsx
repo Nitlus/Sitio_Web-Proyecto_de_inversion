@@ -100,7 +100,8 @@ function Producto() {
   }
 
   const tieneStock = producto.stock > 0;
-  const precioLista = Number(producto.precio || 0);
+  // ✨ CAMBIO AQUÍ: Usamos producto.precio_lista en pesos argentinos
+  const precioLista = Number(producto.precio_lista || 0);
   const precioTransferencia = precioLista * 0.85; // 15% de descuento fijo solicitado
 
   return (

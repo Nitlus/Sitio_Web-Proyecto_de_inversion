@@ -131,7 +131,7 @@ const Pedido = sequelize.define(
 		},
 		usuario_id: {
 			type: DataTypes.INTEGER,
-			allowNull: false,
+			allowNull: true,
 		},
 		fecha: {
 			type: DataTypes.TEXT,
@@ -167,6 +167,10 @@ const Pedido = sequelize.define(
 			allowNull: false,
 		},
 		telefono_contacto: {
+			type: DataTypes.TEXT,
+			allowNull: false,
+		},
+		email_contacto: {
 			type: DataTypes.TEXT,
 			allowNull: false,
 		},
@@ -263,10 +267,104 @@ async function conectarBaseDeDatos() {
 	return sequelize;
 }
 
+async function asegurarEsquemaPedidos() {
+	const [columnas] = await sequelize.query('PRAGMA table_info(pedidos)');
+	if (!Array.isArray(columnas) || columnas.length === 0) {
+		return;
+	}
+
+	const columnasPorNombre = new Map(columnas.map((columna) => [columna.name, columna]));
+	const faltaEmailContacto = !columnasPorNombre.has('email_contacto');
+	const usuarioIdEsObligatorio = columnasPorNombre.get('usuario_id')?.notnull === 1;
+
+	if (!faltaEmailContacto && !usuarioIdEsObligatorio) {
+		return;
+	}
+
+	if (faltaEmailContacto) {
+		await sequelize.query("ALTER TABLE pedidos ADD COLUMN email_contacto TEXT NOT NULL DEFAULT 'No informado'");
+	}
+
+	if (!usuarioIdEsObligatorio) {
+		return;
+	}
+
+	await sequelize.query('PRAGMA foreign_keys = OFF');
+	try {
+		await sequelize.transaction(async (transaction) => {
+			await sequelize.query(
+				`
+				CREATE TABLE pedidos_nueva (
+					id INTEGER PRIMARY KEY AUTOINCREMENT,
+					codigo TEXT NOT NULL UNIQUE CHECK(codigo GLOB '[A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9][A-Z0-9]'),
+					usuario_id INTEGER,
+					fecha TEXT NOT NULL,
+					hora TEXT NOT NULL,
+					total REAL NOT NULL,
+					estado TEXT NOT NULL,
+					metodo_pago TEXT NOT NULL,
+					metodo_envio TEXT NOT NULL,
+					costo_envio REAL NOT NULL DEFAULT 0,
+					direccion_envio TEXT NOT NULL,
+					telefono_contacto TEXT NOT NULL,
+					email_contacto TEXT NOT NULL,
+					FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+						ON UPDATE CASCADE
+						ON DELETE SET NULL
+				)
+				`,
+				{ transaction }
+			);
+
+			await sequelize.query(
+				`
+				INSERT INTO pedidos_nueva (
+					id,
+					codigo,
+					usuario_id,
+					fecha,
+					hora,
+					total,
+					estado,
+					metodo_pago,
+					metodo_envio,
+					costo_envio,
+					direccion_envio,
+					telefono_contacto,
+					email_contacto
+				)
+				SELECT
+					id,
+					codigo,
+					usuario_id,
+					fecha,
+					hora,
+					total,
+					estado,
+					metodo_pago,
+					metodo_envio,
+					costo_envio,
+					direccion_envio,
+					telefono_contacto,
+					email_contacto
+				FROM pedidos
+				`,
+				{ transaction }
+			);
+
+			await sequelize.query('DROP TABLE pedidos', { transaction });
+			await sequelize.query('ALTER TABLE pedidos_nueva RENAME TO pedidos', { transaction });
+		});
+	} finally {
+		await sequelize.query('PRAGMA foreign_keys = ON');
+	}
+}
+
 module.exports = {
 	sequelize,
 	Sequelize,
 	conectarBaseDeDatos,
+	asegurarEsquemaPedidos,
 	Usuario,
 	Categoria,
 	Producto,

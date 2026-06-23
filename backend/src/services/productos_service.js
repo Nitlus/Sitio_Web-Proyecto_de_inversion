@@ -1,6 +1,9 @@
 const { Op } = require('sequelize');
 const { Producto, Categoria, DetallePedido } = require('../config/db');
 
+// NUEVO: Importamos nuestro servicio del dólar
+const { obtenerCotizacionBlue } = require('./dolar_service'); 
+
 function construirOrder(orden) {
 	switch (String(orden || '').toLowerCase()) {
 		case 'precio_asc':
@@ -119,21 +122,27 @@ function esTransferencia(metodoPago) {
 	return String(metodoPago || '').trim().toLowerCase() === 'transferencia';
 }
 
-function calcularPrecioFinal(precio, metodoPago) {
-	const precioBase = Number(precio ?? 0);
+// NUEVO: Ahora recibe la cotización y hace la conversión matemática
+function calcularPrecioFinal(precioUsd, cotizacion, metodoPago) {
+	const precioArs = Number(precioUsd ?? 0) * cotizacion; // Pesificamos
+
 	if (esTransferencia(metodoPago)) {
-		return Number((precioBase * 0.85).toFixed(2));
+		return Number((precioArs * 0.85).toFixed(2)); // Aplica 15% OFF sobre el valor en pesos
 	}
 
-	return precioBase;
+	return Number(precioArs.toFixed(2));
 }
 
-function mapearProducto(producto, metodoPago) {
+// NUEVO: Ahora recibe la cotización del dólar
+function mapearProducto(producto, cotizacion, metodoPago) {
 	const json = producto.toJSON();
+	const precioListaArs = Number(json.precio ?? 0) * cotizacion;
+
 	return {
 		...json,
-		precio_lista: Number(json.precio ?? 0),
-		precio_final: calcularPrecioFinal(json.precio, metodoPago),
+		precio_usd: Number(json.precio ?? 0), // Opcional: Le mandamos al front el valor original
+		precio_lista: Number(precioListaArs.toFixed(2)), // Precio pesificado
+		precio_final: calcularPrecioFinal(json.precio, cotizacion, metodoPago),
 	};
 }
 
@@ -145,6 +154,9 @@ async function listarProductos(filtros = {}) {
 		where.categoria_id = { [Op.in]: idsCategorias };
 	}
 
+	// NUEVO: Pedimos el dólar ANTES de buscar los productos (una sola vez)
+	const cotizacionActual = await obtenerCotizacionBlue();
+
 	const productos = await Producto.findAll({
 		where,
 		include: [
@@ -154,7 +166,8 @@ async function listarProductos(filtros = {}) {
 		order: construirOrder(filtros.orden),
 	});
 
-	return productos.map((producto) => mapearProducto(producto, filtros.metodo_pago));
+	// NUEVO: Le pasamos la cotización al mapeador
+	return productos.map((producto) => mapearProducto(producto, cotizacionActual, filtros.metodo_pago));
 }
 
 async function obtenerProductoPorId(id) {
@@ -169,14 +182,16 @@ async function obtenerProductoPorId(id) {
 		return null;
 	}
 
-	return mapearProducto(producto);
+	// NUEVO: Pedimos el dólar y mapeamos
+	const cotizacionActual = await obtenerCotizacionBlue();
+	return mapearProducto(producto, cotizacionActual);
 }
 
 async function crearProducto(data) {
 	return Producto.create({
 		nombre: data.nombre,
 		descripcion: data.descripcion ?? null,
-		precio: data.precio,
+		precio: data.precio, // Acá deberías guardar el precio en DÓLARES
 		stock: data.stock ?? 0,
 		tipo_producto: data.tipo_producto,
 		condicion: data.condicion,
@@ -193,7 +208,7 @@ async function actualizarProducto(id, data) {
 	await producto.update({
 		nombre: data.nombre ?? producto.nombre,
 		descripcion: data.descripcion ?? producto.descripcion,
-		precio: data.precio ?? producto.precio,
+		precio: data.precio ?? producto.precio, // Sigue siendo en USD
 		stock: data.stock ?? producto.stock,
 		tipo_producto: data.tipo_producto ?? producto.tipo_producto,
 		condicion: data.condicion ?? producto.condicion,
