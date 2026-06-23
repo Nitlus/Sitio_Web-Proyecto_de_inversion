@@ -12,9 +12,10 @@ function DetallePedido() {
 
     const obtenerInformacionPedido = async () => {
       try {
-        const respuesta = await fetch(`http://localhost:3000/api/pedidos/${id}`, {
+        const respuesta = await fetch(`https://unclog-playmate-slush.ngrok-free.dev/api/pedidos/${id}`, {
           headers: {
-            'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
+            'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : '',
+            'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
           }
         });
         if (!respuesta.ok) throw new Error("No se pudo recuperar la orden");

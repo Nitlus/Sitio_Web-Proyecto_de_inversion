@@ -19,9 +19,9 @@ function Login() {
 
     try {
       // Petición exacta a tu controlador de usuarios en el backend
-      const respuesta = await fetch('http://localhost:3000/api/usuarios/login', {
+      const respuesta = await fetch('https://unclog-playmate-slush.ngrok-free.dev/api/usuarios/login', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
         body: JSON.stringify({ email, contraseña: password }) // Coincide con tu modelo de Sequelize
       });
 

@@ -38,7 +38,7 @@ function RedireccionDestacado() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/productos')
+    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos')
       .then(res => res.json())
       .then(productos => {
         if (productos && productos.length > 0) {

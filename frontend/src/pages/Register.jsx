@@ -28,9 +28,9 @@ function Register() {
 
     try {
       // Petición POST de registro hacia tu API
-      const respuesta = await fetch('http://localhost:3000/api/usuarios/register', {
+      const respuesta = await fetch('https://unclog-playmate-slush.ngrok-free.dev/api/usuarios/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 'Content-Type': 'application/json', 'ngrok-skip-browser-warning': 'true' },
         body: JSON.stringify({
           nombre: formData.nombre,
           apellido: formData.apellido,

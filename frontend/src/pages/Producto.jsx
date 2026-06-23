@@ -26,7 +26,11 @@ function Producto() {
 
     const obtenerDetalleProducto = async () => {
       try {
-        const respuesta = await fetch(`http://localhost:3000/api/productos/${id}`);
+        const respuesta = await fetch(`https://unclog-playmate-slush.ngrok-free.dev/api/productos/${id}`, {
+          headers: {
+            'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
+          }
+        });
         if (!respuesta.ok) throw new Error("Producto no encontrado");
         
         const datos = await respuesta.json();

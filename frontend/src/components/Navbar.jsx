@@ -23,7 +23,11 @@ function Navbar() {
 
   // 1. Efecto para buscar las categorías de tu backend Node.js
   useEffect(() => {
-    fetch('http://localhost:3000/api/categorias')
+    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/categorias', {
+      headers: {
+        'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
+      }
+    })
       .then(res => res.json())
       .then(data => {
         // Filtramos para quedarnos solo con las categorías padre (las que no tienen parent_id)

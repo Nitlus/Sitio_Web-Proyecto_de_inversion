@@ -54,7 +54,7 @@ async function prepararBaseYSeedearSiHaceFalta() {
 }
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(cargarUsuarioOpcional);
 app.use('/api/usuarios', usuariosRoutes);
 app.use('/api/categorias', categoriasRoutes);

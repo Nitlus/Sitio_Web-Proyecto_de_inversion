@@ -15,10 +15,11 @@ function HistorialPedidos() {
     const obtenerHistorial = async () => {
       try {
         // Hacemos la petición al endpoint protegido de pedidos
-        const respuesta = await fetch('http://localhost:3000/api/pedidos/mis-pedidos', {
+        const respuesta = await fetch('https://unclog-playmate-slush.ngrok-free.dev/api/pedidos/mis-pedidos', {
           headers: {
             // Enviamos el token JWT para que el backend reconozca al usuario de forma segura
-            'Authorization': `Bearer ${localStorage.getItem('token')}`
+            'Authorization': `Bearer ${localStorage.getItem('token')}`,
+            'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
           }
         });
 

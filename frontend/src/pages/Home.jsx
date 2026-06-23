@@ -20,7 +20,11 @@ function Home() {
     let estaMontado = true;
 
     // Traemos los productos del backend.
-    fetch('http://localhost:3000/api/productos?orden=precio_desc')
+    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos?orden=precio_desc', {
+      headers: {
+        'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
+      }
+    })
       .then(res => res.json())
       .then(data => {
         if (estaMontado && data.length > 0) {

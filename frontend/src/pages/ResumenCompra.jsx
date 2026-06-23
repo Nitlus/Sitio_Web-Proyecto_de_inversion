@@ -162,11 +162,12 @@ function ResumenCompra() {
     };
 
     try {
-      const respuesta = await fetch('http://localhost:3000/api/pedidos', {
+      const respuesta = await fetch('https://unclog-playmate-slush.ngrok-free.dev/api/pedidos', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : ''
+          'Authorization': localStorage.getItem('token') ? `Bearer ${localStorage.getItem('token')}` : '',
+          'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
         },
         body: JSON.stringify(pedidoPayload)
       });
