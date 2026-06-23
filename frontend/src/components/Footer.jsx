@@ -5,12 +5,18 @@ function Footer() {
     <footer className="sitio-footer">
       <div className="footer-contenido">
         
+        {/* ✨ NUEVO: Sobre Nosotros */}
+        <div className="footer-seccion footer-sobre-nosotros">
+          <h3>Sobre Titan Forge</h3>
+          <p>Somos una casa especializada en soluciones informáticas. Nos dedicamos a la venta de hardware de última generación, computadoras prearmadas y componentes refaccionados de alta calidad.</p>
+          <p>Además, contamos con un taller técnico experto en armado, limpieza profunda y reparación de PCs para llevar tu setup al máximo rendimiento.</p>
+        </div>
+
         {/* Sucursales y Horarios */}
         <div className="footer-seccion">
           <h3>Nuestras Sucursales</h3>
           <p>📍 Obispo Salguero 453, Nueva Córdoba </p>
-          <p>📍 Obispo Trejo 320, Barrio Centro</p>
-          <p>⏰ Horarios: Lunes a Viernes de 09:00 a 19:00 hs. Sábados de 09:00 a 13:00 hs.</p>
+          <p>⏰ Lunes a Viernes de 09:00 a 19:00 hs.<br/>Sábados de 09:00 a 13:00 hs.</p>
         </div>
 
         {/* Contacto directo */}

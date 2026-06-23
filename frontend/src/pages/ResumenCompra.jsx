@@ -282,13 +282,6 @@ function ResumenCompra() {
                       <span>📍 Obispo Salguero 453, Nueva Córdoba</span>
                     </div>
                   </label>
-                  <label className={`radio-option ${formData.sucursalRetiro === 'centro' ? 'selected' : ''}`}>
-                    <input type="radio" name="sucursalRetiro" value="centro" checked={formData.sucursalRetiro === 'centro'} onChange={handleChange} />
-                    <div className="radio-txt">
-                      <strong>Barrio Centro</strong>
-                      <span>📍 Obispo Trejo 320, Barrio Centro</span>
-                    </div>
-                  </label>
                 </div>
               </div>
             )}

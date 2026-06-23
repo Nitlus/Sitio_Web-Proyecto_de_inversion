@@ -18,7 +18,13 @@
 
 .footer-seccion {
   flex: 1;
-  min-width: 250px;
+  min-width: 200px; /* Reduje levemente para que entren bien las 4 columnas */
+}
+
+/* Le damos un poco más de jerarquía visual a la descripción de la empresa */
+.footer-sobre-nosotros {
+  flex: 1.5; 
+  padding-right: 20px;
 }
 
 .footer-seccion h3 {
@@ -101,3 +107,4 @@
     gap: 25px;
   }
 }
+

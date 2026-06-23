@@ -13,7 +13,7 @@ async function obtenerCotizacionBlue() {
 
 	try {
 		// Petición a la API gratuita
-		const response = await fetch('https://dolarapi.com/v1/dolares/blue');
+		const response = await fetch('https://dolarapi.com/v1/dolares/bolsa');
 		const data = await response.json();
 		
 		cotizacionCache = data.venta; // Usamos el precio de "Venta" del Blue
