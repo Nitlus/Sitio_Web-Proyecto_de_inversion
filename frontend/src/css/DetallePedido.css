@@ -31,7 +31,7 @@
 .tracking-page-container {
   padding: 10px 0 60px 0;
   color: var(--tf-text);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--tf-font-main);
 }
 
 /* --- ENCABEZADO DE SEGUIMIENTO --- */
@@ -44,16 +44,24 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 25px;
+  gap: 18px;
+  min-width: 0;
+}
+
+.header-id-caja {
+  min-width: 0;
 }
 
 .header-id-caja h1 {
   margin: 0 0 6px 0;
   font-size: 1.8rem;
+  overflow-wrap: anywhere;
 }
 
 .codigo-temporal-tag {
   font-size: 0.85rem;
   color: var(--tf-text-dim);
+  overflow-wrap: anywhere;
 }
 
 .codigo-temporal-tag strong {
@@ -67,6 +75,9 @@
   font-weight: bold;
   font-size: 0.95rem;
   letter-spacing: 0.5px;
+  text-align: center;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .status-badge-grande.pendiente_de_pago, .status-badge-grande.pendiente {
@@ -91,14 +102,17 @@
 .tracking-layout-cuerpo {
   display: flex;
   gap: 30px;
+  min-width: 0;
 }
 
 .tracking-detalles-col {
   flex: 1.4;
+  min-width: 0;
 }
 
 .tracking-acciones-col {
   flex: 1;
+  min-width: 0;
 }
 
 .tracking-subcard {
@@ -106,6 +120,7 @@
   border: 1px solid var(--tf-border);
   border-radius: 12px;
   padding: 25px;
+  min-width: 0;
 }
 
 .tracking-subcard h2 {
@@ -125,13 +140,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 16px;
   font-size: 0.95rem;
+  min-width: 0;
 }
 
 .prod-ped-info {
   display: flex;
   gap: 12px;
   max-width: 80%;
+  min-width: 0;
 }
 
 .prod-ped-cant {
@@ -145,10 +163,12 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  min-width: 0;
 }
 
 .prod-ped-subtotal {
   font-weight: 500;
+  white-space: nowrap;
 }
 
 .tracking-divider {
@@ -167,8 +187,14 @@
 .total-fila-tracking {
   display: flex;
   justify-content: space-between;
+  gap: 16px;
   font-size: 0.9rem;
   color: var(--tf-text-muted);
+}
+
+.total-fila-tracking > span:last-child,
+.total-fila-tracking > strong:last-child {
+  text-align: right;
 }
 
 .entrega-metodo-val {
@@ -179,6 +205,11 @@
 .direccion-desglose {
   font-size: 0.85rem;
   margin-top: -4px;
+  align-items: flex-start;
+}
+
+.direccion-desglose span:last-child {
+  overflow-wrap: anywhere;
 }
 
 .total-destacado-linea {
@@ -198,6 +229,7 @@
   border-radius: 12px;
   padding: 25px;
   height: fit-content;
+  min-width: 0;
 }
 
 .instrucciones-caja h3 {
@@ -234,6 +266,7 @@
   margin: 6px 0;
   font-size: 0.88rem;
   color: var(--tf-text-muted);
+  overflow-wrap: anywhere;
 }
 
 .btn-whatsapp-comprobante {
@@ -282,7 +315,110 @@
     align-items: flex-start;
     gap: 15px;
   }
+
+  .status-badge-grande {
+    white-space: normal;
+  }
+
   .tracking-layout-cuerpo {
     flex-direction: column;
+  }
+}
+
+@media (max-width: 640px) {
+  .tracking-loading,
+  .tracking-error-caja {
+    padding: 42px 18px;
+  }
+
+  .tracking-page-container {
+    padding-top: 6px;
+  }
+
+  .tracking-header-card,
+  .tracking-subcard,
+  .instrucciones-caja {
+    padding: 18px;
+    border-radius: 10px;
+  }
+
+  .header-id-caja h1 {
+    font-size: 1.45rem;
+    line-height: 1.12;
+  }
+
+  .codigo-temporal-tag {
+    display: block;
+    line-height: 1.35;
+  }
+
+  .status-badge-grande {
+    width: 100%;
+    padding: 9px 12px;
+    font-size: 0.86rem;
+  }
+
+  .tracking-subcard h2,
+  .instrucciones-caja h3 {
+    font-size: 1.05rem;
+  }
+
+  .producto-pedido-fila {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 6px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(79, 211, 255, 0.12);
+  }
+
+  .producto-pedido-fila:last-child {
+    border-bottom: none;
+    padding-bottom: 0;
+  }
+
+  .prod-ped-info {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .prod-ped-nombre {
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+
+  .prod-ped-subtotal {
+    align-self: flex-end;
+  }
+
+  .total-fila-tracking {
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .total-fila-tracking > span:last-child,
+  .total-fila-tracking > strong:last-child {
+    text-align: left;
+  }
+
+  .total-destacado-linea {
+    font-size: 1.12rem;
+  }
+
+  .btn-whatsapp-comprobante {
+    font-size: 0.9rem;
+    padding: 11px;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 420px) {
+  .tracking-header-card,
+  .tracking-subcard,
+  .instrucciones-caja {
+    padding: 15px;
+  }
+
+  .prod-ped-info {
+    gap: 8px;
   }
 }

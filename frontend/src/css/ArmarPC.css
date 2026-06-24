@@ -1,7 +1,7 @@
 .servicios-container {
   padding: 40px 20px 80px 20px;
   color: var(--tf-text);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--tf-font-main);
   max-width: 1180px;
   margin: 0 auto;
 }

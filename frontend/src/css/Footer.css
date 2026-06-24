@@ -2,7 +2,7 @@
   background-color: var(--tf-surface); /* Mismo fondo de la Navbar */
   color: var(--tf-text);
   padding: 45px 40px 20px 40px;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--tf-font-main);
   border-top: 1px solid var(--tf-border); /* Línea divisoria superior que espeja el hr de la navbar */
   margin-top: auto; /* Mantener abajo siempre */
 }
@@ -107,4 +107,3 @@
     gap: 25px;
   }
 }
-

@@ -4,7 +4,7 @@
   align-items: center;
   padding: 60px 20px;
   min-height: 60vh;
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--tf-font-main);
 }
 
 .busqueda-card {

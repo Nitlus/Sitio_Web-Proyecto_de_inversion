@@ -1,9 +1,12 @@
+/* =========================================
+   ESTILOS GENERALES Y FILA 1
+========================================= */
 .navbar-container {
   background:
     linear-gradient(180deg, rgba(79, 211, 255, 0.08), transparent 55%),
     var(--tf-surface);
   color: var(--tf-text);
-  padding: 15px 40px; /* Más aire a los costados */
+  padding: 15px 40px;
   font-family: inherit;
   box-shadow: var(--tf-shadow);
   border-bottom: 1px solid var(--tf-border);
@@ -11,7 +14,6 @@
   z-index: 50;
 }
 
-/* --- FILA 1 --- */
 .navbar-fila-1 {
   display: flex;
   justify-content: space-between;
@@ -21,16 +23,12 @@
 }
 
 .navbar-logo {
-  color: var(--tf-text);
-  font-size: 1.6rem;
-  font-weight: 800;
   text-decoration: none;
-  letter-spacing: 0;
-  transition: color 0.2s ease;
+  transition: transform 0.2s ease;
   display: flex;
   align-items: center;
   gap: 12px;
-  min-width: 190px;
+  min-width: 230px;
 }
 
 .navbar-logo-img {
@@ -40,15 +38,54 @@
   filter: drop-shadow(0 0 10px rgba(79, 211, 255, 0.45));
 }
 
-.navbar-logo span {
-  line-height: 1;
-  text-transform: uppercase;
-}
-
 .navbar-logo:hover {
-  color: var(--tf-cyan);
+  transform: translateY(-1px);
 }
 
+/* --- TÍTULO TITAN FORGE (ESTILO ELEGIDO) --- */
+.navbar-logo span {
+  /* Estructura base para que no se rompa la web */
+  position: relative;
+  display: inline-block;
+  line-height: 1;
+  font-size: clamp(1.45rem, 2vw, 1.85rem);
+  text-transform: uppercase;
+  white-space: nowrap;
+  
+  /* Estilo visual metálico elegido */
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 900;
+  letter-spacing: 0px;
+  background: linear-gradient(180deg, #FFFFFF 0%, #708090 71%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  -webkit-text-stroke: 0px rgba(0, 255, 255, 0.6);
+  z-index: 2;
+}
+
+/* Sutil aura de fondo para darle profundidad al metal */
+.navbar-logo span::after {
+  content: "Titan Forge";
+  position: absolute;
+  inset: 0;
+  left: 0;
+  top: 0;
+  z-index: -1;
+  color: transparent;
+  -webkit-text-stroke: 4px rgba(0, 210, 255, 0.3);
+  filter: blur(5px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+
+.navbar-logo:hover span::after {
+  opacity: 1; /* El resplandor aparece levemente al pasar el mouse */
+}
+
+/* =========================================
+   BUSCADOR Y AUTENTICACIÓN
+========================================= */
 .navbar-search {
   display: flex;
   flex: 1;
@@ -129,15 +166,16 @@
   color: var(--tf-cyan);
 }
 
-/* --- SEPARADOR --- */
+/* =========================================
+   SEPARADOR Y FILA 2 (NAVEGACIÓN)
+========================================= */
 .navbar-divider {
   border: 0;
   height: 1px;
-  background-color: var(--tf-border); /* Separador sutil */
+  background-color: var(--tf-border);
   margin: 4px 0;
 }
 
-/* --- FILA 2 --- */
 .navbar-fila-2 {
   display: flex;
   justify-content: space-between;
@@ -175,7 +213,7 @@
 }
 
 .navbar-carrito:hover {
-  color: var(--tf-orange); /* El carrito brilla en verde de éxito al pasar el mouse */
+  color: var(--tf-orange);
   transform: scale(1.05);
 }
 
@@ -195,8 +233,9 @@
   justify-content: center;
 }
 
-/* --- DROPDOWN INTERACTIVO (CASCADA LATERAL) --- */
-
+/* =========================================
+   DROPDOWN DE PRODUCTOS
+========================================= */
 .dropdown-container {
   position: relative;
 }
@@ -218,7 +257,6 @@
   color: var(--tf-cyan);
 }
 
-/* El menú principal que cae hacia abajo */
 .dropdown-menu {
   position: absolute;
   top: 130%;
@@ -240,12 +278,10 @@
   margin-bottom: 4px;
 }
 
-/* El envoltorio de cada categoría (importante para que el panel lateral tome esto como eje) */
 .dropdown-item-wrapper {
-  position: relative; /* Clave para el submenú lateral */
+  position: relative;
 }
 
-/* Link de la categoría principal */
 .dropdown-item-link {
   display: flex;
   justify-content: space-between;
@@ -263,7 +299,6 @@
   color: var(--tf-cyan);
 }
 
-/* La flechita indicadora lateral */
 .dropdown-arrow {
   color: var(--tf-text-muted);
   font-size: 1.2rem;
@@ -274,11 +309,10 @@
   color: var(--tf-cyan);
 }
 
-/* --- PANEL LATERAL DE SUBCATEGORÍAS --- */
 .subcategorias-panel-lateral {
   position: absolute;
-  top: -8px; /* Se alinea perfecto con el borde superior de la categoría */
-  left: 100%; /* ¡La magia! Lo empuja exactamente a la derecha de la caja negra */
+  top: -8px;
+  left: 100%;
   background-color: var(--tf-surface);
   border: 1px solid var(--tf-border);
   border-radius: 8px;
@@ -303,7 +337,6 @@
   transform: translateX(0);
 }
 
-/* Links individuales de subcategoría */
 .subcategoria-link {
   padding: 10px 20px;
   color: var(--tf-text-muted);
@@ -315,11 +348,10 @@
 .subcategoria-link:hover {
   background-color: var(--tf-surface-hover);
   color: var(--tf-text);
-  border-left: 3px solid var(--tf-cyan); /* Pequeño acento estético Titan Forge */
+  border-left: 3px solid var(--tf-cyan);
   padding-left: 17px;
 }
 
-/* Pequeño espacio para separar el panel derecho del menú principal y que el mouse no "se caiga" */
 .subcategorias-panel-lateral::before {
   content: '';
   position: absolute;
@@ -330,6 +362,9 @@
   background: transparent;
 }
 
+/* =========================================
+   MEDIA QUERIES (RESPONSIVE)
+========================================= */
 @media (max-width: 920px) {
   .navbar-container {
     padding: 14px 18px;
@@ -343,12 +378,16 @@
   .navbar-logo {
     flex: 1 1 auto;
     min-width: 0;
-    font-size: 1.25rem;
   }
 
   .navbar-logo-img {
     width: 40px;
     height: 40px;
+  }
+
+  /* Ajuste de tipografía metálica para tablets */
+  .navbar-logo span {
+    font-size: clamp(1.18rem, 4.2vw, 1.45rem);
   }
 
   .navbar-auth {
@@ -417,8 +456,9 @@
     padding: 12px;
   }
 
+  /* Ajuste de tipografía metálica para celulares */
   .navbar-logo span {
-    font-size: 1rem;
+    font-size: clamp(1.05rem, 5.2vw, 1.25rem);
   }
 
   .navbar-auth {

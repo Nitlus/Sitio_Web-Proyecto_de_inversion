@@ -32,7 +32,7 @@
 .carrito-page-wrapper {
   padding: 10px 0 60px 0;
   color: var(--tf-text);
-  font-family: system-ui, -apple-system, sans-serif;
+  font-family: var(--tf-font-main);
 }
 
 .carrito-page-titulo {
