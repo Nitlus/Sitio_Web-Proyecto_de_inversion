@@ -38,7 +38,11 @@ function RedireccionDestacado() {
   const [error, setError] = useState(false);
 
   useEffect(() => {
-    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos')
+    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos?orden=mas_pedido', {
+      headers: {
+        'ngrok-skip-browser-warning': 'true'
+      }
+    })
       .then(res => res.json())
       .then(productos => {
         if (productos && productos.length > 0) {

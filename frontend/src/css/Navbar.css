@@ -7,6 +7,8 @@
   font-family: inherit;
   box-shadow: var(--tf-shadow);
   border-bottom: 1px solid var(--tf-border);
+  position: relative;
+  z-index: 50;
 }
 
 /* --- FILA 1 --- */
@@ -15,6 +17,7 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 12px;
+  gap: 18px;
 }
 
 .navbar-logo {
@@ -50,7 +53,8 @@
   display: flex;
   flex: 1;
   max-width: 550px;
-  margin: 0 30px;
+  margin: 0;
+  min-width: 220px;
 }
 
 .navbar-search input {
@@ -87,12 +91,15 @@
 .navbar-auth {
   display: flex;
   align-items: center;
+  flex-shrink: 0;
 }
 
 .navbar-user-box {
   display: flex;
   align-items: center;
   gap: 15px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
 }
 
 .navbar-user-greeting {
@@ -136,15 +143,23 @@
   justify-content: space-between;
   align-items: center;
   padding-top: 12px;
+  gap: 20px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 25px;
+  min-width: 0;
 }
 
 .navbar-links a {
   color: var(--tf-text-muted);
   text-decoration: none;
-  margin-right: 25px;
   font-size: 0.95rem;
   font-weight: 500;
   transition: color 0.2s ease;
+  white-space: nowrap;
 }
 
 .navbar-links a:hover {
@@ -156,6 +171,7 @@
   display: flex;
   align-items: center;
   transition: color 0.2s ease, transform 0.2s ease;
+  flex-shrink: 0;
 }
 
 .navbar-carrito:hover {
@@ -194,9 +210,11 @@
   font-weight: bold;
   padding: 4px 0;
   transition: color 0.2s;
+  white-space: nowrap;
 }
 
-.btn-productos:hover {
+.btn-productos:hover,
+.btn-productos:focus-visible {
   color: var(--tf-cyan);
 }
 
@@ -214,6 +232,12 @@
   padding: 8px 0;
   display: flex;
   flex-direction: column;
+}
+
+.dropdown-todos-productos {
+  color: var(--tf-orange);
+  border-bottom: 1px solid var(--tf-border);
+  margin-bottom: 4px;
 }
 
 /* El envoltorio de cada categoría (importante para que el panel lateral tome esto como eje) */
@@ -264,6 +288,19 @@
   display: flex;
   flex-direction: column;
   z-index: 1001;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateX(-8px);
+  transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s ease;
+}
+
+.dropdown-item-wrapper:hover .subcategorias-panel-lateral,
+.dropdown-item-wrapper:focus-within .subcategorias-panel-lateral {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateX(0);
 }
 
 /* Links individuales de subcategoría */
@@ -291,4 +328,143 @@
   height: 100%;
   width: 5px;
   background: transparent;
+}
+
+@media (max-width: 920px) {
+  .navbar-container {
+    padding: 14px 18px;
+  }
+
+  .navbar-fila-1 {
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .navbar-logo {
+    flex: 1 1 auto;
+    min-width: 0;
+    font-size: 1.25rem;
+  }
+
+  .navbar-logo-img {
+    width: 40px;
+    height: 40px;
+  }
+
+  .navbar-auth {
+    justify-content: flex-end;
+  }
+
+  .navbar-auth a {
+    margin-left: 12px;
+  }
+
+  .navbar-search {
+    order: 3;
+    flex-basis: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .navbar-fila-2 {
+    align-items: center;
+    gap: 12px;
+  }
+
+  .navbar-links {
+    flex: 1 1 auto;
+    gap: 14px;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+  }
+
+  .navbar-links::-webkit-scrollbar {
+    display: none;
+  }
+
+  .dropdown-menu {
+    max-width: calc(100vw - 36px);
+    min-width: 230px;
+  }
+
+  .subcategorias-panel-lateral {
+    position: static;
+    display: none;
+    min-width: 0;
+    margin: 2px 10px 8px;
+    box-shadow: none;
+    border-color: rgba(79, 211, 255, 0.16);
+    background-color: rgba(10, 23, 39, 0.92);
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transform: none;
+  }
+
+  .dropdown-item-wrapper:hover .subcategorias-panel-lateral,
+  .dropdown-item-wrapper:focus-within .subcategorias-panel-lateral {
+    display: flex;
+  }
+
+  .subcategorias-panel-lateral::before {
+    content: none;
+  }
+}
+
+@media (max-width: 560px) {
+  .navbar-container {
+    padding: 12px;
+  }
+
+  .navbar-logo span {
+    font-size: 1rem;
+  }
+
+  .navbar-auth {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .navbar-auth a {
+    margin-left: 0;
+    font-size: 0.88rem;
+  }
+
+  .navbar-user-box {
+    width: 100%;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .navbar-user-greeting {
+    max-width: 60%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .navbar-search input {
+    min-width: 0;
+    padding: 10px 12px;
+  }
+
+  .navbar-search button {
+    padding: 10px 12px;
+  }
+
+  .navbar-fila-2 {
+    flex-wrap: nowrap;
+  }
+
+  .dropdown-menu {
+    left: 0;
+    top: 125%;
+  }
+
+  .navbar-links a,
+  .btn-productos {
+    font-size: 0.9rem;
+  }
 }

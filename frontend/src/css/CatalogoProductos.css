@@ -209,3 +209,27 @@
     min-width: 0;
   }
 }
+
+@media (max-width: 520px) {
+  .catalogo-container {
+    padding-top: 12px;
+  }
+
+  .catalogo-titulo {
+    font-size: 1.55rem;
+    line-height: 1.1;
+  }
+
+  .grilla-productos {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  .tarjeta-info {
+    padding: 16px 16px 40px;
+  }
+
+  .precio-transferencia {
+    font-size: 1.35rem;
+  }
+}

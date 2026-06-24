@@ -1,4 +1,4 @@
-const { Op } = require('sequelize');
+const { Op, fn, col, literal } = require('sequelize');
 const { Producto, Categoria, DetallePedido } = require('../config/db');
 
 // NUEVO: Importamos nuestro servicio del dólar
@@ -14,9 +14,15 @@ function construirOrder(orden) {
 			return [['nombre', 'ASC']];
 		case 'alfabetico_za':
 			return [['nombre', 'DESC']];
+		case 'mas_pedido':
+			return [[literal('pedidos_realizados'), 'DESC'], ['id', 'ASC']];
 		default:
 			return [['id', 'ASC']];
 	}
+}
+
+function esOrdenMasPedido(orden) {
+	return String(orden || '').toLowerCase() === 'mas_pedido';
 }
 
 function construirWhere(filtros = {}) {
@@ -149,6 +155,7 @@ function mapearProducto(producto, cotizacion, metodoPago) {
 async function listarProductos(filtros = {}) {
 	const where = construirWhere(filtros);
 	const idsCategorias = await obtenerIdsCategoriasFiltradas(filtros);
+	const ordenarPorMasPedido = esOrdenMasPedido(filtros.orden);
 
 	if (idsCategorias) {
 		where.categoria_id = { [Op.in]: idsCategorias };
@@ -159,10 +166,16 @@ async function listarProductos(filtros = {}) {
 
 	const productos = await Producto.findAll({
 		where,
+		attributes: {
+			include: ordenarPorMasPedido
+				? [[fn('COUNT', col('detallesPedido.pedido_id')), 'pedidos_realizados']]
+				: [],
+		},
 		include: [
 			{ model: Categoria, as: 'categoria' },
-			{ model: DetallePedido, as: 'detallesPedido' },
+			{ model: DetallePedido, as: 'detallesPedido', attributes: ordenarPorMasPedido ? [] : undefined },
 		],
+		group: ordenarPorMasPedido ? ['Producto.id'] : undefined,
 		order: construirOrder(filtros.orden),
 	});
 

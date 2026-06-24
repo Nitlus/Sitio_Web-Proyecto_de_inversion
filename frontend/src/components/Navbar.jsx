@@ -13,7 +13,6 @@ function Navbar() {
   
   // Estados para controlar los menús desplegables
   const [mostrarDropdown, setMostrarDropdown] = useState(false);
-  const [categoriaHover, setCategoriaHover] = useState(null); // Sabe qué categoría tiene el mouse encima
   
   const navigate = useNavigate();
 
@@ -103,16 +102,31 @@ function Navbar() {
         <div 
           className="dropdown-container"
           onMouseEnter={() => setMostrarDropdown(true)}
-          onMouseLeave={() => {
-            setMostrarDropdown(false);
-            setCategoriaHover(null); // Resetea el panel lateral al sacar el mouse
+          onMouseLeave={() => setMostrarDropdown(false)}
+          onFocus={() => setMostrarDropdown(true)}
+          onBlur={(e) => {
+            if (!e.currentTarget.contains(e.relatedTarget)) {
+              setMostrarDropdown(false);
+            }
           }}
         >
           {/* Botón principal de productos */}
-          <Link to="/tienda" className="btn-productos" style={{textDecoration: 'none'}}>Productos ▾</Link>
+          <button
+            type="button"
+            className="btn-productos"
+            onClick={() => setMostrarDropdown(prev => !prev)}
+            aria-expanded={mostrarDropdown}
+            aria-haspopup="true"
+          >
+            Productos ▾
+          </button>
           
           {mostrarDropdown && (
             <div className="dropdown-menu">
+              <Link to="/tienda" className="dropdown-item-link dropdown-todos-productos">
+                Todos los productos
+              </Link>
+
               {categorias.map(categoria => {
                 const tieneSub = categoria.subcategorias && categoria.subcategorias.length > 0;
                 
@@ -120,7 +134,6 @@ function Navbar() {
                   <div 
                     key={categoria.id} 
                     className="dropdown-item-wrapper"
-                    onMouseEnter={() => setCategoriaHover(categoria.id)}
                   >
                     <Link to={`/tienda/${formatearURL(categoria.nombre)}`} className="dropdown-item-link">
                       <span>{categoria.nombre}</span>
@@ -129,7 +142,7 @@ function Navbar() {
                     </Link>
                     
                     {/* PANEL LATERAL DE SUBCATEGORÍAS (Aparece a la derecha) */}
-                    {tieneSub && categoriaHover === categoria.id && (
+                    {tieneSub && (
                       <div className="subcategorias-panel-lateral">
                         {categoria.subcategorias.map(sub => (
                           <Link 

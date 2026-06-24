@@ -337,3 +337,51 @@
     order: -1; /* Coloca el resumen arriba en pantallas chicas si se prefiere, o déjalo abajo quitando esto */
   }
 }
+
+@media (max-width: 620px) {
+  .carrito-page-titulo {
+    font-size: 1.45rem;
+  }
+
+  .carrito-item-card {
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 14px;
+    padding: 14px;
+  }
+
+  .item-imagen-contenedor {
+    width: 68px;
+    height: 68px;
+  }
+
+  .item-detalles-contenedor {
+    flex: 1 1 calc(100% - 86px);
+    min-width: 0;
+  }
+
+  .item-cantidad-control {
+    order: 3;
+  }
+
+  .item-precios-totales {
+    order: 4;
+    align-items: flex-start;
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .btn-remover-producto {
+    order: 5;
+    margin-left: auto;
+  }
+
+  .resumen-totales-tarjeta {
+    position: static;
+    padding: 18px;
+  }
+
+  .total-monto-valor {
+    font-size: 1.35rem;
+  }
+}

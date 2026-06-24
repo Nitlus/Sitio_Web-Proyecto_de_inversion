@@ -19,8 +19,8 @@ function Home() {
   useEffect(() => {
     let estaMontado = true;
 
-    // Traemos los productos del backend.
-    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos?orden=precio_desc', {
+    // Traemos primero el producto con más unidades pedidas.
+    fetch('https://unclog-playmate-slush.ngrok-free.dev/api/productos?orden=mas_pedido', {
       headers: {
         'ngrok-skip-browser-warning': 'true' // ✨ Esto evita que la página se quede pensando
       }
@@ -28,7 +28,7 @@ function Home() {
       .then(res => res.json())
       .then(data => {
         if (estaMontado && data.length > 0) {
-          setDestacado(data[0]); // El producto N°1 de la lista es el estrella
+          setDestacado(data[0]); // El producto N°1 de la lista es el más pedido
           setProductos(data.slice(1, 9)); // Tomamos los siguientes 8 para la cuadrícula inferior
         }
         if (estaMontado) setCargando(false);

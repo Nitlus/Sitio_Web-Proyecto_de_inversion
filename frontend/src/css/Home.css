@@ -459,3 +459,54 @@
     right: 10px;
   }
 }
+
+@media (max-width: 520px) {
+  .home-container {
+    gap: 28px;
+  }
+
+  .hero-section,
+  .hero-carousel,
+  .hero-track,
+  .hero-slide {
+    min-height: 560px;
+  }
+
+  .hero-banner {
+    background-size: auto 72%;
+    background-position: center 34%;
+  }
+
+  .hero-banner::before {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.38) 0%, rgba(0, 0, 0, 0.72) 52%, rgba(0, 0, 0, 0.92) 100%);
+  }
+
+  .hero-texto-overlay {
+    left: 18px;
+    right: 18px;
+    bottom: 78px;
+  }
+
+  .hero-logo {
+    width: min(180px, 62vw);
+    max-height: 74px;
+  }
+
+  .hero-texto-overlay p,
+  .hero-destacado-copy p {
+    font-size: 1rem;
+    line-height: 1.35;
+  }
+
+  .hero-destacado-slide {
+    padding: 34px 18px 84px;
+  }
+
+  .hero-destacado-visual {
+    min-height: 200px;
+  }
+
+  .productos-grid {
+    grid-template-columns: 1fr;
+  }
+}

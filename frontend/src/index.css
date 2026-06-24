@@ -1,5 +1,5 @@
 html, body, #root {
-  height: 100%;
+  min-height: 100%;
   margin: 0;
   background-color: var(--tf-bg);
   color: var(--tf-text);
@@ -11,6 +11,7 @@ html, body, #root {
   --tf-surface: #0d1b2d;
   --tf-surface-2: #12263a;
   --tf-surface-3: #16324a;
+  --tf-surface-hover: #183752;
   --tf-input: #0a1727;
   --tf-border: rgba(79, 211, 255, 0.24);
   --tf-border-strong: rgba(79, 211, 255, 0.46);
@@ -41,6 +42,14 @@ body {
     radial-gradient(circle at 88% 18%, rgba(255, 107, 53, 0.1), transparent 26%),
     linear-gradient(135deg, var(--tf-bg-deep), var(--tf-bg) 48%, var(--tf-surface-2));
   background-attachment: fixed;
+  overflow-x: hidden;
+}
+
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
 }
 
 button,
@@ -122,9 +131,15 @@ button,
 
 .contenedor-principal {
   flex: 1; /* Esto empuja el footer al fondo si el contenido es corto */
-  padding: 20px;
+  padding: clamp(12px, 3vw, 20px);
   max-width: 1200px;
   width: 100%;
   margin: 0 auto;
   box-sizing: border-box;
+}
+
+@media (max-width: 640px) {
+  body {
+    background-attachment: scroll;
+  }
 }
